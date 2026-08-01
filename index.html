@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PLTRS.MOBILE — скоро</title>
+
+    <style>
+        /* ============================================================
+           1. БАЗОВЫЕ СТИЛИ
+           ============================================================ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            height: 100%;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #ffffff;
+            color: #000000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        /* ============================================================
+           2. ЛОГОТИП
+           ============================================================ */
+        .logo {
+            opacity: 0;
+            animation: fadeUp 0.8s ease forwards;
+        }
+
+        .title {
+            font-size: 64px;
+            font-weight: 900;
+            letter-spacing: -2px;
+            text-transform: uppercase;
+        }
+
+        .subtitle {
+            font-size: 20px;
+            font-weight: 300;
+            opacity: 0.6;
+            margin-top: -6px;
+        }
+
+        /* ============================================================
+           3. ТЕКСТ
+           ============================================================ */
+        .emoji-big {
+            font-size: 64px;
+            opacity: 0;
+            animation: fadeUp 0.8s ease 0.4s forwards;
+            margin-bottom: 10px;
+        }
+
+        .desc-mobile {
+            font-size: 18px;
+            line-height: 1.6;
+            opacity: 0;
+            animation: fadeUp 0.8s ease 0.4s forwards;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        /* ============================================================
+           4. БЕЙДЖ "СКОРО"
+           ============================================================ */
+        .coming-badge {
+            display: inline-block;
+            padding: 8px 24px;
+            border: 2px solid #000000;
+            border-radius: 60px;
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            opacity: 0;
+            animation: fadeUp 0.8s ease 0.6s forwards;
+            margin-top: 10px;
+        }
+
+        .coming-badge span {
+            display: inline-block;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        /* ============================================================
+           5. ССЫЛКА НАЗАД
+           ============================================================ */
+        .back-link {
+            display: inline-block;
+            margin-top: 30px;
+            color: #000000;
+            text-decoration: none;
+            font-weight: 500;
+            border-bottom: 2px solid #000000;
+            padding-bottom: 4px;
+            opacity: 0;
+            animation: fadeUp 0.8s ease 0.9s forwards;
+            transition: opacity 0.3s;
+        }
+
+        .back-link:hover {
+            opacity: 0.6;
+        }
+
+        /* ============================================================
+           6. АНИМАЦИИ
+           ============================================================ */
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%,
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.5;
+                transform: scale(0.98);
+            }
+        }
+
+        /* ============================================================
+           7. АДАПТИВ
+           ============================================================ */
+
+        /* Ноутбуки и планшеты (горизонтальные) */
+        @media (min-width: 768px) {
+            .title {
+                font-size: 80px;
+            }
+            .subtitle {
+                font-size: 24px;
+            }
+            .desc-mobile {
+                font-size: 20px;
+            }
+            .coming-badge {
+                font-size: 24px;
+                padding: 10px 32px;
+            }
+            .emoji-big {
+                font-size: 80px;
+            }
+        }
+
+        /* Телефоны */
+        @media (max-width: 767px) {
+            .title {
+                font-size: 48px;
+            }
+            .subtitle {
+                font-size: 18px;
+            }
+            .desc-mobile {
+                font-size: 16px;
+                padding: 0 10px;
+            }
+            .coming-badge {
+                font-size: 16px;
+                padding: 6px 18px;
+            }
+            .emoji-big {
+                font-size: 48px;
+            }
+        }
+
+        /* Маленькие телефоны */
+        @media (max-width: 400px) {
+            .title {
+                font-size: 36px;
+            }
+            .subtitle {
+                font-size: 15px;
+            }
+            .desc-mobile {
+                font-size: 14px;
+            }
+            .coming-badge {
+                font-size: 14px;
+                padding: 4px 14px;
+            }
+            .emoji-big {
+                font-size: 36px;
+            }
+            .back-link {
+                font-size: 14px;
+            }
+        }
+    </style>
+
+</head>
+<body>
+
+    <div class="container">
+        <div class="content">
+
+            <!-- Логотип -->
+            <div class="logo">
+                <h1 class="title">PLTRS.MOBILE</h1>
+                <p class="subtitle">— связь, которой пока нет</p>
+            </div>
+
+            <!-- Эмодзи -->
+            <div class="emoji-big">📱</div>
+
+            <!-- Описание -->
+            <p class="desc-mobile">
+                Мы строим сеть, которая никогда не подведёт.<br>
+                Пока что она строится.
+            </p>
+
+            <!-- Бейдж "Скоро" -->
+            <div class="coming-badge">
+                <span>🚧 скоро</span>
+            </div>
+
+            <!-- Ссылка назад -->
+            <a href="index.html" class="back-link">← на главную</a>
+
+        </div>
+    </div>
+
+    <script>
+        // ============================================================
+        //   СКРИПТ (для обратной совместимости и доп. эффектов)
+        // ============================================================
+
+        // Можно добавить клик по бейджу, чтобы он "оживал"
+        document.querySelector('.coming-badge')?.addEventListener('click', function() {
+            this.style.transform = 'scale(1.1)';
+            setTimeout(() => {
+                this.style.transform = 'scale(1)';
+            }, 300);
+        });
+
+        // Логирование в консоль (для фана)
+        console.log('📱 PLTRS.MOBILE — заглушка загружена!');
+        console.log('🚧 Скоро тут будет что-то интересное.');
+    </script>
+
+</body>
+</html>
