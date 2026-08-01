@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PLTRS — Тарифы</title>
+    
+    <!-- Подключение иконок -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    
+    <style>
+        /* ===== ОБЩИЕ СТИЛИ ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #ffffff;
+            color: #000000;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        body.dark-theme {
+            background: #0a0a0a;
+            color: #f0f0f0;
+        }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            font-size: 24px;
+            line-height: 1;
+            vertical-align: middle;
+            display: inline-block;
+            user-select: none;
+        }
+
+        .icon-lg {
+            font-size: 40px;
+        }
+
+        .icon-sm {
+            font-size: 18px;
+        }
+
+        /* ===== КНОПКИ ===== */
+        .btn-primary {
+            display: inline-block;
+            padding: 12px 28px;
+            background: #000000;
+            color: #ffffff;
+            border: 2px solid #000000;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 15px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .btn-primary:hover {
+            background: #ffffff;
+            color: #000000;
+        }
+
+        body.dark-theme .btn-primary {
+            background: #ffffff;
+            color: #000000;
+            border-color: #ffffff;
+        }
+
+        body.dark-theme .btn-primary:hover {
+            background: transparent;
+            color: #ffffff;
+        }
+
+        /* ===== ХЕДЕР ===== */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 40px;
+            border-bottom: 1px solid #e5e5e5;
+            background: #ffffff;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        body.dark-theme header {
+            background: #111111;
+            border-bottom-color: #2a2a2a;
+        }
+
+        .logo {
+            display: flex;
+            align-items: baseline;
+            gap: 6px;
+        }
+
+        .logo .pltrs {
+            font-family: 'Inter', sans-serif;
+            font-size: 28px;
+            font-weight: 900;
+            letter-spacing: -1px;
+            text-transform: uppercase;
+        }
+
+        .logo .by {
+            font-size: 11px;
+            font-weight: 300;
+            opacity: 0.5;
+            letter-spacing: 0.5px;
+        }
+
+        header nav {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+
+        header nav a {
+            font-weight: 500;
+            font-size: 14px;
+            color: #000000;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            padding: 4px 0;
+            border-bottom: 2px solid transparent;
+        }
+
+        header nav a:hover,
+        header nav a.active {
+            color: #555555;
+            border-bottom-color: #000000;
+        }
+
+        body.dark-theme header nav a {
+            color: #cccccc;
+        }
+
+        body.dark-theme header nav a:hover,
+        body.dark-theme header nav a.active {
+            color: #ffffff;
+            border-bottom-color: #ffffff;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .theme-toggle {
+            background: none;
+            border: 2px solid #d0d0d0;
+            border-radius: 50%;
+            width: 34px;
+            height: 34px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1);
+            border-color: #888;
+        }
+
+        body.dark-theme .theme-toggle {
+            border-color: #444444;
+        }
+
+        .burger {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 4px;
+        }
+
+        .burger .material-symbols-outlined {
+            font-size: 28px;
+        }
+
+        body.dark-theme .burger .material-symbols-outlined {
+            color: #ffffff;
+        }
+
+        /* ===== ТАРИФЫ ===== */
+        .tariffs-page {
+            padding: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .tariffs-page h1 {
+            font-size: 40px;
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        /* ===== КОНСТРУКТОР ===== */
+        .constructor-section {
+            background: #000000;
+            color: #ffffff;
+            padding: 40px;
+            border-radius: 24px;
+            margin-bottom: 60px;
+        }
+
+        body.dark-theme .constructor-section {
+            background: #1a1a1a;
+        }
+
+        .constructor-section h2 {
+            font-size: 32px;
+            margin-bottom: 4px;
+        }
+
+        .constructor-section p {
+            opacity: 0.6;
+            margin-bottom: 24px;
+        }
+
+        .constructor {
+            max-width: 600px;
+        }
+
+        .constructor-row {
+            margin-bottom: 16px;
+        }
+
+        .constructor-row label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+
+        .constructor-row input[type="range"] {
+            width: 100%;
+            accent-color: white;
+            background: #333;
+            height: 4px;
+            border-radius: 2px;
+        }
+
+        .constructor-bonuses {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin: 16px 0;
+        }
+
+        .constructor-bonuses label {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-weight: 400;
+            font-size: 14px;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 6px 14px;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+
+        .constructor-price {
+            font-size: 28px;
+            font-weight: 700;
+            margin: 16px 0;
+        }
+
+        /* ===== СЕТКА ТАРИФОВ ===== */
+        .tariff-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .tariff-card {
+            background: #ffffff;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            padding: 24px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .tariff-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        body.dark-theme .tariff-card {
+            background: #1a1a1a;
+            border-color: #333333;
+            color: #eeeeee;
+        }
+
+        .tariff-card h2 {
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .tariff-stats {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin: 12px 0;
+            font-size: 14px;
+            opacity: 0.7;
+        }
+
+        .tariff-stats span {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .tariff-bonuses {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin: 12px 0;
+        }
+
+        /* ===== ВСЕ ЦВЕТА ДЛЯ БОНУСОВ (встроены!) ===== */
+        .bonus {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .bonus-telegram { background: #0088cc; color: #ffffff; }
+        .bonus-whatsapp { background: #25d366; color: #ffffff; }
+        .bonus-vk { background: #4a76a8; color: #ffffff; }
+        .bonus-viber { background: #7360f2; color: #ffffff; }
+        .bonus-spotify { background: #1DB954; color: #ffffff; }
+        .bonus-apple-music { background: linear-gradient(135deg, #ff3b30, #ff6b6b); color: #ffffff; }
+        .bonus-youtube { background: #ff0000; color: #ffffff; }
+        .bonus-kinopoisk { background: linear-gradient(135deg, #1a1a1a, #ff6b00); color: #ffffff; }
+        .bonus-twitch { background: #6441A4; color: #ffffff; }
+        .bonus-steam { background: #3a5a7a; color: #ffffff; }
+        .bonus-instagram { background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); color: #ffffff; }
+        .bonus-x { background: #000000; color: #ffffff; }
+        .bonus-protection { background: #ff6b6b; color: #ffffff; }
+        .bonus-control { background: #4a90d9; color: #ffffff; }
+
+        body.dark-theme .bonus {
+            /* для тёмной темы оставляем те же цвета, они не переопределяются */
+        }
+
+        .tariff-price {
+            font-size: 32px;
+            font-weight: 900;
+            margin: 12px 0;
+        }
+
+        .tariff-price span {
+            font-size: 14px;
+            font-weight: 400;
+            opacity: 0.5;
+        }
+
+        .tariff-family {
+            font-size: 14px;
+            opacity: 0.6;
+            margin: 4px 0 12px;
+            background: #f0f0f0;
+            padding: 4px 12px;
+            border-radius: 12px;
+            display: inline-block;
+        }
+
+        body.dark-theme .tariff-family {
+            background: #333333;
+            color: #cccccc;
+        }
+
+        .tariff-per-minute {
+            font-size: 18px;
+            font-weight: 700;
+            color: #333;
+            margin: 4px 0 12px;
+        }
+
+        body.dark-theme .tariff-per-minute {
+            color: #cccccc;
+        }
+
+        .btn-order {
+            display: inline-block;
+            margin-top: 12px;
+            padding: 10px 24px;
+            background: #000000;
+            color: #ffffff;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn-order:hover {
+            background: #333;
+        }
+
+        body.dark-theme .btn-order {
+            background: #ffffff;
+            color: #000000;
+        }
+
+        body.dark-theme .btn-order:hover {
+            background: #dddddd;
+        }
+
+        /* ===== АДАПТИВ ===== */
+        @media (max-width: 768px) {
+            header {
+                padding: 12px 16px;
+            }
+
+            header nav {
+                display: none;
+                width: 100%;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+                padding: 14px 0 6px;
+                border-top: 1px solid #e5e5e5;
+            }
+
+            header nav.open {
+                display: flex;
+            }
+
+            body.dark-theme header nav {
+                border-top-color: #2a2a2a;
+            }
+
+            .burger {
+                display: block;
+            }
+
+            .logo .pltrs {
+                font-size: 22px;
+            }
+
+            .tariffs-page {
+                padding: 20px;
+            }
+
+            .constructor-section {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">
+            <span class="pltrs">PLTRS</span>
+            <span class="by">by plykk</span>
+        </div>
+        <nav>
+            <a href="index.html">Главная</a>
+            <a href="tariffs.html" class="active">Тарифы</a>
+        </nav>
+        <div class="header-actions">
+            <button class="theme-toggle" onclick="toggleTheme()" id="themeToggle">
+                <span class="material-symbols-outlined">dark_mode</span>
+            </button>
+            <button class="burger" onclick="toggleMenu()">
+                <span class="material-symbols-outlined">menu</span>
+            </button>
+        </div>
+    </header>
+
+    <section class="tariffs-page">
+        <!-- КОНСТРУКТОР -->
+        <div class="constructor-section">
+            <h2>Конструктор</h2>
+            <p>Собери свой идеальный тариф до 590 ₽</p>
+            <div class="constructor">
+                <div class="constructor-row">
+                    <label>ГБ интернета: <span id="gbVal">15</span> ГБ</label>
+                    <input type="range" id="gbSlider" min="0" max="100" value="15" oninput="updateConstructor()">
+                </div>
+                <div class="constructor-row">
+                    <label>Минуты: <span id="minVal">200</span> мин</label>
+                    <input type="range" id="minSlider" min="0" max="1000" value="200" step="50" oninput="updateConstructor()">
+                </div>
+                <div class="constructor-row">
+                    <label>СМС: <span id="smsVal">20</span> шт</label>
+                    <input type="range" id="smsSlider" min="0" max="100" value="20" step="10" oninput="updateConstructor()">
+                </div>
+                <div class="constructor-bonuses">
+                    <label><input type="checkbox" checked> Telegram</label>
+                    <label><input type="checkbox" checked> WhatsApp</label>
+                    <label><input type="checkbox" checked> VK</label>
+                    <label><input type="checkbox" checked> Viber</label>
+                    <label><input type="checkbox"> YouTube</label>
+                    <label><input type="checkbox"> Spotify</label>
+                    <label><input type="checkbox"> VPN</label>
+                </div>
+                <div class="constructor-price">
+                    Цена: <span id="constructorPrice">199</span> ₽/мес
+                </div>
+                <a href="payment.html?tariff=custom" class="btn-primary">Оформить</a>
+            </div>
+        </div>
+
+        <h1>Все тарифы</h1>
+        <div class="tariff-grid">
+
+            <!-- Лайт -->
+            <div class="tariff-card">
+                <h2>Лайт</h2>
+                <div class="tariff-stats">
+                    <span><span class="material-symbols-outlined icon-sm">wifi</span> 15 ГБ</span>
+                    <span><span class="material-symbols-outlined icon-sm">call</span> 200 мин</span>
+                    <span><span class="material-symbols-outlined icon-sm">sms</span> 20 СМС</span>
+                </div>
+                <div class="tariff-bonuses">
+                    <span class="bonus bonus-telegram">Telegram</span>
+                    <span class="bonus bonus-whatsapp">WhatsApp</span>
+                    <span class="bonus bonus-vk">VK</span>
+                    <span class="bonus bonus-viber">Viber</span>
+                </div>
+                <div class="tariff-price">199 ₽<span>/мес</span></div>
+                <a href="payment.html?tariff=light" class="btn-order">Оформить</a>
+            </div>
+
+            <!-- Оптима -->
+            <div class="tariff-card">
+                <h2>Оптима</h2>
+                <div class="tariff-stats">
+                    <span><span class="material-symbols-outlined icon-sm">wifi</span> 25 ГБ</span>
+                    <span><span class="material-symbols-outlined icon-sm">call</span> 300 мин</span>
+                    <span><span class="material-symbols-outlined icon-sm">sms</span> 50 СМС</span>
+                </div>
+                <div class="tariff-bonuses">
+                    <span class="bonus bonus-telegram">Telegram</span>
+                    <span class="bonus bonus-whatsapp">WhatsApp</span>
+                    <span class="bonus bonus-vk">VK</span>
+                    <span class="bonus bonus-viber">Viber</span>
+                </div>
+                <div class="tariff-price">299 ₽<span>/мес</span></div>
+                <a href="payment.html?tariff=optima" class="btn-order">Оформить</a>
+            </div>
+
+            <!-- Макс -->
+            <div class="tariff-card">
+                <h2>Макс</h2>
+                <div class="tariff-stats">
+                    <span><span class="material-symbols-outlined icon-sm">wifi</span> 40 ГБ</span>
+                    <span><span class="material-symbols-outlined icon-sm">call</span> 500 мин</span>
+                    <span><span class="material-symbols-outlined icon-sm">sms</span> 50 СМС</span>
+                </div>
+                <div class="tariff-bonuses">
+                    <span class="bonus bonus-telegram">Telegram</span>
+                    <span class="bonus bonus-whatsapp">WhatsApp</span>
+                    <span class="bonus bonus-vk">VK</span>
+                    <span class="bonus bonus-viber">Viber</span>
+                </div>
+                <div class="tariff-price">450 ₽<span>/мес</span></div>
+                <a href="payment.html?tariff=max" class="btn-order">Оформить</a>
+            </div>
+
+            <!-- Музыка ван лав -->
+            <div class="tariff-card">
+                <h2>Музыка ван лав</h2>
+                <div class="tariff-stats">
+                    <span><span class="material-symbols-outlined icon-sm">wifi</span> 20 ГБ</span>
+                    <span><span class="material-symbols-outlined icon-sm">call</span> 200 мин</span>
+                </div>
+                <div class="tariff-bonuses">
+                    <span class="bonus bonus-telegram">Telegram</span>
+                    <span class="bonus bonus-whatsapp">WhatsApp</span>
+                    <span class="bonus bonus-vk">VK</span>
+                    <span class="bonus bonus-viber">Viber</span>
+                    <span class="bonus bonus-spotify">Spotify</span>
+                    <span class="bonus bonus-apple-music">Apple Music</span>
+                </div>
+                <div class="tariff-price">250 ₽<span>/мес</span></div>
+                <a href="payment.html?tariff=music" class="btn-order">Оформить</a>
+            </div>
+
+            <!-- Сериалы и кино -->
+            <div class="tariff-card">
+                <h2>Сериалы и кино</h2>
+                <div class="tariff-stats">
+                    <span><span class="material-symbols-outlined icon-sm">wifi</span> 25 ГБ</span>
+                    <span><span class="material-symbols-outlined icon-sm">call</span> 250 мин</span>
+                </div>
+                <div class="tariff-bonuses">
+                    <span class="bonus bonus-telegram">Telegram</span>
+                    <span class="bonus bonus-whatsapp">WhatsApp</span>
+                    <span class="bonus bonus-vk">VK</span>
+                    <span class="bonus bonus-viber">Viber</span>
+                    <span class="bonus bonus-youtube">YouTube</span>
+                    <span class="bonus bonus-kinopoisk">Кинопоиск</span>
+                </div>
+                <div class="tariff-price">250 ₽<span>/мес</span></div>
+                <a href="payment.html?tariff=video" class="btn-order">Оформить</a>
+            </div>
+
+            <!-- Игры -->
+            <div class="tariff-card">
+                <h2>Игры</h2>
+                <div class="tariff-stats">
+                    <span><span class="material-symbols-outlined icon-sm">wifi</span> 35 ГБ</span>
+                    <span><span class="material-symbols-outlined icon-sm">call</span> 200 мин</span>
+                </div>
+                <div class="tariff-bonuses">
+                    <span class="bonus bonus-telegram">Telegram</span>
+                    <span class="bonus bonus-whatsapp">WhatsApp</span>
+                    <span class="bonus bonus-vk">VK</span>
+                    <span class="bonus bonus-viber">Viber</span>
+                    <span class="bonus bonus-twitch">Twitch</span>
+                    <span class="bonus bonus-steam">Steam</span>
+                </div>
+                <div class="tariff-price">300 ₽<span>/мес</span></div>
+                <a href="payment.html?tariff=gaming" class="btn-order">Оформить</a>
+            </div>
+
+            <!-- Бабушки и дедушки -->
+            <div class="tariff-card">
+                <h2>Бабушки и дедушки</h2>
+                <div class="tariff-stats">
+                    <span><span class="material-symbols-outlined icon-sm">wifi</span> 20 ГБ</span>
+                    <span><span class="material-symbols-outlined icon-sm">call</span> 500 мин</span>
+                    <span><span class="material-symbols-outlined icon-sm">sms</span> 50 СМС</span>
+                </div>
+                <div class="tariff-bonuses">
+                    <span class="bonus bonus-telegram">Telegram</span>
+                    <span class="bonus bonus-whatsapp">WhatsApp</span>
+                    <span class="bonus bonus-vk">VK</span>
+                    <span class="bonus bonus-viber">Viber</span>
+                    <span class="bonus bonus-protection">Защита</span>
+                </div>
+                <div class="tariff-price">450 ₽<span>/мес</span></div>
+                <div class="tariff-family">В семье: 350 ₽</div>
+                <a href="payment.html?tariff=grandparents" class="btn-order">Оформить</a>
+            </div>
+
+            <!-- Родители -->
+            <div class="tariff-card">
+                <h2>Родители</h2>
+                <div class="tariff-stats">
+                    <span><span class="material-symbols-outlined icon-sm">wifi</span> 30 ГБ</span>
+                    <span><span class="material-symbols-outlined icon-sm">call</span> 400 мин</span>
+                    <span><span class="material-symbols-outlined icon-sm">sms</span> 50 СМС</span>
+                </div>
+                <div class="tariff-bonuses">
+                    <span class="bonus bonus-telegram">Telegram</span>
+                    <span class="bonus bonus-whatsapp">WhatsApp</span>
+                    <span class="bonus bonus-vk">VK</span>
+                    <span class="bonus bonus-viber">Viber</span>
+                    <span class="bonus bonus-protection">Защита</span>
+                </div>
+                <div class="tariff-price">450 ₽<span>/мес</span></div>
+                <div class="tariff-family">В семье: 390 ₽</div>
+                <a href="payment.html?tariff=parents" class="btn-order">Оформить</a>
+            </div>
+
+            <!-- Дети -->
+            <div class="tariff-card">
+                <h2>Дети</h2>
+                <div class="tariff-stats">
+                    <span><span class="material-symbols-outlined icon-sm">wifi</span> 35 ГБ</span>
+                    <span><span class="material-symbols-outlined icon-sm">call</span> 200 мин</span>
+                    <span><span class="material-symbols-outlined icon-sm">sms</span> 20 СМС</span>
+                </div>
+                <div class="tariff-bonuses">
+                    <span class="bonus bonus-telegram">Telegram</span>
+                    <span class="bonus bonus-whatsapp">WhatsApp</span>
+                    <span class="bonus bonus-vk">VK</span>
+                    <span class="bonus bonus-viber">Viber</span>
+                    <span class="bonus bonus-protection">Защита</span>
+                    <span class="bonus bonus-control">Контроль</span>
+                </div>
+                <div class="tariff-price">470 ₽<span>/мес</span></div>
+                <div class="tariff-family">В семье: 350 ₽</div>
+                <a href="payment.html?tariff=kids" class="btn-order">Оформить</a>
+            </div>
+
+            <!-- Хеллоу фром Раша -->
+            <div class="tariff-card">
+                <h2>Хеллоу фром Раша!</h2>
+                <div class="tariff-stats">
+                    <span><span class="material-symbols-outlined icon-sm">wifi</span> 15 ГБ</span>
+                    <span><span class="material-symbols-outlined icon-sm">call</span> 200 мин</span>
+                    <span><span class="material-symbols-outlined icon-sm">sms</span> 20 СМС</span>
+                </div>
+                <div class="tariff-bonuses">
+                    <span class="bonus bonus-telegram">Telegram</span>
+                    <span class="bonus bonus-whatsapp">WhatsApp</span>
+                    <span class="bonus bonus-vk">VK</span>
+                    <span class="bonus bonus-instagram">Instagram</span>
+                    <span class="bonus bonus-x">X</span>
+                </div>
+                <div class="tariff-price">350 ₽<span>/мес</span></div>
+                <a href="payment.html?tariff=travel" class="btn-order">Оформить</a>
+            </div>
+
+            <!-- По минуте -->
+            <div class="tariff-card">
+                <h2>По минуте</h2>
+                <div class="tariff-stats">
+                    <span><span class="material-symbols-outlined icon-sm">wifi</span> 0 ГБ</span>
+                    <span><span class="material-symbols-outlined icon-sm">call</span> Поминутно</span>
+                    <span><span class="material-symbols-outlined icon-sm">sms</span> 0 СМС</span>
+                </div>
+                <div class="tariff-per-minute">3,5 ₽/мин</div>
+                <div class="tariff-price">0 ₽<span>/мес</span></div>
+                <a href="payment.html?tariff=perminute" class="btn-order">Оформить</a>
+            </div>
+
+        </div>
+    </section>
+
+    <script>
+        // ===== БУРГЕР =====
+        function toggleMenu() {
+            const nav = document.querySelector('header nav');
+            if (nav) nav.classList.toggle('open');
+        }
+
+        // ===== ТЁМНАЯ ТЕМА =====
+        function toggleTheme() {
+            const body = document.body;
+            const btn = document.getElementById('themeToggle');
+            body.classList.toggle('dark-theme');
+            if (btn) {
+                btn.innerHTML = body.classList.contains('dark-theme') 
+                    ? '<span class="material-symbols-outlined">sunny</span>' 
+                    : '<span class="material-symbols-outlined">dark_mode</span>';
+            }
+            localStorage.setItem('pltrs_theme', body.classList.contains('dark-theme'));
+        }
+
+        function loadTheme() {
+            const isDark = localStorage.getItem('pltrs_theme') === 'true';
+            if (isDark) {
+                document.body.classList.add('dark-theme');
+                const btn = document.getElementById('themeToggle');
+                if (btn) {
+                    btn.innerHTML = '<span class="material-symbols-outlined">sunny</span>';
+                }
+            }
+        }
+
+        // ===== КОНСТРУКТОР =====
+        function updateConstructor() {
+            const gb = parseInt(document.getElementById('gbSlider').value);
+            const min = parseInt(document.getElementById('minSlider').value);
+            const sms = parseInt(document.getElementById('smsSlider').value);
+            
+            document.getElementById('gbVal').textContent = gb;
+            document.getElementById('minVal').textContent = min;
+            document.getElementById('smsVal').textContent = sms;
+            
+            let price = 50 + gb * 5 + min * 0.3 + sms * 0.5;
+            const bonuses = document.querySelectorAll('.constructor-bonuses input[type="checkbox"]:checked');
+            price += bonuses.length * 20;
+            
+            price = Math.min(price, 590);
+            document.getElementById('constructorPrice').textContent = Math.round(price);
+        }
+
+        // ===== ЗАГРУЗКА =====
+        document.addEventListener('DOMContentLoaded', function() {
+            loadTheme();
+            updateConstructor();
+            
+            document.querySelectorAll('.constructor-bonuses input').forEach(input => {
+                input.addEventListener('change', updateConstructor);
+            });
+        });
+    </script>
+
+</body>
+</html>
