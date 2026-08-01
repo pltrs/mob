@@ -104,6 +104,17 @@
             color: #000000;
         }
 
+        .btn-primary.dark {
+            background: #ffffff;
+            color: #000000;
+            border-color: #ffffff;
+        }
+
+        .btn-primary.dark:hover {
+            background: #000000;
+            color: #ffffff;
+        }
+
         .btn-secondary {
             display: inline-block;
             padding: 10px 24px;
@@ -121,6 +132,16 @@
         .btn-secondary:hover {
             background: #000000;
             color: #ffffff;
+        }
+
+        .btn-secondary.dark {
+            color: #ffffff;
+            border-color: #ffffff;
+        }
+
+        .btn-secondary.dark:hover {
+            background: #ffffff;
+            color: #000000;
         }
 
         .btn-order {
@@ -162,6 +183,10 @@
             letter-spacing: 0.5px;
         }
 
+        .logo.small .pltrs {
+            font-size: 20px;
+        }
+
         /* ============================================================
            6. ХЕДЕР — ИДЕАЛЬНОЕ ВЫРАВНИВАНИЕ
            ============================================================ */
@@ -176,6 +201,7 @@
             top: 0;
             z-index: 1000;
             gap: 20px;
+            flex-wrap: wrap;
         }
 
         header .logo {
@@ -188,6 +214,7 @@
             gap: 28px;
             flex: 1;
             justify-content: center;
+            flex-wrap: wrap;
         }
 
         header nav a {
@@ -239,6 +266,8 @@
             border: none;
             cursor: pointer;
             padding: 4px;
+            align-items: center;
+            justify-content: center;
         }
 
         .burger svg {
@@ -419,6 +448,7 @@
             justify-content: space-between;
             align-items: center;
             user-select: none;
+            padding: 4px 0;
         }
 
         .faq-question::after {
@@ -668,11 +698,28 @@
             transition: all 0.4s ease;
             margin: 8px auto;
             font-size: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .plus-btn.active {
             transform: rotate(45deg);
             border-color: #000;
+        }
+
+        .tariff-detail {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.4s ease;
+            font-size: 14px;
+            opacity: 0.7;
+            line-height: 1.6;
+        }
+
+        .tariff-detail.open {
+            max-height: 200px;
+            padding: 12px 0;
         }
 
         /* ============================================================
@@ -849,18 +896,6 @@
             color: #ffffff;
         }
 
-        body.dark-theme footer {
-            background: #111111;
-        }
-
-        body.dark-theme footer .logo span {
-            color: #ffffff;
-        }
-
-        body.dark-theme footer p {
-            color: #666666;
-        }
-
         body.dark-theme .btn-primary {
             background: #ffffff;
             color: #000000;
@@ -886,9 +921,37 @@
             border-color: #444444;
         }
 
+        body.dark-theme .bonus-btn {
+            background: #2a2a2a;
+            color: #cccccc;
+        }
+
+        body.dark-theme .bonus-btn.active {
+            background: #ffffff;
+            color: #000000;
+            border-color: #000000;
+        }
+
         /* ============================================================
-           15. АДАПТИВ
+           15. АДАПТИВ (ПОЛНЫЙ)
            ============================================================ */
+
+        /* Планшеты и ноутбуки */
+        @media (max-width: 1024px) {
+            header {
+                padding: 14px 24px;
+            }
+
+            header nav {
+                gap: 18px;
+            }
+
+            .hero h1 {
+                font-size: 64px;
+            }
+        }
+
+        /* Телефоны (горизонтальные) */
         @media (max-width: 768px) {
             header {
                 padding: 12px 16px;
@@ -905,43 +968,118 @@
                 border-top: 1px solid #e5e5e5;
                 order: 3;
                 flex: none;
+                justify-content: center;
             }
 
             header nav.open {
                 display: flex;
             }
 
+            header nav a {
+                font-size: 15px;
+                padding: 8px 0;
+                width: 100%;
+                text-align: center;
+                border-bottom: none !important;
+            }
+
             .burger {
                 display: flex;
             }
 
+            .header-actions {
+                gap: 8px;
+            }
+
+            .theme-toggle {
+                width: 30px;
+                height: 30px;
+                font-size: 16px;
+            }
+
+            .burger svg {
+                width: 24px;
+                height: 24px;
+            }
+
+            .logo .pltrs {
+                font-size: 22px;
+            }
+            .logo .by {
+                font-size: 9px;
+            }
+
             .hero h1 {
                 font-size: 48px;
+                letter-spacing: -2px;
             }
 
             .hero .subtitle {
                 font-size: 20px;
             }
 
+            .hero .desc {
+                font-size: 16px;
+                padding: 0 10px;
+            }
+
             .features {
                 padding: 40px 20px;
             }
 
-            .about,
+            .features h2 {
+                font-size: 28px;
+            }
+
+            .feature-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 16px;
+            }
+
+            .about {
+                padding: 40px 20px;
+            }
+
+            .about h2 {
+                font-size: 28px;
+            }
+
             .faq {
                 padding: 40px 20px;
+            }
+
+            .faq h2 {
+                font-size: 28px;
             }
 
             .tariffs-page {
                 padding: 20px;
             }
 
+            .tariffs-page h1 {
+                font-size: 28px;
+                margin: 24px 0;
+            }
+
             .constructor-section {
                 padding: 20px;
             }
 
+            .constructor-section h2 {
+                font-size: 24px;
+            }
+
+            .constructor {
+                max-width: 100%;
+            }
+
             .tariff-grid {
                 grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .tariff-card {
+                padding: 20px;
             }
 
             .constructor-bonuses {
@@ -952,19 +1090,43 @@
                 font-size: 12px;
                 padding: 6px 14px;
             }
+
+            .constructor-price {
+                font-size: 24px;
+            }
+
+            body.dark-theme header nav {
+                border-top-color: #2a2a2a;
+            }
         }
 
+        /* Маленькие телефоны (вертикальные) */
         @media (max-width: 480px) {
             header {
                 padding: 10px 12px;
             }
 
-            header nav a {
-                font-size: 13px;
+            .logo .pltrs {
+                font-size: 18px;
+            }
+            .logo .by {
+                font-size: 8px;
+            }
+
+            .theme-toggle {
+                width: 26px;
+                height: 26px;
+                font-size: 14px;
+            }
+
+            .burger svg {
+                width: 20px;
+                height: 20px;
             }
 
             .hero h1 {
                 font-size: 36px;
+                letter-spacing: -1px;
             }
 
             .hero .subtitle {
@@ -972,12 +1134,101 @@
             }
 
             .hero .desc {
-                font-size: 16px;
+                font-size: 14px;
+            }
+
+            .hero {
+                padding: 60px 16px 40px;
+            }
+
+            .feature-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+
+            .features {
+                padding: 30px 16px;
+            }
+
+            .about {
+                padding: 30px 16px;
+            }
+
+            .faq {
+                padding: 30px 16px;
+            }
+
+            .tariffs-page {
+                padding: 16px;
+            }
+
+            .constructor-section {
+                padding: 16px;
+            }
+
+            .constructor-section h2 {
+                font-size: 20px;
             }
 
             .bonus-btn {
                 font-size: 11px;
                 padding: 4px 12px;
+            }
+
+            .constructor-price {
+                font-size: 20px;
+            }
+
+            .tariff-card h2 {
+                font-size: 20px;
+            }
+
+            .tariff-price {
+                font-size: 26px;
+            }
+
+            .tariff-stats {
+                font-size: 12px;
+                gap: 8px;
+            }
+
+            .bonus {
+                font-size: 11px;
+                padding: 2px 10px;
+            }
+
+            .btn-primary {
+                padding: 10px 20px;
+                font-size: 13px;
+            }
+
+            .btn-order {
+                padding: 8px 18px;
+                font-size: 13px;
+            }
+        }
+
+        /* Супер-маленькие (до 360px) */
+        @media (max-width: 360px) {
+            .hero h1 {
+                font-size: 28px;
+            }
+
+            .hero .subtitle {
+                font-size: 14px;
+            }
+
+            .tariff-card {
+                padding: 14px;
+            }
+
+            .constructor-section {
+                padding: 12px;
+            }
+
+            .bonus-btn {
+                font-size: 10px;
+                padding: 3px 10px;
             }
         }
     </style>
@@ -1033,7 +1284,7 @@
         <h2>Преимущества</h2>
         <div class="feature-grid">
 
-            <!-- 1 -->
+            <!-- 1. Работаем на сетях -->
             <div class="feature-card">
                 <span class="icon icon-lg">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
@@ -1048,7 +1299,7 @@
                 </div>
             </div>
 
-            <!-- 2 -->
+            <!-- 2. Второй номер -->
             <div class="feature-card">
                 <span class="icon icon-lg">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
@@ -1059,7 +1310,7 @@
                 <p>Бесплатный номер для регистраций и объявлений. Автопереадресация на личный.</p>
             </div>
 
-            <!-- 3 -->
+            <!-- 3. Запись разговоров -->
             <div class="feature-card">
                 <span class="icon icon-lg">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
@@ -1070,7 +1321,7 @@
                 <p>Запись доступна в приложении. Ничего не потеряется.</p>
             </div>
 
-            <!-- 4 -->
+            <!-- 4. Голосовой ассистент -->
             <div class="feature-card">
                 <span class="icon icon-lg">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
@@ -1081,7 +1332,7 @@
                 <p>Дерзкий, но сдержанный. Поможет и поржёт над мошенниками.</p>
             </div>
 
-            <!-- 5 -->
+            <!-- 5. Гудок и Гудок у себя -->
             <div class="feature-card">
                 <span class="icon icon-lg">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
@@ -1092,7 +1343,7 @@
                 <p>Ставь любые мелодии вместо гудков. Настрой через приложение.</p>
             </div>
 
-            <!-- 6 -->
+            <!-- 6. Смена названия оператора -->
             <div class="feature-card">
                 <span class="icon icon-lg">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
@@ -1103,7 +1354,7 @@
                 <p>До 16 символов, смайлы и символы. PLTRS → что хочешь.</p>
             </div>
 
-            <!-- 7 -->
+            <!-- 7. Бесплатный VPN -->
             <div class="feature-card">
                 <span class="icon icon-lg">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
@@ -1114,7 +1365,7 @@
                 <p>Автоподбор локации. Всё летает. Для всех абонентов.</p>
             </div>
 
-            <!-- 8 -->
+            <!-- 8. Подходит для всех -->
             <div class="feature-card">
                 <span class="icon icon-lg">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
@@ -1195,6 +1446,8 @@
                     <span class="bonus bonus-viber">Viber</span>
                 </div>
                 <div class="tariff-price">199 ₽<span>/мес</span></div>
+                <button class="plus-btn" onclick="toggleTariff(this)">➕</button>
+                <div class="tariff-detail">Безлимитные звонки на номера PLTRS, безлимитный интернет в Telegram, WhatsApp, VK, Viber. Идеальный для повседневного использования.</div>
                 <a href="#" class="btn-order" onclick="alert('Скоро здесь будет оформление!')">Оформить</a>
             </div>
 
@@ -1213,6 +1466,8 @@
                     <span class="bonus bonus-viber">Viber</span>
                 </div>
                 <div class="tariff-price">299 ₽<span>/мес</span></div>
+                <button class="plus-btn" onclick="toggleTariff(this)">➕</button>
+                <div class="tariff-detail">Всё как в Лайт, плюс больше трафика и минут. Для активных пользователей.</div>
                 <a href="#" class="btn-order" onclick="alert('Скоро здесь будет оформление!')">Оформить</a>
             </div>
 
@@ -1231,6 +1486,8 @@
                     <span class="bonus bonus-viber">Viber</span>
                 </div>
                 <div class="tariff-price">450 ₽<span>/мес</span></div>
+                <button class="plus-btn" onclick="toggleTariff(this)">➕</button>
+                <div class="tariff-detail">Максимум возможностей. Для тех, кто живёт в интернете.</div>
                 <a href="#" class="btn-order" onclick="alert('Скоро здесь будет оформление!')">Оформить</a>
             </div>
 
@@ -1261,7 +1518,7 @@
     ============================================================ -->
     <footer>
         <div class="logo">PLTRS <span>by plykk</span></div>
-        <p>© 2026 · Теперь точно можно пойти спать</p>
+        <p>© 2026 · Проект молодого создателя</p>
     </footer>
 
     <!-- ============================================================
@@ -1270,7 +1527,8 @@
     <script>
         // ===== БУРГЕР =====
         function toggleMenu() {
-            document.querySelector('header nav').classList.toggle('open');
+            const nav = document.querySelector('header nav');
+            if (nav) nav.classList.toggle('open');
         }
 
         // ===== ТЁМНАЯ ТЕМА =====
@@ -1283,7 +1541,7 @@
         }
 
         // Загрузка темы
-        (function() {
+        (function loadTheme() {
             const isDark = localStorage.getItem('pltrs_theme') === 'true';
             if (isDark) {
                 document.body.classList.add('dark-theme');
@@ -1330,6 +1588,16 @@
         function toggleBonus(btn) {
             btn.classList.toggle('active');
             updateConstructor();
+        }
+
+        // ===== ПЛЮСИКИ В ТАРИФАХ =====
+        function toggleTariff(btn) {
+            const card = btn.parentElement;
+            const detail = card.querySelector('.tariff-detail');
+            if (detail) {
+                detail.classList.toggle('open');
+                btn.classList.toggle('active');
+            }
         }
 
         // ===== ЗАПУСК ПРИ ЗАГРУЗКЕ =====
