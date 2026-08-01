@@ -1573,7 +1573,7 @@
             document.getElementById('minVal').textContent = min;
             document.getElementById('smsVal').textContent = sms;
 
-            let price = 50 + gb * 5 + min * 0.3 + sms * 0.5;
+            let price = gb * 5 + min * 0.3 + sms * 0.5;
 
             document.querySelectorAll('.bonus-btn.active').forEach(btn => {
                 price += parseInt(btn.dataset.price) || 20;
