@@ -5,9 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>pltrs.mob — Тарифы</title>
 
+    <!-- ===== ШРИФТЫ ===== -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;800&family=DM+Sans:opsz,wght@9..40,500;9..40,700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Unbounded:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 
     <style>
@@ -19,7 +20,7 @@
         }
 
         body {
-            font-family: 'DM Sans', sans-serif;
+            font-family: 'Unbounded', sans-serif;
             font-weight: 500;
             font-size: 18px;
             line-height: 1.5;
@@ -35,6 +36,15 @@
             color: #000000;
         }
 
+        /* ===== ПРАВИЛО ШРИФТОВ ===== */
+        .lang-ru {
+            font-family: 'Unbounded', sans-serif;
+        }
+
+        .lang-en {
+            font-family: 'Syne', sans-serif;
+        }
+
         .title-main {
             font-family: 'Syne', sans-serif;
             font-weight: 800;
@@ -46,13 +56,13 @@
 
         .title-card {
             font-family: 'Syne', sans-serif;
-            font-weight: 600;
-            font-size: 28px;
+            font-weight: 700;
+            font-size: 32px;
             letter-spacing: -0.02em;
         }
 
         .text-body {
-            font-family: 'DM Sans', sans-serif;
+            font-family: 'Unbounded', sans-serif;
             font-weight: 500;
             font-size: 18px;
         }
@@ -95,11 +105,7 @@
             font-feature-settings: 'liga';
         }
 
-        .icon-lg {
-            font-size: 40px;
-        }
-
-        /* ===== ХЕДЕР С БУРГЕРОМ ===== */
+        /* ===== ХЕДЕР ===== */
         header {
             position: fixed;
             top: 0;
@@ -192,7 +198,7 @@
             transform: rotate(180deg);
         }
 
-        /* ===== МЕНЮ (ОВЕРЛЕЙ) ===== */
+        /* ===== МЕНЮ ===== */
         .menu-overlay {
             position: fixed;
             top: 0;
@@ -242,10 +248,11 @@
             padding: 14px 18px;
             border-radius: 16px;
             font-size: 18px;
-            font-weight: 500;
+            font-weight: 600;
             color: #f0f0f0;
             text-decoration: none;
             transition: all 0.2s;
+            font-family: 'Unbounded', sans-serif;
         }
         body.light-theme .menu-panel nav a {
             color: #000000;
@@ -266,7 +273,7 @@
             margin: 0 auto;
         }
 
-        /* ===== КОНСТРУКТОР (СВЕРХУ) ===== */
+        /* ===== КОНСТРУКТОР ===== */
         .constructor-section {
             background: rgba(255, 255, 255, 0.04);
             border-radius: 24px;
@@ -279,6 +286,7 @@
             border-color: rgba(0, 0, 0, 0.06);
         }
         .constructor-section .title-card {
+            font-family: 'Syne', sans-serif;
             font-size: 32px;
             margin-bottom: 16px;
         }
@@ -288,11 +296,13 @@
         }
         .constructor-row label {
             display: block;
-            font-family: 'DM Sans', sans-serif;
-            font-weight: 500;
+            font-family: 'Unbounded', sans-serif;
+            font-weight: 600;
             font-size: 18px;
             margin-bottom: 6px;
         }
+
+        /* ===== СЛАЙДЕР ===== */
         .constructor-row input[type="range"] {
             width: 100%;
             height: 4px;
@@ -302,23 +312,44 @@
             border-radius: 2px;
             outline: none;
             margin: 8px 0;
+            transition: background 0.3s ease;
+        }
+        body.light-theme .constructor-row input[type="range"] {
+            background: #ddd;
         }
         .constructor-row input[type="range"]::-webkit-slider-thumb {
             -webkit-appearance: none;
             appearance: none;
-            width: 18px;
-            height: 18px;
+            width: 20px;
+            height: 20px;
             border-radius: 50%;
             background: #ffffff;
             cursor: pointer;
             border: 2px solid #ffffff;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            transition: all 0.2s ease;
         }
         body.light-theme .constructor-row input[type="range"]::-webkit-slider-thumb {
             background: #000000;
             border-color: #000000;
         }
+        .constructor-row input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.1);
+        }
+        .constructor-row input[type="range"]::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #ffffff;
+            cursor: pointer;
+            border: 2px solid #ffffff;
+        }
+        body.light-theme .constructor-row input[type="range"]::-moz-range-thumb {
+            background: #000000;
+            border-color: #000000;
+        }
 
-        /* ===== КАСТОМНЫЕ ЧЕКБОКСЫ ===== */
+        /* ===== КАСТОМНЫЕ ЧЕКБОКСЫ (ТЕКСТ-КНОПКИ) ===== */
         .constructor-bonuses {
             display: flex;
             flex-wrap: wrap;
@@ -326,18 +357,17 @@
             margin: 16px 0;
         }
         .constructor-bonuses label {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-family: 'DM Sans', sans-serif;
-            font-weight: 500;
+            display: inline-block;
+            font-family: 'Unbounded', sans-serif;
+            font-weight: 600;
             font-size: 16px;
-            background: rgba(255, 255, 255, 0.04);
-            padding: 6px 14px 6px 10px;
+            padding: 6px 16px;
             border-radius: 20px;
             cursor: pointer;
             transition: all 0.3s ease;
             user-select: none;
+            background: rgba(255, 255, 255, 0.04);
+            color: #888;
             border: 1px solid transparent;
         }
         body.light-theme .constructor-bonuses label {
@@ -352,37 +382,12 @@
         .constructor-bonuses input[type="checkbox"] {
             display: none;
         }
-        .constructor-bonuses input[type="checkbox"]+span {
-            display: inline-block;
-            width: 18px;
-            height: 18px;
-            border: 2px solid #888;
-            border-radius: 4px;
-            background: transparent;
-            transition: all 0.3s ease;
-            position: relative;
-            flex-shrink: 0;
-        }
-        .constructor-bonuses input[type="checkbox"]:checked+span {
+        .constructor-bonuses input[type="checkbox"]:checked+label {
             background: #ffffff;
-            border-color: #ffffff;
-        }
-        body.light-theme .constructor-bonuses input[type="checkbox"]:checked+span {
-            background: #000000;
-            border-color: #000000;
-        }
-        .constructor-bonuses input[type="checkbox"]:checked+span::after {
-            content: '✓';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
             color: #000000;
-            font-size: 14px;
-            font-weight: 700;
-            line-height: 1;
         }
-        body.light-theme .constructor-bonuses input[type="checkbox"]:checked+span::after {
+        body.light-theme .constructor-bonuses input[type="checkbox"]:checked+label {
+            background: #000000;
             color: #ffffff;
         }
 
@@ -393,6 +398,13 @@
             margin: 16px 0;
         }
 
+        .constructor-price span {
+            font-family: 'Unbounded', sans-serif;
+            font-weight: 500;
+            font-size: 18px;
+            opacity: 0.6;
+        }
+
         .btn-primary {
             display: inline-block;
             padding: 14px 32px;
@@ -400,7 +412,7 @@
             color: #000000;
             border: 2px solid #ffffff;
             border-radius: 60px;
-            font-family: 'DM Sans', sans-serif;
+            font-family: 'Syne', sans-serif;
             font-weight: 700;
             font-size: 18px;
             text-decoration: none;
@@ -432,7 +444,6 @@
             gap: 24px;
             margin: 32px 0;
         }
-
         .tariff-card {
             background: rgba(255, 255, 255, 0.04);
             border-radius: 24px;
@@ -452,8 +463,8 @@
         body.light-theme .tariff-card:hover {
             background: rgba(0, 0, 0, 0.04);
         }
-
         .tariff-card .title-card {
+            font-family: 'Syne', sans-serif;
             font-size: 28px;
             margin-bottom: 8px;
         }
@@ -469,10 +480,12 @@
             opacity: 0.5;
         }
         .tariff-card .text-body {
+            font-family: 'Unbounded', sans-serif;
             opacity: 0.7;
             font-size: 16px;
         }
         .tariff-card .family-price {
+            font-family: 'Unbounded', sans-serif;
             font-size: 16px;
             opacity: 0.5;
             margin: 4px 0 12px;
@@ -484,10 +497,10 @@
             padding: 4px 12px;
             border-radius: 20px;
             font-size: 13px;
-            font-weight: 500;
+            font-weight: 600;
             margin: 3px;
+            font-family: 'Unbounded', sans-serif;
         }
-
         .bonus-telegram {
             background: #0088cc;
             color: #fff;
@@ -640,9 +653,9 @@
     <!-- ===== КОНТЕНТ ===== -->
     <div class="container">
 
-        <h1 class="title-main">Тарифы pltrs.mob</h1>
+        <h1 class="title-main">Тарифы <span class="lang-en">pltrs.mob</span></h1>
 
-        <!-- ===== КОНСТРУКТОР (СВЕРХУ) ===== -->
+        <!-- ===== КОНСТРУКТОР ===== -->
         <div class="constructor-section">
             <h3 class="title-card">Конструктор</h3>
             <p class="text-body" style="opacity:0.6; margin-bottom:16px;">Собери свой тариф</p>
@@ -662,18 +675,32 @@
                 <input type="range" id="smsSlider" min="0" max="100" value="20" step="10" />
             </div>
 
+            <!-- КАСТОМНЫЕ ЧЕКБОКСЫ (ТЕКСТ-КНОПКИ) -->
             <div class="constructor-bonuses">
-                <label><input type="checkbox" checked><span></span> Telegram</label>
-                <label><input type="checkbox" checked><span></span> WhatsApp</label>
-                <label><input type="checkbox" checked><span></span> VK</label>
-                <label><input type="checkbox" checked><span></span> Viber</label>
-                <label><input type="checkbox"><span></span> YouTube</label>
-                <label><input type="checkbox"><span></span> Spotify</label>
-                <label><input type="checkbox"><span></span> VPN</label>
+                <input type="checkbox" id="chkTelegram" checked />
+                <label for="chkTelegram">Telegram</label>
+
+                <input type="checkbox" id="chkWhatsApp" checked />
+                <label for="chkWhatsApp">WhatsApp</label>
+
+                <input type="checkbox" id="chkVK" checked />
+                <label for="chkVK">VK</label>
+
+                <input type="checkbox" id="chkViber" checked />
+                <label for="chkViber">Viber</label>
+
+                <input type="checkbox" id="chkYouTube" />
+                <label for="chkYouTube">YouTube</label>
+
+                <input type="checkbox" id="chkSpotify" />
+                <label for="chkSpotify">Spotify</label>
+
+                <input type="checkbox" id="chkVPN" />
+                <label for="chkVPN">VPN</label>
             </div>
 
             <div class="constructor-price">
-                Цена: <span id="constructorPrice">199</span> ₽/мес
+                <span>Цена:</span> <span id="constructorPrice">199</span> ₽/мес
             </div>
 
             <a href="payment.html?tariff=custom" class="btn-primary btn-sm">Оформить</a>
@@ -724,7 +751,7 @@
                 <a href="payment.html?tariff=max" class="btn-primary btn-sm">Оформить</a>
             </div>
 
-            <!-- Музыка -->
+            <!-- Музыка ван лав -->
             <div class="tariff-card">
                 <h3 class="title-card">Музыка ван лав</h3>
                 <p class="text-body">20 ГБ · 200 мин</p>
@@ -740,7 +767,7 @@
                 <a href="payment.html?tariff=music" class="btn-primary btn-sm">Оформить</a>
             </div>
 
-            <!-- Кино -->
+            <!-- Сериалы и кино -->
             <div class="tariff-card">
                 <h3 class="title-card">Сериалы и кино</h3>
                 <p class="text-body">25 ГБ · 250 мин</p>
@@ -772,7 +799,7 @@
                 <a href="payment.html?tariff=gaming" class="btn-primary btn-sm">Оформить</a>
             </div>
 
-            <!-- Бабушки -->
+            <!-- Бабушки и дедушки -->
             <div class="tariff-card">
                 <h3 class="title-card">Бабушки и дедушки</h3>
                 <p class="text-body">20 ГБ · 500 мин · 50 СМС</p>
@@ -784,7 +811,7 @@
                     <span class="bonus bonus-protection">Защита</span>
                 </div>
                 <div class="price">450 ₽<span>/мес</span></div>
-                <div class="family-price">👨‍👩‍👧‍👦 В семье: 350 ₽</div>
+                <div class="family-price">В семье: 350 ₽</div>
                 <a href="payment.html?tariff=grandparents" class="btn-primary btn-sm">Оформить</a>
             </div>
 
@@ -800,7 +827,7 @@
                     <span class="bonus bonus-protection">Защита</span>
                 </div>
                 <div class="price">450 ₽<span>/мес</span></div>
-                <div class="family-price">👨‍👩‍👧‍👦 В семье: 390 ₽</div>
+                <div class="family-price">В семье: 390 ₽</div>
                 <a href="payment.html?tariff=parents" class="btn-primary btn-sm">Оформить</a>
             </div>
 
@@ -817,13 +844,13 @@
                     <span class="bonus bonus-control">Контроль</span>
                 </div>
                 <div class="price">470 ₽<span>/мес</span></div>
-                <div class="family-price">👨‍👩‍👧‍👦 В семье: 350 ₽</div>
+                <div class="family-price">В семье: 350 ₽</div>
                 <a href="payment.html?tariff=kids" class="btn-primary btn-sm">Оформить</a>
             </div>
 
-            <!-- Хеллоу -->
+            <!-- Хеллоу фром Раша -->
             <div class="tariff-card">
-                <h3 class="title-card">Хеллоу фром Раша!</h3>
+                <h3 class="title-card">Хеллоу фром Раша</h3>
                 <p class="text-body">15 ГБ · 200 мин · 20 СМС</p>
                 <div>
                     <span class="bonus bonus-telegram">Telegram</span>
