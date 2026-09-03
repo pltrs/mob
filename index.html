@@ -5,13 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>pltrs.mob</title>
 
+    <!-- ===== ШРИФТЫ ===== -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;800&family=DM+Sans:opsz,wght@9..40,500;9..40,700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;600;700;800&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 
     <style>
-        /* ===== БАЗА ===== */
+        /* ============================================================
+           БАЗА
+           ============================================================ */
         * {
             margin: 0;
             padding: 0;
@@ -19,15 +22,15 @@
         }
 
         body {
-            font-family: 'DM Sans', sans-serif;
-            font-weight: 500;
-            font-size: 18px;
-            line-height: 1.5;
+            font-family: 'Unbounded', sans-serif;
             background: #0a0a0a;
             color: #f0f0f0;
             transition: background 0.6s ease, color 0.6s ease;
             min-height: 100vh;
             padding: 80px 24px 40px;
+            font-weight: 500;
+            font-size: 18px;
+            line-height: 1.5;
         }
 
         body.light-theme {
@@ -35,28 +38,17 @@
             color: #000000;
         }
 
-        .title-main {
+        .eng {
             font-family: 'Syne', sans-serif;
-            font-weight: 800;
-            font-size: 60px;
-            letter-spacing: -0.02em;
-            line-height: 1.1;
         }
 
-        .title-card {
-            font-family: 'Syne', sans-serif;
-            font-weight: 600;
-            font-size: 32px;
-            letter-spacing: -0.02em;
+        .rus {
+            font-family: 'Unbounded', sans-serif;
         }
 
-        .text-body {
-            font-family: 'DM Sans', sans-serif;
-            font-weight: 500;
-            font-size: 18px;
-        }
-
-        /* ===== АНИМАЦИЯ ЗАЛИВКИ ===== */
+        /* ============================================================
+           АНИМАЦИЯ ЗАЛИВКИ
+           ============================================================ */
         .theme-transition-overlay {
             position: fixed;
             top: 0;
@@ -76,6 +68,9 @@
             background: #ffffff;
         }
 
+        /* ============================================================
+           ИКОНКИ
+           ============================================================ */
         .material-symbols-outlined {
             font-family: 'Material Symbols Outlined' !important;
             font-weight: normal;
@@ -98,7 +93,9 @@
             font-size: 40px;
         }
 
-        /* ===== ХЕДЕР С БУРГЕРОМ ===== */
+        /* ============================================================
+           ХЕДЕР
+           ============================================================ */
         header {
             position: fixed;
             top: 0;
@@ -191,7 +188,9 @@
             transform: rotate(180deg);
         }
 
-        /* ===== МЕНЮ (ОВЕРЛЕЙ) ===== */
+        /* ============================================================
+           МЕНЮ
+           ============================================================ */
         .menu-overlay {
             position: fixed;
             top: 0;
@@ -241,10 +240,11 @@
             padding: 14px 18px;
             border-radius: 16px;
             font-size: 18px;
-            font-weight: 500;
+            font-weight: 600;
             color: #f0f0f0;
             text-decoration: none;
             transition: all 0.2s;
+            font-family: 'Unbounded', sans-serif;
         }
         body.light-theme .menu-panel nav a {
             color: #000000;
@@ -259,13 +259,17 @@
             font-size: 22px;
         }
 
-        /* ===== КОНТЕЙНЕР ===== */
+        /* ============================================================
+           КОНТЕЙНЕР
+           ============================================================ */
         .container {
             max-width: 1200px;
             margin: 0 auto;
         }
 
-        /* ===== HERO ===== */
+        /* ============================================================
+           HERO
+           ============================================================ */
         .hero {
             display: flex;
             align-items: flex-start;
@@ -279,10 +283,15 @@
             min-width: 280px;
         }
         .hero-left .title-main {
+            font-family: 'Syne', sans-serif;
+            font-weight: 800;
+            font-size: 60px;
+            letter-spacing: -0.02em;
+            line-height: 1.1;
             margin-bottom: 8px;
         }
         .hero-left .subtitle {
-            font-family: 'DM Sans', sans-serif;
+            font-family: 'Unbounded', sans-serif;
             font-weight: 500;
             font-size: 24px;
             opacity: 0.6;
@@ -293,9 +302,11 @@
             text-align: right;
         }
         .hero-right .text-body {
+            font-family: 'Unbounded', sans-serif;
+            font-weight: 500;
+            font-size: 20px;
             opacity: 0.7;
             margin-bottom: 24px;
-            font-size: 20px;
         }
 
         .btn-primary {
@@ -305,7 +316,7 @@
             color: #000000;
             border: 2px solid #ffffff;
             border-radius: 60px;
-            font-family: 'DM Sans', sans-serif;
+            font-family: 'Unbounded', sans-serif;
             font-weight: 700;
             font-size: 18px;
             text-decoration: none;
@@ -326,7 +337,9 @@
             color: #000000;
         }
 
-        /* ===== ПРЕИМУЩЕСТВА ===== */
+        /* ============================================================
+           ПРЕИМУЩЕСТВА
+           ============================================================ */
         .features {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -359,18 +372,20 @@
         }
         .feature-card h3 {
             font-family: 'Syne', sans-serif;
-            font-weight: 600;
+            font-weight: 700;
             font-size: 22px;
             margin-bottom: 8px;
         }
         .feature-card p {
-            font-family: 'DM Sans', sans-serif;
+            font-family: 'Unbounded', sans-serif;
             font-weight: 500;
             font-size: 16px;
             opacity: 0.7;
         }
 
-        /* ===== О КОМПАНИИ ===== */
+        /* ============================================================
+           О КОМПАНИИ
+           ============================================================ */
         .about {
             margin: 60px 0;
             padding: 40px 0;
@@ -381,19 +396,30 @@
             border-color: rgba(0, 0, 0, 0.06);
         }
         .about .title-card {
+            font-family: 'Syne', sans-serif;
+            font-weight: 700;
+            font-size: 32px;
             margin-bottom: 16px;
         }
         .about .text-body {
+            font-family: 'Unbounded', sans-serif;
+            font-weight: 500;
+            font-size: 18px;
             opacity: 0.7;
             max-width: 700px;
             margin: 0 auto;
         }
 
-        /* ===== FAQ ===== */
+        /* ============================================================
+           FAQ
+           ============================================================ */
         .faq {
             margin: 60px 0;
         }
         .faq .title-card {
+            font-family: 'Syne', sans-serif;
+            font-weight: 700;
+            font-size: 32px;
             margin-bottom: 24px;
         }
         .faq-item {
@@ -408,7 +434,7 @@
         }
         .faq-question {
             font-family: 'Syne', sans-serif;
-            font-weight: 600;
+            font-weight: 700;
             font-size: 22px;
             cursor: pointer;
             display: flex;
@@ -417,7 +443,7 @@
             user-select: none;
         }
         .faq-answer {
-            font-family: 'DM Sans', sans-serif;
+            font-family: 'Unbounded', sans-serif;
             font-weight: 500;
             font-size: 18px;
             opacity: 0.7;
@@ -431,7 +457,9 @@
             padding: 12px 0 0 0;
         }
 
-        /* ===== АДАПТИВ ===== */
+        /* ============================================================
+           АДАПТИВ
+           ============================================================ */
         @media (max-width: 768px) {
             body {
                 padding: 80px 16px 40px;
@@ -443,7 +471,7 @@
             .hero-right {
                 text-align: left;
             }
-            .title-main {
+            .hero-left .title-main {
                 font-size: 40px;
             }
             .features {
@@ -458,7 +486,7 @@
             }
         }
         @media (max-width: 480px) {
-            .title-main {
+            .hero-left .title-main {
                 font-size: 32px;
             }
             .features {
@@ -659,7 +687,6 @@
             }
         });
 
-        // Закрываем меню при клике на ссылку
         document.querySelectorAll('.menu-panel nav a').forEach(link => {
             link.addEventListener('click', () => {
                 burgerBtn.classList.remove('active');
