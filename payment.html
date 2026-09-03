@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>pltrs.mob — Оплата</title>
+    <title>pltrs.mob — Тарифы</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 
     <style>
+        /* ===== БАЗА ===== */
         * {
             margin: 0;
             padding: 0;
@@ -22,17 +23,66 @@
             font-weight: 500;
             font-size: 18px;
             line-height: 1.5;
-            background: rgba(0, 0, 0, 0.6);
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            background: #0a0a0a;
+            color: #f0f0f0;
+            transition: background 0.6s ease, color 0.6s ease;
             min-height: 100vh;
-            padding: 20px;
-            transition: background 0.3s ease;
+            padding: 80px 24px 40px;
         }
 
         body.light-theme {
-            background: rgba(10, 10, 10, 0.9);
+            background: #ffffff;
+            color: #000000;
+        }
+
+        .lang-ru {
+            font-family: 'Unbounded', sans-serif;
+        }
+
+        .lang-en {
+            font-family: 'Syne', sans-serif;
+        }
+
+        .title-main {
+            font-family: 'Syne', sans-serif;
+            font-weight: 800;
+            font-size: 48px;
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+            margin-bottom: 32px;
+        }
+
+        .title-card {
+            font-family: 'Syne', sans-serif;
+            font-weight: 700;
+            font-size: 32px;
+            letter-spacing: -0.02em;
+        }
+
+        .text-body {
+            font-family: 'Unbounded', sans-serif;
+            font-weight: 500;
+            font-size: 18px;
+        }
+
+        /* ===== АНИМАЦИЯ ЗАЛИВКИ ===== */
+        .theme-transition-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translateY(-100%);
+            transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            background: #0a0a0a;
+        }
+        .theme-transition-overlay.active {
+            transform: translateY(0);
+        }
+        .theme-transition-overlay.light {
+            background: #ffffff;
         }
 
         .material-symbols-outlined {
@@ -53,471 +103,894 @@
             font-feature-settings: 'liga';
         }
 
-        .icon-sm {
-            font-size: 18px;
+        .icon-lg {
+            font-size: 40px;
         }
 
-        .lang-ru {
-            font-family: 'Unbounded', sans-serif;
-        }
-
-        .lang-en {
-            font-family: 'Syne', sans-serif;
-        }
-
-        .btn-primary {
-            display: inline-block;
-            padding: 12px 28px;
-            background: #000000;
-            color: #ffffff;
-            border: 2px solid #000000;
-            border-radius: 30px;
-            font-family: 'Syne', sans-serif;
-            font-weight: 700;
-            font-size: 15px;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-
-        .btn-primary:hover {
-            background: #ffffff;
-            color: #000000;
-        }
-
-        body.light-theme .btn-primary {
-            background: #ffffff;
-            color: #000000;
-            border-color: #ffffff;
-        }
-
-        body.light-theme .btn-primary:hover {
-            background: transparent;
-            color: #ffffff;
-        }
-
-        .btn-secondary {
-            display: inline-block;
-            padding: 10px 24px;
-            background: transparent;
-            color: #000000;
-            border: 2px solid #000000;
-            border-radius: 30px;
-            font-family: 'Syne', sans-serif;
-            font-weight: 500;
-            font-size: 14px;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-
-        .btn-secondary:hover {
-            background: #000000;
-            color: #ffffff;
-        }
-
-        body.light-theme .btn-secondary {
-            color: #ffffff;
-            border-color: #ffffff;
-        }
-
-        body.light-theme .btn-secondary:hover {
-            background: #ffffff;
-            color: #000000;
-        }
-
-        .payment-overlay {
-            width: 100%;
-            max-width: 700px;
-        }
-
-        .payment-panel {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            background: #ffffff;
-            border-radius: 24px;
-            overflow: hidden;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            animation: slideUp 0.4s ease;
-        }
-
-        body.light-theme .payment-panel {
-            background: #1a1a1a;
-        }
-
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .payment-left {
-            padding: 30px;
-            background: #ffffff;
-        }
-
-        body.light-theme .payment-left {
-            background: #1a1a1a;
-            color: #eeeeee;
-        }
-
-        .payment-left .payment-item {
-            font-size: 16px;
-            padding: 8px 0;
-            border-bottom: 1px solid #eee;
-            font-family: 'Unbounded', sans-serif;
-        }
-
-        body.light-theme .payment-left .payment-item {
-            border-bottom-color: #333333;
-        }
-
-        .payment-left .payment-item span {
-            float: right;
-            font-weight: 600;
-            font-family: 'Syne', sans-serif;
-        }
-
-        .payment-total {
-            font-size: 22px;
-            font-weight: 900;
-            padding-top: 16px;
-            margin-top: 8px;
-            border-top: 2px solid #000000;
-            font-family: 'Syne', sans-serif;
-        }
-
-        body.light-theme .payment-total {
-            border-top-color: #ffffff;
-            color: #ffffff;
-        }
-
-        .payment-total span {
-            float: right;
-        }
-
-        .payment-right {
-            padding: 30px;
-            background: #000000;
-            color: #ffffff;
-        }
-
-        body.light-theme .payment-right {
-            background: #0a0a0a;
-        }
-
-        .payment-methods {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 16px;
-            flex-wrap: wrap;
-        }
-
-        .payment-methods span {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 13px;
-            cursor: pointer;
-            transition: background 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            font-family: 'Unbounded', sans-serif;
-        }
-
-        .payment-methods span:hover {
-            background: rgba(255, 255, 255, 0.2);
-        }
-
-        .payment-email {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(255, 255, 255, 0.05);
-            padding: 10px 14px;
-            border-radius: 12px;
-            margin-bottom: 12px;
-            font-size: 14px;
-            font-family: 'Unbounded', sans-serif;
-        }
-
-        .edit-icon {
-            margin-left: auto;
-            opacity: 0.5;
-            cursor: pointer;
-        }
-
-        .payment-blank {
-            background: #ffffff;
-            border-radius: 12px;
-            padding: 0 14px;
-            margin-bottom: 12px;
-            transition: background 0.3s;
-        }
-
-        body.light-theme .payment-blank {
-            background: #333333;
-        }
-
-        .payment-blank input {
-            width: 100%;
-            padding: 12px 0;
-            border: none;
-            outline: none;
-            font-size: 14px;
-            background: transparent;
-            font-family: 'Unbounded', sans-serif;
-        }
-
-        body.light-theme .payment-blank input {
-            color: #ffffff;
-        }
-
-        body.light-theme .payment-blank input::placeholder {
-            color: #888888;
-        }
-
-        .payment-agree {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 13px;
-            opacity: 0.7;
-            margin: 12px 0;
-            font-family: 'Unbounded', sans-serif;
-        }
-
-        .btn-pay {
-            width: 100%;
-            padding: 14px;
-            background: #ffffff;
-            color: #000000;
-            border: none;
-            border-radius: 30px;
-            font-family: 'Syne', sans-serif;
-            font-weight: 700;
-            font-size: 16px;
-            cursor: pointer;
-            transition: all 0.3s;
+        /* ===== ХЕДЕР ===== */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            padding: 16px 24px;
+            background: transparent;
+            pointer-events: none;
+        }
+        header * {
+            pointer-events: auto;
         }
 
-        .btn-pay:disabled {
-            opacity: 0.3;
-            cursor: not-allowed;
+        .burger-btn {
+            background: none;
+            border: 2px solid rgba(255, 255, 255, 0.15);
+            border-radius: 50%;
+            width: 48px;
+            height: 48px;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            transition: all 0.3s;
+            position: relative;
+            z-index: 1001;
+        }
+        body.light-theme .burger-btn {
+            border-color: rgba(0, 0, 0, 0.15);
+        }
+        .burger-btn .bar {
+            display: block;
+            width: 22px;
+            height: 2.5px;
+            background: #f0f0f0;
+            border-radius: 4px;
+            transition: all 0.35s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+        }
+        body.light-theme .burger-btn .bar {
+            background: #000000;
+        }
+        .burger-btn.active .bar:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+            width: 26px;
+        }
+        .burger-btn.active .bar:nth-child(2) {
+            opacity: 0;
+            transform: scaleX(0);
+        }
+        .burger-btn.active .bar:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+            width: 26px;
         }
 
-        .btn-pay:hover:not(:disabled) {
-            transform: scale(1.02);
+        .theme-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.15);
+            border-radius: 50%;
+            width: 48px;
+            height: 48px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            backdrop-filter: blur(8px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            position: relative;
+            z-index: 1001;
         }
-
-        body.light-theme .btn-pay {
-            background: #ffffff;
+        body.light-theme .theme-btn {
+            background: rgba(0, 0, 0, 0.85);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+        .theme-btn .material-symbols-outlined {
+            font-size: 28px;
+            transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), color 0.4s ease;
+            color: #ffffff;
+        }
+        body.light-theme .theme-btn .material-symbols-outlined {
             color: #000000;
         }
+        .theme-btn .material-symbols-outlined.rotated {
+            transform: rotate(180deg);
+        }
 
-        .success-overlay {
+        /* ===== МЕНЮ ===== */
+        .menu-overlay {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
             background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(12px);
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
             display: flex;
-            justify-content: center;
             align-items: center;
-            z-index: 1000;
+            justify-content: center;
         }
-
-        .success-panel {
-            background: #ffffff;
-            border-radius: 24px;
-            padding: 40px 30px;
-            text-align: center;
-            max-width: 400px;
-            animation: slideUp 0.5s ease;
+        .menu-overlay.open {
+            opacity: 1;
+            visibility: visible;
         }
-
-        body.light-theme .success-panel {
+        .menu-panel {
             background: #1a1a1a;
-            color: #eeeeee;
+            border-radius: 32px;
+            padding: 40px 32px;
+            max-width: 420px;
+            width: 90%;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+            transform: scale(0.95) translateY(20px);
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        body.light-theme .menu-panel {
+            background: #ffffff;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.1);
+        }
+        .menu-overlay.open .menu-panel {
+            transform: scale(1) translateY(0);
+        }
+        .menu-panel nav {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .menu-panel nav a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 18px;
+            border-radius: 16px;
+            font-size: 18px;
+            font-weight: 600;
+            color: #f0f0f0;
+            text-decoration: none;
+            transition: all 0.2s;
+            font-family: 'Unbounded', sans-serif;
+        }
+        body.light-theme .menu-panel nav a {
+            color: #000000;
+        }
+        .menu-panel nav a:hover {
+            background: rgba(255, 255, 255, 0.06);
+        }
+        body.light-theme .menu-panel nav a:hover {
+            background: rgba(0, 0, 0, 0.05);
+        }
+        .menu-panel nav a .material-symbols-outlined {
+            font-size: 22px;
         }
 
-        .success-icon {
-            display: inline-flex;
-            justify-content: center;
-            align-items: center;
-            width: 80px;
-            height: 80px;
-            background: rgba(0, 200, 100, 0.15);
-            border-radius: 50%;
+        /* ===== КОНТЕЙНЕР ===== */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* ===== КОНСТРУКТОР ===== */
+        .constructor-section {
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 24px;
+            padding: 32px;
+            margin-bottom: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+        body.light-theme .constructor-section {
+            background: rgba(0, 0, 0, 0.02);
+            border-color: rgba(0, 0, 0, 0.06);
+        }
+        .constructor-section .title-card {
+            font-family: 'Syne', sans-serif;
+            font-size: 32px;
             margin-bottom: 16px;
         }
 
-        .success-icon .material-symbols-outlined {
-            font-size: 48px;
-            color: #22c55e;
+        .constructor-row {
+            margin-bottom: 20px;
         }
-
-        .success-panel h2 {
-            font-size: 28px;
-            margin-bottom: 8px;
-            font-family: 'Syne', sans-serif;
-        }
-
-        .success-panel p {
-            font-size: 16px;
-            opacity: 0.6;
-            margin-bottom: 24px;
+        .constructor-row label {
+            display: block;
             font-family: 'Unbounded', sans-serif;
-        }
-
-        .success-footer {
-            display: inline-block;
-            background: #000000;
-            color: #ffffff;
-            padding: 12px 40px;
-            border-radius: 30px;
-            font-family: 'Syne', sans-serif;
-            font-weight: 700;
+            font-weight: 600;
             font-size: 18px;
-            border: none;
+            margin-bottom: 6px;
+        }
+
+        /* ===== СЛАЙДЕР ===== */
+        .constructor-row input[type="range"] {
+            width: 100%;
+            height: 4px;
+            -webkit-appearance: none;
+            appearance: none;
+            background: #333;
+            border-radius: 2px;
+            outline: none;
+            margin: 8px 0;
+            transition: background 0.3s ease;
+        }
+        body.light-theme .constructor-row input[type="range"] {
+            background: #ddd;
+        }
+        .constructor-row input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #ffffff;
             cursor: pointer;
-            transition: all 0.3s;
+            border: 2px solid #ffffff;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            transition: all 0.2s ease;
+        }
+        body.light-theme .constructor-row input[type="range"]::-webkit-slider-thumb {
+            background: #000000;
+            border-color: #000000;
+        }
+        .constructor-row input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.1);
+        }
+        .constructor-row input[type="range"]::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #ffffff;
+            cursor: pointer;
+            border: 2px solid #ffffff;
+        }
+        body.light-theme .constructor-row input[type="range"]::-moz-range-thumb {
+            background: #000000;
+            border-color: #000000;
         }
 
-        .success-footer:hover {
-            transform: scale(1.05);
+        /* ===== КАСТОМНЫЕ ЧЕКБОКСЫ (ТЕКСТ-КНОПКИ) ===== */
+        .constructor-bonuses {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 16px 0;
         }
-
-        body.light-theme .success-footer {
+        .constructor-bonuses label {
+            display: inline-block;
+            font-family: 'Unbounded', sans-serif;
+            font-weight: 600;
+            font-size: 16px;
+            padding: 6px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            user-select: none;
+            background: rgba(255, 255, 255, 0.04);
+            color: #888;
+            border: 1px solid transparent;
+        }
+        body.light-theme .constructor-bonuses label {
+            background: rgba(0, 0, 0, 0.04);
+        }
+        .constructor-bonuses label:hover {
+            background: rgba(255, 255, 255, 0.08);
+        }
+        body.light-theme .constructor-bonuses label:hover {
+            background: rgba(0, 0, 0, 0.08);
+        }
+        .constructor-bonuses input[type="checkbox"] {
+            display: none;
+        }
+        .constructor-bonuses input[type="checkbox"]:checked+label {
             background: #ffffff;
             color: #000000;
         }
+        body.light-theme .constructor-bonuses input[type="checkbox"]:checked+label {
+            background: #000000;
+            color: #ffffff;
+        }
 
-        @media (max-width: 600px) {
-            .payment-panel {
+        .constructor-price {
+            font-family: 'Syne', sans-serif;
+            font-weight: 800;
+            font-size: 48px;
+            margin: 16px 0;
+            line-height: 1.2;
+        }
+
+        .constructor-price span {
+            font-family: 'Syne', sans-serif;
+        }
+
+        .constructor-price .currency {
+            font-size: 24px;
+            opacity: 0.7;
+        }
+
+        .constructor-price .per-month {
+            display: block;
+            font-size: 14px;
+            opacity: 0.4;
+            font-family: 'Unbounded', sans-serif;
+            font-weight: 400;
+        }
+
+        .btn-primary {
+            display: inline-block;
+            padding: 14px 32px;
+            background: #ffffff;
+            color: #000000;
+            border: 2px solid #ffffff;
+            border-radius: 60px;
+            font-family: 'Syne', sans-serif;
+            font-weight: 700;
+            font-size: 18px;
+            text-decoration: none;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            cursor: pointer;
+        }
+        body.light-theme .btn-primary {
+            background: #000000;
+            color: #ffffff;
+            border-color: #000000;
+        }
+        .btn-primary:hover {
+            background: transparent;
+            color: #ffffff;
+        }
+        body.light-theme .btn-primary:hover {
+            background: transparent;
+            color: #000000;
+        }
+        .btn-sm {
+            font-size: 16px;
+            padding: 10px 24px;
+        }
+
+        /* ===== ТАРИФЫ ===== */
+        .tariffs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin: 32px 0;
+        }
+        .tariff-card {
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 24px;
+            padding: 28px 24px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+        body.light-theme .tariff-card {
+            background: rgba(0, 0, 0, 0.02);
+            border-color: rgba(0, 0, 0, 0.06);
+        }
+        .tariff-card:hover {
+            transform: translateY(-4px);
+            background: rgba(255, 255, 255, 0.06);
+        }
+        body.light-theme .tariff-card:hover {
+            background: rgba(0, 0, 0, 0.04);
+        }
+        .tariff-card .title-card {
+            font-family: 'Unbounded', sans-serif !important;
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+        .tariff-card .price {
+            font-family: 'Syne', sans-serif;
+            font-weight: 800;
+            font-size: 36px;
+            margin: 12px 0;
+        }
+        .tariff-card .price span {
+            font-size: 18px;
+            font-weight: 400;
+            opacity: 0.5;
+        }
+        .tariff-card .text-body {
+            font-family: 'Unbounded', sans-serif;
+            opacity: 0.7;
+            font-size: 16px;
+        }
+        .tariff-card .family-price {
+            font-family: 'Unbounded', sans-serif;
+            font-size: 16px;
+            opacity: 0.5;
+            margin: 4px 0 12px;
+        }
+
+        /* ===== БОНУСЫ ===== */
+        .bonus {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            margin: 3px;
+            font-family: 'Unbounded', sans-serif;
+        }
+        .bonus-telegram {
+            background: #0088cc;
+            color: #fff;
+        }
+        .bonus-whatsapp {
+            background: #25d366;
+            color: #fff;
+        }
+        .bonus-vk {
+            background: #4a76a8;
+            color: #fff;
+        }
+        .bonus-viber {
+            background: #7360f2;
+            color: #fff;
+        }
+        .bonus-spotify {
+            background: #1DB954;
+            color: #fff;
+        }
+        .bonus-apple-music {
+            background: linear-gradient(135deg, #ff3b30, #ff6b6b);
+            color: #fff;
+        }
+        .bonus-youtube {
+            background: #ff0000;
+            color: #fff;
+        }
+        .bonus-kinopoisk {
+            background: linear-gradient(135deg, #1a1a1a, #ff6b00);
+            color: #fff;
+        }
+        .bonus-twitch {
+            background: #6441A4;
+            color: #fff;
+        }
+        .bonus-steam {
+            background: #3a5a7a;
+            color: #fff;
+        }
+        .bonus-instagram {
+            background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+            color: #fff;
+        }
+        .bonus-x {
+            background: #000000;
+            color: #fff;
+        }
+        .bonus-protection {
+            background: #ff6b6b;
+            color: #fff;
+        }
+        .bonus-control {
+            background: #4a90d9;
+            color: #fff;
+        }
+
+        /* ===== АДАПТИВ ===== */
+        @media (max-width: 768px) {
+            body {
+                padding: 80px 16px 40px;
+            }
+            .title-main {
+                font-size: 36px;
+            }
+            .tariffs-grid {
                 grid-template-columns: 1fr;
-                border-radius: 16px;
             }
-            .payment-right {
+            .constructor-section {
                 padding: 20px;
             }
-            .payment-left {
-                padding: 20px;
+            .menu-panel {
+                padding: 28px 20px;
+            }
+            .menu-panel nav a {
+                font-size: 16px;
+                padding: 12px 14px;
+            }
+            .constructor-price {
+                font-size: 36px;
+            }
+        }
+        @media (max-width: 480px) {
+            .title-main {
+                font-size: 28px;
+            }
+            .tariff-card .price {
+                font-size: 28px;
+            }
+            .burger-btn {
+                width: 40px;
+                height: 40px;
+            }
+            .burger-btn .bar {
+                width: 18px;
+                height: 2px;
+            }
+            .theme-btn {
+                width: 40px;
+                height: 40px;
+            }
+            .theme-btn .material-symbols-outlined {
+                font-size: 22px;
+            }
+            .constructor-price {
+                font-size: 28px;
+            }
+            .constructor-price .currency {
+                font-size: 18px;
             }
         }
     </style>
 </head>
 <body>
 
-    <div class="payment-overlay">
-        <div class="payment-panel">
-            <div class="payment-left">
-                <div class="payment-summary">
-                    <div class="payment-item">Сим-карта — <span>50 ₽</span></div>
-                    <div class="payment-item" id="tariffName">Тариф "Лайт" — <span>199 ₽</span></div>
-                    <div class="payment-total">Сумма <span id="totalAmount">249 ₽</span></div>
-                </div>
-            </div>
-            <div class="payment-right">
-                <div class="payment-methods">
-                    <span><span class="material-symbols-outlined icon-sm">payments</span> СБП</span>
-                    <span><span class="material-symbols-outlined icon-sm">credit_card</span> Карта</span>
-                    <span><span class="material-symbols-outlined icon-sm">more_horiz</span> Другое</span>
-                </div>
-                <div class="payment-email">
-                    <span class="material-symbols-outlined">mail</span>
-                    <span>ployyka@icloud.com</span>
-                    <span class="edit-icon"><span class="material-symbols-outlined">edit</span></span>
-                </div>
-                <div class="payment-blank">
-                    <input type="text" placeholder="Ваше сообщение (необязательно)" id="messageInput" onfocus="this.parentElement.style.background='#eee'" onblur="if(!this.value) this.parentElement.style.background='white'" />
-                </div>
-                <label class="payment-agree">
-                    <input type="checkbox" id="agreeCheck" onchange="togglePayButton()" /> Согласен с условиями
-                </label>
-                <button class="btn-pay" id="payButton" disabled onclick="processPayment()">
-                    Оплатить <span id="payAmount">249 ₽</span>
-                    <span class="material-symbols-outlined">arrow_forward</span>
-                </button>
-                <br>
-                <a href="tariffs.html" class="btn-secondary dark">← Назад</a>
-            </div>
+    <!-- ===== ОВЕРЛЕЙ ===== -->
+    <div class="theme-transition-overlay" id="themeOverlay"></div>
+
+    <!-- ===== ХЕДЕР ===== -->
+    <header>
+        <button class="burger-btn" id="burgerBtn" aria-label="Меню">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </button>
+        <button class="theme-btn" id="themeBtn" aria-label="Тема">
+            <span class="material-symbols-outlined" id="themeIcon">light_mode</span>
+        </button>
+    </header>
+
+    <!-- ===== МЕНЮ ===== -->
+    <div class="menu-overlay" id="menuOverlay">
+        <div class="menu-panel">
+            <nav>
+                <a href="index.html">
+                    <span class="material-symbols-outlined">home</span>
+                    Главная
+                </a>
+                <a href="index.html#features">
+                    <span class="material-symbols-outlined">stars</span>
+                    Преимущества
+                </a>
+                <a href="tariffs.html">
+                    <span class="material-symbols-outlined">list_alt</span>
+                    Тарифы
+                </a>
+                <a href="index.html#about">
+                    <span class="material-symbols-outlined">info</span>
+                    О компании
+                </a>
+                <a href="index.html#faq">
+                    <span class="material-symbols-outlined">help</span>
+                    FAQ
+                </a>
+            </nav>
         </div>
     </div>
 
-    <div id="successPanel" style="display:none;" class="success-overlay">
-        <div class="success-panel">
-            <div class="success-icon">
-                <span class="material-symbols-outlined">check_circle</span>
+    <!-- ===== КОНТЕНТ ===== -->
+    <div class="container">
+
+        <h1 class="title-main">Тарифы <span class="lang-en">pltrs.mob</span></h1>
+
+        <!-- ===== КОНСТРУКТОР ===== -->
+        <div class="constructor-section">
+            <h3 class="title-card">Конструктор</h3>
+            <p class="text-body" style="opacity:0.6; margin-bottom:16px;">Собери свой тариф</p>
+
+            <div class="constructor-row">
+                <label>ГБ интернета: <span id="gbVal">15</span> ГБ</label>
+                <input type="range" id="gbSlider" min="0" max="100" value="15" />
             </div>
-            <h2>Оплачено</h2>
-            <p>На вашу почту уже отправлен чек</p>
-            <button class="success-footer" onclick="goToMain()">Супер!</button>
+
+            <div class="constructor-row">
+                <label>Минуты: <span id="minVal">200</span> мин</label>
+                <input type="range" id="minSlider" min="0" max="1000" value="200" step="50" />
+            </div>
+
+            <div class="constructor-row">
+                <label>СМС: <span id="smsVal">20</span> шт</label>
+                <input type="range" id="smsSlider" min="0" max="100" value="20" step="10" />
+            </div>
+
+            <!-- КАСТОМНЫЕ ЧЕКБОКСЫ (ТЕКСТ-КНОПКИ) -->
+            <div class="constructor-bonuses">
+                <input type="checkbox" id="chkTelegram" checked />
+                <label for="chkTelegram">Telegram</label>
+
+                <input type="checkbox" id="chkWhatsApp" checked />
+                <label for="chkWhatsApp">WhatsApp</label>
+
+                <input type="checkbox" id="chkVK" checked />
+                <label for="chkVK">VK</label>
+
+                <input type="checkbox" id="chkViber" checked />
+                <label for="chkViber">Viber</label>
+
+                <input type="checkbox" id="chkYouTube" />
+                <label for="chkYouTube">YouTube</label>
+
+                <input type="checkbox" id="chkSpotify" />
+                <label for="chkSpotify">Spotify</label>
+
+                <input type="checkbox" id="chkVPN" />
+                <label for="chkVPN">VPN</label>
+            </div>
+
+            <div class="constructor-price">
+                <span id="constructorPrice">0</span>
+                <span class="currency">₽</span>
+                <span class="per-month">/мес</span>
+            </div>
+
+            <a href="payment.html?tariff=custom" class="btn-primary btn-sm">Оформить</a>
         </div>
+
+        <!-- ===== ВСЕ ТАРИФЫ ===== -->
+        <div class="tariffs-grid">
+
+            <!-- Лайт -->
+            <div class="tariff-card">
+                <h3 class="title-card">Лайт</h3>
+                <p class="text-body">15 ГБ · 200 мин · 20 СМС</p>
+                <div>
+                    <span class="bonus bonus-telegram">Telegram</span>
+                    <span class="bonus bonus-whatsapp">WhatsApp</span>
+                    <span class="bonus bonus-vk">VK</span>
+                    <span class="bonus bonus-viber">Viber</span>
+                </div>
+                <div class="price">199 ₽<span>/мес</span></div>
+                <a href="payment.html?tariff=light" class="btn-primary btn-sm">Оформить</a>
+            </div>
+
+            <!-- Оптима -->
+            <div class="tariff-card">
+                <h3 class="title-card">Оптима</h3>
+                <p class="text-body">25 ГБ · 300 мин · 50 СМС</p>
+                <div>
+                    <span class="bonus bonus-telegram">Telegram</span>
+                    <span class="bonus bonus-whatsapp">WhatsApp</span>
+                    <span class="bonus bonus-vk">VK</span>
+                    <span class="bonus bonus-viber">Viber</span>
+                </div>
+                <div class="price">299 ₽<span>/мес</span></div>
+                <a href="payment.html?tariff=optima" class="btn-primary btn-sm">Оформить</a>
+            </div>
+
+            <!-- Макс -->
+            <div class="tariff-card">
+                <h3 class="title-card">Макс</h3>
+                <p class="text-body">40 ГБ · 500 мин · 50 СМС</p>
+                <div>
+                    <span class="bonus bonus-telegram">Telegram</span>
+                    <span class="bonus bonus-whatsapp">WhatsApp</span>
+                    <span class="bonus bonus-vk">VK</span>
+                    <span class="bonus bonus-viber">Viber</span>
+                </div>
+                <div class="price">450 ₽<span>/мес</span></div>
+                <a href="payment.html?tariff=max" class="btn-primary btn-sm">Оформить</a>
+            </div>
+
+            <!-- Музыка ван лав -->
+            <div class="tariff-card">
+                <h3 class="title-card">Музыка ван лав</h3>
+                <p class="text-body">20 ГБ · 200 мин</p>
+                <div>
+                    <span class="bonus bonus-telegram">Telegram</span>
+                    <span class="bonus bonus-whatsapp">WhatsApp</span>
+                    <span class="bonus bonus-vk">VK</span>
+                    <span class="bonus bonus-viber">Viber</span>
+                    <span class="bonus bonus-spotify">Spotify</span>
+                    <span class="bonus bonus-apple-music">Apple Music</span>
+                </div>
+                <div class="price">250 ₽<span>/мес</span></div>
+                <a href="payment.html?tariff=music" class="btn-primary btn-sm">Оформить</a>
+            </div>
+
+            <!-- Сериалы и кино -->
+            <div class="tariff-card">
+                <h3 class="title-card">Сериалы и кино</h3>
+                <p class="text-body">25 ГБ · 250 мин</p>
+                <div>
+                    <span class="bonus bonus-telegram">Telegram</span>
+                    <span class="bonus bonus-whatsapp">WhatsApp</span>
+                    <span class="bonus bonus-vk">VK</span>
+                    <span class="bonus bonus-viber">Viber</span>
+                    <span class="bonus bonus-youtube">YouTube</span>
+                    <span class="bonus bonus-kinopoisk">Кинопоиск</span>
+                </div>
+                <div class="price">250 ₽<span>/мес</span></div>
+                <a href="payment.html?tariff=video" class="btn-primary btn-sm">Оформить</a>
+            </div>
+
+            <!-- Игры -->
+            <div class="tariff-card">
+                <h3 class="title-card">Игры</h3>
+                <p class="text-body">35 ГБ · 200 мин</p>
+                <div>
+                    <span class="bonus bonus-telegram">Telegram</span>
+                    <span class="bonus bonus-whatsapp">WhatsApp</span>
+                    <span class="bonus bonus-vk">VK</span>
+                    <span class="bonus bonus-viber">Viber</span>
+                    <span class="bonus bonus-twitch">Twitch</span>
+                    <span class="bonus bonus-steam">Steam</span>
+                </div>
+                <div class="price">300 ₽<span>/мес</span></div>
+                <a href="payment.html?tariff=gaming" class="btn-primary btn-sm">Оформить</a>
+            </div>
+
+            <!-- Бабушки и дедушки -->
+            <div class="tariff-card">
+                <h3 class="title-card">Бабушки и дедушки</h3>
+                <p class="text-body">20 ГБ · 500 мин · 50 СМС</p>
+                <div>
+                    <span class="bonus bonus-telegram">Telegram</span>
+                    <span class="bonus bonus-whatsapp">WhatsApp</span>
+                    <span class="bonus bonus-vk">VK</span>
+                    <span class="bonus bonus-viber">Viber</span>
+                    <span class="bonus bonus-protection">Защита</span>
+                </div>
+                <div class="price">450 ₽<span>/мес</span></div>
+                <div class="family-price">В семье: 350 ₽</div>
+                <a href="payment.html?tariff=grandparents" class="btn-primary btn-sm">Оформить</a>
+            </div>
+
+            <!-- Родители -->
+            <div class="tariff-card">
+                <h3 class="title-card">Родители</h3>
+                <p class="text-body">30 ГБ · 400 мин · 50 СМС</p>
+                <div>
+                    <span class="bonus bonus-telegram">Telegram</span>
+                    <span class="bonus bonus-whatsapp">WhatsApp</span>
+                    <span class="bonus bonus-vk">VK</span>
+                    <span class="bonus bonus-viber">Viber</span>
+                    <span class="bonus bonus-protection">Защита</span>
+                </div>
+                <div class="price">450 ₽<span>/мес</span></div>
+                <div class="family-price">В семье: 390 ₽</div>
+                <a href="payment.html?tariff=parents" class="btn-primary btn-sm">Оформить</a>
+            </div>
+
+            <!-- Дети -->
+            <div class="tariff-card">
+                <h3 class="title-card">Дети</h3>
+                <p class="text-body">35 ГБ · 200 мин · 20 СМС</p>
+                <div>
+                    <span class="bonus bonus-telegram">Telegram</span>
+                    <span class="bonus bonus-whatsapp">WhatsApp</span>
+                    <span class="bonus bonus-vk">VK</span>
+                    <span class="bonus bonus-viber">Viber</span>
+                    <span class="bonus bonus-protection">Защита</span>
+                    <span class="bonus bonus-control">Контроль</span>
+                </div>
+                <div class="price">470 ₽<span>/мес</span></div>
+                <div class="family-price">В семье: 350 ₽</div>
+                <a href="payment.html?tariff=kids" class="btn-primary btn-sm">Оформить</a>
+            </div>
+
+            <!-- Хеллоу фром Раша -->
+            <div class="tariff-card">
+                <h3 class="title-card">Хеллоу фром Раша</h3>
+                <p class="text-body">15 ГБ · 200 мин · 20 СМС</p>
+                <div>
+                    <span class="bonus bonus-telegram">Telegram</span>
+                    <span class="bonus bonus-whatsapp">WhatsApp</span>
+                    <span class="bonus bonus-vk">VK</span>
+                    <span class="bonus bonus-instagram">Instagram</span>
+                    <span class="bonus bonus-x">X</span>
+                </div>
+                <div class="price">350 ₽<span>/мес</span></div>
+                <a href="payment.html?tariff=travel" class="btn-primary btn-sm">Оформить</a>
+            </div>
+
+            <!-- По минуте -->
+            <div class="tariff-card">
+                <h3 class="title-card">По минуте</h3>
+                <p class="text-body">0 ГБ · Поминутно · 0 СМС</p>
+                <div style="font-weight: 700; font-size: 20px; margin: 8px 0;">3,5 ₽/мин</div>
+                <div class="price">0 ₽<span>/мес</span></div>
+                <a href="payment.html?tariff=perminute" class="btn-primary btn-sm">Оформить</a>
+            </div>
+
+        </div>
+
     </div>
 
     <script>
-        function goToMain() {
-            window.location.href = 'index.html';
-        }
-
-        function togglePayButton() {
-            const agree = document.getElementById('agreeCheck').checked;
-            document.getElementById('payButton').disabled = !agree;
-        }
-
-        function processPayment() {
-            document.querySelector('.payment-overlay').style.display = 'none';
-            document.getElementById('successPanel').style.display = 'flex';
-        }
+        // ===== ТЕМА =====
+        const themeBtn = document.getElementById('themeBtn');
+        const themeIcon = document.getElementById('themeIcon');
+        const overlay = document.getElementById('themeOverlay');
 
         function toggleTheme() {
-            document.body.classList.toggle('light-theme');
-            localStorage.setItem('pltrs_theme', document.body.classList.contains('light-theme'));
+            const body = document.body;
+            const isLight = body.classList.contains('light-theme');
+            overlay.style.background = isLight ? '#0a0a0a' : '#ffffff';
+            if (isLight) overlay.classList.remove('light');
+            else overlay.classList.add('light');
+            requestAnimationFrame(() => overlay.classList.add('active'));
+            setTimeout(() => {
+                body.classList.toggle('light-theme');
+                const newIsLight = body.classList.contains('light-theme');
+                themeIcon.textContent = newIsLight ? 'dark_mode' : 'light_mode';
+                themeIcon.classList.toggle('rotated');
+                localStorage.setItem('pltrs_theme', newIsLight ? 'light' : 'dark');
+            }, 400);
+            setTimeout(() => overlay.classList.remove('active'), 800);
         }
 
         function loadTheme() {
-            const isDark = localStorage.getItem('pltrs_theme') === 'true';
-            if (isDark) {
-                document.body.classList.add('light-theme');
-            }
+            const body = document.body;
+            body.classList.remove('light-theme');
+            themeIcon.textContent = 'light_mode';
+            themeIcon.classList.add('rotated');
+            overlay.classList.remove('active');
+            localStorage.setItem('pltrs_theme', 'dark');
         }
 
+        // ===== БУРГЕР =====
+        const burgerBtn = document.getElementById('burgerBtn');
+        const menuOverlay = document.getElementById('menuOverlay');
+
+        burgerBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            this.classList.toggle('active');
+            menuOverlay.classList.toggle('open');
+            document.body.style.overflow = menuOverlay.classList.contains('open') ? 'hidden' : '';
+        });
+
+        menuOverlay.addEventListener('click', function(e) {
+            if (e.target === this) {
+                burgerBtn.classList.remove('active');
+                this.classList.remove('open');
+                document.body.style.overflow = '';
+            }
+        });
+
+        document.querySelectorAll('.menu-panel nav a').forEach(link => {
+            link.addEventListener('click', () => {
+                burgerBtn.classList.remove('active');
+                menuOverlay.classList.remove('open');
+                document.body.style.overflow = '';
+            });
+        });
+
+        // ===== КОНСТРУКТОР (НОВАЯ ЛОГИКА) =====
+        function updateConstructor() {
+            const gb = parseInt(document.getElementById('gbSlider').value);
+            const min = parseInt(document.getElementById('minSlider').value);
+            const sms = parseInt(document.getElementById('smsSlider').value);
+
+            document.getElementById('gbVal').textContent = gb;
+            document.getElementById('minVal').textContent = min;
+            document.getElementById('smsVal').textContent = sms;
+
+            // Новая логика: всё от 0 до 590
+            let price = 0;
+            price += gb * 3; // 3 ₽ за ГБ
+            price += min * 0.2; // 0.2 ₽ за минуту
+            price += sms * 0.3; // 0.3 ₽ за СМС
+
+            const bonuses = document.querySelectorAll('.constructor-bonuses input[type="checkbox"]:checked');
+            price += bonuses.length * 25; // 25 ₽ за каждый безлимит
+
+            price = Math.min(price, 590);
+            document.getElementById('constructorPrice').textContent = Math.round(price);
+        }
+
+        document.querySelectorAll('.constructor-bonuses input, .constructor-row input').forEach(el => {
+            el.addEventListener('input', updateConstructor);
+        });
+
+        // ===== ЗАГРУЗКА =====
         document.addEventListener('DOMContentLoaded', function() {
             loadTheme();
-
-            const params = new URLSearchParams(window.location.search);
-            const tariff = params.get('tariff');
-
-            const tariffs = {
-                light: { name: 'Лайт', price: 199 },
-                optima: { name: 'Оптима', price: 299 },
-                max: { name: 'Макс', price: 450 },
-                music: { name: 'Музыка ван лав', price: 250 },
-                video: { name: 'Сериалы и кино', price: 250 },
-                gaming: { name: 'Игры', price: 300 },
-                grandparents: { name: 'Бабушки и дедушки', price: 450 },
-                parents: { name: 'Родители', price: 450 },
-                kids: { name: 'Дети', price: 470 },
-                travel: { name: 'Хеллоу фром Раша', price: 350 },
-                perminute: { name: 'По минуте', price: 0 },
-                custom: { name: 'Конструктор', price: 249 }
-            };
-
-            const data = tariffs[tariff] || tariffs.light;
-            document.getElementById('tariffName').innerHTML = `Тариф "${data.name}" — <span>${data.price} ₽</span>`;
-            document.getElementById('totalAmount').textContent = (data.price + 50) + ' ₽';
-            document.getElementById('payAmount').textContent = (data.price + 50) + ' ₽';
+            themeBtn.addEventListener('click', toggleTheme);
+            updateConstructor();
         });
     </script>
 
