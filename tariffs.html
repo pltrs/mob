@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>pltrs.mob — Тарифы</title>
 
-    <!-- ===== ШРИФТЫ ===== -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Unbounded:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -36,7 +35,6 @@
             color: #000000;
         }
 
-        /* ===== ПРАВИЛО ШРИФТОВ ===== */
         .lang-ru {
             font-family: 'Unbounded', sans-serif;
         }
@@ -103,6 +101,10 @@
             -moz-osx-font-smoothing: grayscale;
             text-rendering: optimizeLegibility;
             font-feature-settings: 'liga';
+        }
+
+        .icon-lg {
+            font-size: 40px;
         }
 
         /* ===== ХЕДЕР ===== */
@@ -394,15 +396,26 @@
         .constructor-price {
             font-family: 'Syne', sans-serif;
             font-weight: 800;
-            font-size: 32px;
+            font-size: 48px;
             margin: 16px 0;
+            line-height: 1.2;
         }
 
         .constructor-price span {
+            font-family: 'Syne', sans-serif;
+        }
+
+        .constructor-price .currency {
+            font-size: 24px;
+            opacity: 0.7;
+        }
+
+        .constructor-price .per-month {
+            display: block;
+            font-size: 14px;
+            opacity: 0.4;
             font-family: 'Unbounded', sans-serif;
-            font-weight: 500;
-            font-size: 18px;
-            opacity: 0.6;
+            font-weight: 400;
         }
 
         .btn-primary {
@@ -464,7 +477,7 @@
             background: rgba(0, 0, 0, 0.04);
         }
         .tariff-card .title-card {
-            font-family: 'Syne', sans-serif;
+            font-family: 'Unbounded', sans-serif !important;
             font-size: 28px;
             margin-bottom: 8px;
         }
@@ -579,6 +592,9 @@
                 font-size: 16px;
                 padding: 12px 14px;
             }
+            .constructor-price {
+                font-size: 36px;
+            }
         }
         @media (max-width: 480px) {
             .title-main {
@@ -601,6 +617,12 @@
             }
             .theme-btn .material-symbols-outlined {
                 font-size: 22px;
+            }
+            .constructor-price {
+                font-size: 28px;
+            }
+            .constructor-price .currency {
+                font-size: 18px;
             }
         }
     </style>
@@ -700,7 +722,9 @@
             </div>
 
             <div class="constructor-price">
-                <span>Цена:</span> <span id="constructorPrice">199</span> ₽/мес
+                <span id="constructorPrice">0</span>
+                <span class="currency">₽</span>
+                <span class="per-month">/мес</span>
             </div>
 
             <a href="payment.html?tariff=custom" class="btn-primary btn-sm">Оформить</a>
@@ -935,7 +959,7 @@
             });
         });
 
-        // ===== КОНСТРУКТОР =====
+        // ===== КОНСТРУКТОР (НОВАЯ ЛОГИКА) =====
         function updateConstructor() {
             const gb = parseInt(document.getElementById('gbSlider').value);
             const min = parseInt(document.getElementById('minSlider').value);
@@ -945,9 +969,15 @@
             document.getElementById('minVal').textContent = min;
             document.getElementById('smsVal').textContent = sms;
 
-            let price = 50 + gb * 5 + min * 0.3 + sms * 0.5;
+            // Новая логика: всё от 0 до 590
+            let price = 0;
+            price += gb * 3; // 3 ₽ за ГБ
+            price += min * 0.2; // 0.2 ₽ за минуту
+            price += sms * 0.3; // 0.3 ₽ за СМС
+
             const bonuses = document.querySelectorAll('.constructor-bonuses input[type="checkbox"]:checked');
-            price += bonuses.length * 20;
+            price += bonuses.length * 25; // 25 ₽ за каждый безлимит
+
             price = Math.min(price, 590);
             document.getElementById('constructorPrice').textContent = Math.round(price);
         }
