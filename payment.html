@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PLTRS — Оплата</title>
-    
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>pltrs.mob — Оплата</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Unbounded:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-    
+
     <style>
         * {
             margin: 0;
@@ -15,7 +18,10 @@
         }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-family: 'Unbounded', sans-serif;
+            font-weight: 500;
+            font-size: 18px;
+            line-height: 1.5;
             background: rgba(0, 0, 0, 0.6);
             display: flex;
             justify-content: center;
@@ -25,21 +31,38 @@
             transition: background 0.3s ease;
         }
 
-        body.dark-theme {
+        body.light-theme {
             background: rgba(10, 10, 10, 0.9);
         }
 
         .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            font-family: 'Material Symbols Outlined' !important;
+            font-weight: normal;
+            font-style: normal;
             font-size: 24px;
             line-height: 1;
-            vertical-align: middle;
+            letter-spacing: normal;
+            text-transform: none;
             display: inline-block;
-            user-select: none;
+            white-space: nowrap;
+            word-wrap: normal;
+            direction: ltr;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
+            font-feature-settings: 'liga';
         }
 
         .icon-sm {
             font-size: 18px;
+        }
+
+        .lang-ru {
+            font-family: 'Unbounded', sans-serif;
+        }
+
+        .lang-en {
+            font-family: 'Syne', sans-serif;
         }
 
         .btn-primary {
@@ -49,7 +72,8 @@
             color: #ffffff;
             border: 2px solid #000000;
             border-radius: 30px;
-            font-weight: 600;
+            font-family: 'Syne', sans-serif;
+            font-weight: 700;
             font-size: 15px;
             text-decoration: none;
             transition: all 0.3s ease;
@@ -61,13 +85,13 @@
             color: #000000;
         }
 
-        body.dark-theme .btn-primary {
+        body.light-theme .btn-primary {
             background: #ffffff;
             color: #000000;
             border-color: #ffffff;
         }
 
-        body.dark-theme .btn-primary:hover {
+        body.light-theme .btn-primary:hover {
             background: transparent;
             color: #ffffff;
         }
@@ -79,6 +103,7 @@
             color: #000000;
             border: 2px solid #000000;
             border-radius: 30px;
+            font-family: 'Syne', sans-serif;
             font-weight: 500;
             font-size: 14px;
             text-decoration: none;
@@ -91,12 +116,12 @@
             color: #ffffff;
         }
 
-        body.dark-theme .btn-secondary {
+        body.light-theme .btn-secondary {
             color: #ffffff;
             border-color: #ffffff;
         }
 
-        body.dark-theme .btn-secondary:hover {
+        body.light-theme .btn-secondary:hover {
             background: #ffffff;
             color: #000000;
         }
@@ -116,13 +141,19 @@
             animation: slideUp 0.4s ease;
         }
 
-        body.dark-theme .payment-panel {
+        body.light-theme .payment-panel {
             background: #1a1a1a;
         }
 
         @keyframes slideUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .payment-left {
@@ -130,7 +161,7 @@
             background: #ffffff;
         }
 
-        body.dark-theme .payment-left {
+        body.light-theme .payment-left {
             background: #1a1a1a;
             color: #eeeeee;
         }
@@ -139,15 +170,17 @@
             font-size: 16px;
             padding: 8px 0;
             border-bottom: 1px solid #eee;
+            font-family: 'Unbounded', sans-serif;
         }
 
-        body.dark-theme .payment-left .payment-item {
+        body.light-theme .payment-left .payment-item {
             border-bottom-color: #333333;
         }
 
         .payment-left .payment-item span {
             float: right;
             font-weight: 600;
+            font-family: 'Syne', sans-serif;
         }
 
         .payment-total {
@@ -156,9 +189,10 @@
             padding-top: 16px;
             margin-top: 8px;
             border-top: 2px solid #000000;
+            font-family: 'Syne', sans-serif;
         }
 
-        body.dark-theme .payment-total {
+        body.light-theme .payment-total {
             border-top-color: #ffffff;
             color: #ffffff;
         }
@@ -173,7 +207,7 @@
             color: #ffffff;
         }
 
-        body.dark-theme .payment-right {
+        body.light-theme .payment-right {
             background: #0a0a0a;
         }
 
@@ -194,6 +228,7 @@
             display: flex;
             align-items: center;
             gap: 4px;
+            font-family: 'Unbounded', sans-serif;
         }
 
         .payment-methods span:hover {
@@ -209,6 +244,7 @@
             border-radius: 12px;
             margin-bottom: 12px;
             font-size: 14px;
+            font-family: 'Unbounded', sans-serif;
         }
 
         .edit-icon {
@@ -225,7 +261,7 @@
             transition: background 0.3s;
         }
 
-        body.dark-theme .payment-blank {
+        body.light-theme .payment-blank {
             background: #333333;
         }
 
@@ -236,13 +272,14 @@
             outline: none;
             font-size: 14px;
             background: transparent;
+            font-family: 'Unbounded', sans-serif;
         }
 
-        body.dark-theme .payment-blank input {
+        body.light-theme .payment-blank input {
             color: #ffffff;
         }
 
-        body.dark-theme .payment-blank input::placeholder {
+        body.light-theme .payment-blank input::placeholder {
             color: #888888;
         }
 
@@ -253,6 +290,7 @@
             font-size: 13px;
             opacity: 0.7;
             margin: 12px 0;
+            font-family: 'Unbounded', sans-serif;
         }
 
         .btn-pay {
@@ -262,6 +300,7 @@
             color: #000000;
             border: none;
             border-radius: 30px;
+            font-family: 'Syne', sans-serif;
             font-weight: 700;
             font-size: 16px;
             cursor: pointer;
@@ -280,7 +319,7 @@
             transform: scale(1.02);
         }
 
-        body.dark-theme .btn-pay {
+        body.light-theme .btn-pay {
             background: #ffffff;
             color: #000000;
         }
@@ -307,7 +346,7 @@
             animation: slideUp 0.5s ease;
         }
 
-        body.dark-theme .success-panel {
+        body.light-theme .success-panel {
             background: #1a1a1a;
             color: #eeeeee;
         }
@@ -331,12 +370,14 @@
         .success-panel h2 {
             font-size: 28px;
             margin-bottom: 8px;
+            font-family: 'Syne', sans-serif;
         }
 
         .success-panel p {
             font-size: 16px;
             opacity: 0.6;
             margin-bottom: 24px;
+            font-family: 'Unbounded', sans-serif;
         }
 
         .success-footer {
@@ -345,7 +386,8 @@
             color: #ffffff;
             padding: 12px 40px;
             border-radius: 30px;
-            font-weight: 600;
+            font-family: 'Syne', sans-serif;
+            font-weight: 700;
             font-size: 18px;
             border: none;
             cursor: pointer;
@@ -356,7 +398,7 @@
             transform: scale(1.05);
         }
 
-        body.dark-theme .success-footer {
+        body.light-theme .success-footer {
             background: #ffffff;
             color: #000000;
         }
@@ -398,10 +440,10 @@
                     <span class="edit-icon"><span class="material-symbols-outlined">edit</span></span>
                 </div>
                 <div class="payment-blank">
-                    <input type="text" placeholder="Ваше сообщение (необязательно)" id="messageInput" onfocus="this.parentElement.style.background='#eee'" onblur="if(!this.value) this.parentElement.style.background='white'">
+                    <input type="text" placeholder="Ваше сообщение (необязательно)" id="messageInput" onfocus="this.parentElement.style.background='#eee'" onblur="if(!this.value) this.parentElement.style.background='white'" />
                 </div>
                 <label class="payment-agree">
-                    <input type="checkbox" id="agreeCheck" onchange="togglePayButton()"> Согласен с условиями
+                    <input type="checkbox" id="agreeCheck" onchange="togglePayButton()" /> Согласен с условиями
                 </label>
                 <button class="btn-pay" id="payButton" disabled onclick="processPayment()">
                     Оплатить <span id="payAmount">249 ₽</span>
@@ -440,23 +482,23 @@
         }
 
         function toggleTheme() {
-            document.body.classList.toggle('dark-theme');
-            localStorage.setItem('pltrs_theme', document.body.classList.contains('dark-theme'));
+            document.body.classList.toggle('light-theme');
+            localStorage.setItem('pltrs_theme', document.body.classList.contains('light-theme'));
         }
 
         function loadTheme() {
             const isDark = localStorage.getItem('pltrs_theme') === 'true';
             if (isDark) {
-                document.body.classList.add('dark-theme');
+                document.body.classList.add('light-theme');
             }
         }
 
         document.addEventListener('DOMContentLoaded', function() {
             loadTheme();
-            
+
             const params = new URLSearchParams(window.location.search);
             const tariff = params.get('tariff');
-            
+
             const tariffs = {
                 light: { name: 'Лайт', price: 199 },
                 optima: { name: 'Оптима', price: 299 },
@@ -467,11 +509,11 @@
                 grandparents: { name: 'Бабушки и дедушки', price: 450 },
                 parents: { name: 'Родители', price: 450 },
                 kids: { name: 'Дети', price: 470 },
-                travel: { name: 'Хеллоу фром Раша!', price: 350 },
+                travel: { name: 'Хеллоу фром Раша', price: 350 },
                 perminute: { name: 'По минуте', price: 0 },
                 custom: { name: 'Конструктор', price: 249 }
             };
-            
+
             const data = tariffs[tariff] || tariffs.light;
             document.getElementById('tariffName').innerHTML = `Тариф "${data.name}" — <span>${data.price} ₽</span>`;
             document.getElementById('totalAmount').textContent = (data.price + 50) + ' ₽';
