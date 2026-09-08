@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>pltrs.mob</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📶</text></svg>" />
 
     <!-- ===== ШРИФТЫ ===== -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -13,6 +14,72 @@
 
     <style>
         /* ===== БАЗА ===== */
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 100px;
+            overflow-y: scroll;
+            scrollbar-gutter: stable;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(255, 255, 255, 0.18) transparent;
+        }
+
+        html:has(body.light-theme),
+        body.light-theme {
+            scrollbar-color: rgba(0, 0, 0, 0.18) transparent;
+        }
+
+        /* ===== КАСТОМНЫЙ СКРОЛЛБАР (СЛИВАЮЩИЙСЯ С ФОНОМ) ===== */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 10px;
+            border: 2px solid transparent;
+            background-clip: padding-box;
+            transition: background 0.2s ease;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.32);
+            border: 2px solid transparent;
+            background-clip: padding-box;
+        }
+
+        ::-webkit-scrollbar-thumb:active {
+            background: rgba(255, 255, 255, 0.48);
+            border: 2px solid transparent;
+            background-clip: padding-box;
+        }
+
+        /* Скроллбар для светлой темы */
+        body.light-theme::-webkit-scrollbar-thumb,
+        html:has(body.light-theme)::-webkit-scrollbar-thumb {
+            background: rgba(0, 0, 0, 0.15);
+            border: 2px solid transparent;
+            background-clip: padding-box;
+        }
+
+        body.light-theme::-webkit-scrollbar-thumb:hover,
+        html:has(body.light-theme)::-webkit-scrollbar-thumb:hover {
+            background: rgba(0, 0, 0, 0.32);
+            border: 2px solid transparent;
+            background-clip: padding-box;
+        }
+
+        body.light-theme::-webkit-scrollbar-thumb:active,
+        html:has(body.light-theme)::-webkit-scrollbar-thumb:active {
+            background: rgba(0, 0, 0, 0.48);
+            border: 2px solid transparent;
+            background-clip: padding-box;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -26,7 +93,7 @@
             line-height: 1.5;
             background: #0a0a0a;
             color: #f0f0f0;
-            transition: background 0.6s ease, color 0.6s ease;
+            transition: background 0.25s ease, color 0.25s ease;
             min-height: 100vh;
             padding: 80px 24px 40px;
         }
@@ -76,7 +143,7 @@
             pointer-events: none;
             z-index: 9999;
             transform: translateY(-100%);
-            transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
             background: #0a0a0a;
         }
         .theme-transition-overlay.active {
@@ -191,11 +258,11 @@
         }
         .theme-btn .material-symbols-outlined {
             font-size: 28px;
-            transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), color 0.4s ease;
+            transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), color 0.25s ease;
             color: #ffffff;
         }
         body.light-theme .theme-btn .material-symbols-outlined {
-            color: #000000;
+            color: #ffffff;
         }
         .theme-btn .material-symbols-outlined.rotated {
             transform: rotate(180deg);
@@ -265,6 +332,15 @@
         }
         body.light-theme .menu-panel nav a:hover {
             background: rgba(0, 0, 0, 0.05);
+        }
+        .menu-panel nav a.active-hash {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        body.light-theme .menu-panel nav a.active-hash {
+            background: rgba(0, 0, 0, 0.08);
+        }
+        .menu-panel nav a:active {
+            transform: scale(0.97);
         }
         .menu-panel nav a .material-symbols-outlined {
             font-size: 22px;
@@ -411,11 +487,12 @@
             margin-bottom: 24px;
         }
         .faq-item {
-            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-            padding: 16px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 8px 0;
+            transition: border-color 0.3s ease;
         }
         body.light-theme .faq-item {
-            border-color: rgba(0, 0, 0, 0.06);
+            border-color: rgba(0, 0, 0, 0.08);
         }
         .faq-item:last-child {
             border-bottom: none;
@@ -423,26 +500,57 @@
         .faq-question {
             font-family: 'Unbounded', sans-serif;
             font-weight: 600;
-            font-size: 22px;
+            font-size: 20px;
             cursor: pointer;
             display: flex;
             justify-content: space-between;
             align-items: center;
             user-select: none;
+            padding: 14px 0;
+            transition: opacity 0.2s ease;
+        }
+        .faq-question:hover {
+            opacity: 0.85;
+        }
+        .faq-question .material-symbols-outlined {
+            font-size: 28px;
+            transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+            user-select: none;
+        }
+        .faq-item.open .faq-question .material-symbols-outlined {
+            transform: rotate(45deg);
+        }
+        .faq-answer-wrapper {
+            display: grid;
+            grid-template-rows: 0fr;
+            transition: grid-template-rows 0.32s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .faq-item.open .faq-answer-wrapper {
+            grid-template-rows: 1fr;
         }
         .faq-answer {
+            min-height: 0;
+            overflow: hidden;
             font-family: 'Unbounded', sans-serif;
             font-weight: 400;
-            font-size: 18px;
-            opacity: 0.7;
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.4s ease, padding 0.4s ease;
-            padding: 0 0 0 0;
+            font-size: 17px;
+            opacity: 0;
+            transform: translateY(-6px);
+            transition: opacity 0.25s ease, transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), padding 0.3s ease;
+            line-height: 1.6;
+            padding: 0;
         }
-        .faq-answer.open {
-            max-height: 200px;
-            padding: 12px 0 0 0;
+        .faq-item.open .faq-answer {
+            opacity: 0.75;
+            transform: translateY(0);
+            padding-bottom: 16px;
+        }
+
+        /* ===== ХЕШИ / ЯКОРЯ: ПОЗИЦИОНИРОВАНИЕ ===== */
+        #features,
+        #about,
+        #faq {
+            scroll-margin-top: 100px;
         }
 
         /* ===== АДАПТИВ ===== */
@@ -496,6 +604,24 @@
             .theme-btn .material-symbols-outlined {
                 font-size: 22px;
             }
+        }
+
+        /* ===== ФУТЕР ===== */
+        footer {
+            margin-top: 80px;
+            padding: 32px 0 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+            font-size: 14px;
+            opacity: 0.6;
+            font-family: 'Unbounded', sans-serif;
+        }
+        body.light-theme footer {
+            border-top-color: rgba(0, 0, 0, 0.08);
         }
     </style>
 </head>
@@ -619,26 +745,38 @@
             <h2 class="title-card">FAQ</h2>
             <div class="faq-item">
                 <div class="faq-question" onclick="toggleFaq(this)">
-                    Почему pltrs.mob?
-                    <span class="material-symbols-outlined" style="font-size: 28px;">add</span>
+                    <span>Почему pltrs.mob?</span>
+                    <span class="material-symbols-outlined">add</span>
                 </div>
-                <div class="faq-answer">Потому что просто. Связь, которая не подведёт.</div>
+                <div class="faq-answer-wrapper">
+                    <div class="faq-answer">Потому что просто. Связь, которая не подведёт.</div>
+                </div>
             </div>
             <div class="faq-item">
                 <div class="faq-question" onclick="toggleFaq(this)">
-                    Как оформить сим-карту?
-                    <span class="material-symbols-outlined" style="font-size: 28px;">add</span>
+                    <span>Как оформить сим-карту?</span>
+                    <span class="material-symbols-outlined">add</span>
                 </div>
-                <div class="faq-answer">Перейди в раздел «Тарифы», выбери тариф и оформи онлайн.</div>
+                <div class="faq-answer-wrapper">
+                    <div class="faq-answer">Перейди в раздел «Тарифы», выбери тариф и оформи онлайн.</div>
+                </div>
             </div>
             <div class="faq-item">
                 <div class="faq-question" onclick="toggleFaq(this)">
-                    VPN бесплатный?
-                    <span class="material-symbols-outlined" style="font-size: 28px;">add</span>
+                    <span>VPN бесплатный?</span>
+                    <span class="material-symbols-outlined">add</span>
                 </div>
-                <div class="faq-answer">Да, для всех абонентов pltrs.mob.</div>
+                <div class="faq-answer-wrapper">
+                    <div class="faq-answer">Да, для всех абонентов pltrs.mob.</div>
+                </div>
             </div>
         </div>
+
+        <!-- ===== ФУТЕР ===== -->
+        <footer>
+            <div>© <span id="currentYear"></span> pltrs.mob — всегда на связи</div>
+            <div>Связь нового поколения · Учебный проект</div>
+        </footer>
 
     </div>
 
@@ -661,58 +799,149 @@
                 themeIcon.textContent = newIsLight ? 'dark_mode' : 'light_mode';
                 themeIcon.classList.toggle('rotated');
                 localStorage.setItem('pltrs_theme', newIsLight ? 'light' : 'dark');
-            }, 400);
-            setTimeout(() => overlay.classList.remove('active'), 800);
+            }, 140);
+            setTimeout(() => overlay.classList.remove('active'), 280);
         }
 
         function loadTheme() {
             const body = document.body;
-            body.classList.remove('light-theme');
-            themeIcon.textContent = 'light_mode';
-            themeIcon.classList.add('rotated');
+            const savedTheme = localStorage.getItem('pltrs_theme') || 'dark';
+            if (savedTheme === 'light') {
+                body.classList.add('light-theme');
+                themeIcon.textContent = 'dark_mode';
+                themeIcon.classList.remove('rotated');
+            } else {
+                body.classList.remove('light-theme');
+                themeIcon.textContent = 'light_mode';
+                themeIcon.classList.add('rotated');
+            }
             overlay.classList.remove('active');
-            localStorage.setItem('pltrs_theme', 'dark');
         }
 
         // ===== БУРГЕР =====
         const burgerBtn = document.getElementById('burgerBtn');
         const menuOverlay = document.getElementById('menuOverlay');
 
+        function closeMenu() {
+            burgerBtn.classList.remove('active');
+            menuOverlay.classList.remove('open');
+        }
+
         burgerBtn.addEventListener('click', function(e) {
             e.stopPropagation();
             this.classList.toggle('active');
             menuOverlay.classList.toggle('open');
-            document.body.style.overflow = menuOverlay.classList.contains('open') ? 'hidden' : '';
         });
 
         menuOverlay.addEventListener('click', function(e) {
             if (e.target === this) {
-                burgerBtn.classList.remove('active');
-                this.classList.remove('open');
-                document.body.style.overflow = '';
+                closeMenu();
             }
         });
 
+        // Блокировка прокрутки фона при открытом меню без скрытия скроллбара
+        function handleOverlayScrollLock(e) {
+            if (menuOverlay && menuOverlay.classList.contains('open')) {
+                if (!e.target.closest('.menu-panel')) {
+                    e.preventDefault();
+                }
+            }
+        }
+        window.addEventListener('wheel', handleOverlayScrollLock, { passive: false });
+        window.addEventListener('touchmove', handleOverlayScrollLock, { passive: false });
+        window.addEventListener('keydown', function(e) {
+            if (menuOverlay && menuOverlay.classList.contains('open') && ['ArrowUp', 'ArrowDown', 'PageUp', 'PageDown', 'Space', 'Home', 'End'].includes(e.code)) {
+                if (!e.target.closest('input, textarea, select')) {
+                    e.preventDefault();
+                }
+            }
+        });
+
+        // ===== ХЕШИ И ЯКОРНАЯ НАВИГАЦИЯ =====
+        function handleAnchorClick(e, href) {
+            if (href.startsWith('#')) {
+                e.preventDefault();
+                closeMenu();
+                const target = document.querySelector(href);
+                if (target) {
+                    history.pushState(null, '', href);
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            } else if (href === 'index.html' || href === './' || href === window.location.pathname) {
+                if (window.location.pathname.endsWith('index.html') || window.location.pathname === '/' || window.location.pathname.endsWith('/mob/') || window.location.pathname.endsWith('/mob/index.html')) {
+                    e.preventDefault();
+                    closeMenu();
+                    if (window.location.hash) {
+                        history.pushState(null, '', window.location.pathname);
+                    }
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+            }
+        }
+
         document.querySelectorAll('.menu-panel nav a').forEach(link => {
-            link.addEventListener('click', () => {
-                burgerBtn.classList.remove('active');
-                menuOverlay.classList.remove('open');
-                document.body.style.overflow = '';
+            link.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                if (href) {
+                    handleAnchorClick(e, href);
+                }
             });
+        });
+
+        // IntersectionObserver для подсветки текущего активного хеша в меню
+        if ('IntersectionObserver' in window) {
+            const hashObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const id = entry.target.getAttribute('id');
+                        document.querySelectorAll('.menu-panel nav a').forEach(a => {
+                            if (a.getAttribute('href') === '#' + id) {
+                                a.classList.add('active-hash');
+                            } else if (a.getAttribute('href').startsWith('#')) {
+                                a.classList.remove('active-hash');
+                            }
+                        });
+                    }
+                });
+            }, { threshold: 0.35 });
+
+            document.querySelectorAll('#features, #about, #faq').forEach(el => hashObserver.observe(el));
+        }
+
+        // Проверка хеша при загрузке страницы
+        function checkHashOnLoad() {
+            if (window.location.hash) {
+                const target = document.querySelector(window.location.hash);
+                if (target) {
+                    setTimeout(() => {
+                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }, 250);
+                }
+            }
+        }
+
+        window.addEventListener('hashchange', () => {
+            if (window.location.hash) {
+                const target = document.querySelector(window.location.hash);
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            }
         });
 
         // ===== FAQ =====
         function toggleFaq(el) {
-            const answer = el.nextElementSibling;
-            const icon = el.querySelector('.material-symbols-outlined');
-            answer.classList.toggle('open');
-            icon.textContent = answer.classList.contains('open') ? 'remove' : 'add';
+            const item = el.closest('.faq-item');
+            if (item) item.classList.toggle('open');
         }
 
         // ===== ЗАГРУЗКА =====
         document.addEventListener('DOMContentLoaded', function() {
             loadTheme();
             themeBtn.addEventListener('click', toggleTheme);
+            const yearEl = document.getElementById('currentYear');
+            if (yearEl) yearEl.textContent = new Date().getFullYear();
+            checkHashOnLoad();
         });
     </script>
 
