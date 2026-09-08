@@ -12,9 +12,634 @@
 
     <style>
         /* ============================================================
-           ВЕСЬ ТВОЙ CSS (такой же как был)
+           БАЗА
            ============================================================ */
-        /* ... тут твой CSS из предыдущего payment.html ... */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Unbounded', sans-serif;
+            font-weight: 500;
+            font-size: 18px;
+            line-height: 1.5;
+            background: rgba(0, 0, 0, 0.6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            transition: background 0.3s ease;
+        }
+
+        body.light-theme {
+            background: rgba(10, 10, 10, 0.9);
+        }
+
+        .material-symbols-outlined {
+            font-family: 'Material Symbols Outlined' !important;
+            font-weight: normal;
+            font-style: normal;
+            font-size: 24px;
+            line-height: 1;
+            letter-spacing: normal;
+            text-transform: none;
+            display: inline-block;
+            white-space: nowrap;
+            word-wrap: normal;
+            direction: ltr;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
+            font-feature-settings: 'liga';
+        }
+
+        .icon-sm {
+            font-size: 18px;
+        }
+
+        .lang-ru {
+            font-family: 'Unbounded', sans-serif;
+        }
+        .lang-en {
+            font-family: 'Syne', sans-serif;
+        }
+
+        .btn-primary {
+            display: inline-block;
+            padding: 12px 28px;
+            background: #000000;
+            color: #ffffff;
+            border: 2px solid #000000;
+            border-radius: 30px;
+            font-family: 'Syne', sans-serif;
+            font-weight: 700;
+            font-size: 15px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .btn-primary:hover {
+            background: #ffffff;
+            color: #000000;
+        }
+        body.light-theme .btn-primary {
+            background: #ffffff;
+            color: #000000;
+            border-color: #ffffff;
+        }
+        body.light-theme .btn-primary:hover {
+            background: transparent;
+            color: #ffffff;
+        }
+
+        .btn-secondary {
+            display: inline-block;
+            padding: 10px 24px;
+            background: transparent;
+            color: #000000;
+            border: 2px solid #000000;
+            border-radius: 30px;
+            font-family: 'Syne', sans-serif;
+            font-weight: 500;
+            font-size: 14px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .btn-secondary:hover {
+            background: #000000;
+            color: #ffffff;
+        }
+        body.light-theme .btn-secondary {
+            color: #ffffff;
+            border-color: #ffffff;
+        }
+        body.light-theme .btn-secondary:hover {
+            background: #ffffff;
+            color: #000000;
+        }
+
+        /* ===== ПАНЕЛЬ ОПЛАТЫ ===== */
+        .payment-overlay {
+            width: 100%;
+            max-width: 700px;
+        }
+
+        .payment-panel {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            background: #ffffff;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: slideUp 0.4s ease;
+        }
+
+        body.light-theme .payment-panel {
+            background: #1a1a1a;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .payment-left {
+            padding: 30px;
+            background: #ffffff;
+        }
+        body.light-theme .payment-left {
+            background: #1a1a1a;
+            color: #eeeeee;
+        }
+
+        .payment-left .payment-item {
+            font-size: 16px;
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+            font-family: 'Unbounded', sans-serif;
+        }
+        body.light-theme .payment-left .payment-item {
+            border-bottom-color: #333333;
+        }
+        .payment-left .payment-item span {
+            float: right;
+            font-weight: 600;
+            font-family: 'Syne', sans-serif;
+        }
+
+        .payment-total {
+            font-size: 22px;
+            font-weight: 900;
+            padding-top: 16px;
+            margin-top: 8px;
+            border-top: 2px solid #000000;
+            font-family: 'Syne', sans-serif;
+        }
+        body.light-theme .payment-total {
+            border-top-color: #ffffff;
+            color: #ffffff;
+        }
+        .payment-total span {
+            float: right;
+        }
+
+        .payment-right {
+            padding: 30px;
+            background: #000000;
+            color: #ffffff;
+        }
+        body.light-theme .payment-right {
+            background: #0a0a0a;
+        }
+
+        /* ===== ВЫБОР ОПЛАТЫ (КЛИКАБЕЛЬНЫЕ КНОПКИ) ===== */
+        .payment-methods {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+        .payment-methods .pm-btn {
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-family: 'Unbounded', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.08);
+            color: #aaa;
+            border: 2px solid transparent;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            user-select: none;
+        }
+        .payment-methods .pm-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+            color: #fff;
+        }
+        .payment-methods .pm-btn.active {
+            background: #ffffff;
+            color: #000000;
+            border-color: #ffffff;
+        }
+        body.light-theme .payment-methods .pm-btn {
+            background: rgba(0, 0, 0, 0.08);
+            color: #666;
+        }
+        body.light-theme .payment-methods .pm-btn:hover {
+            background: rgba(0, 0, 0, 0.15);
+            color: #000;
+        }
+        body.light-theme .payment-methods .pm-btn.active {
+            background: #000000;
+            color: #ffffff;
+            border-color: #000000;
+        }
+
+        /* ===== КАСТОМНЫЙ ДРОПДАУН ===== */
+        .custom-dropdown {
+            position: relative;
+            margin-bottom: 12px;
+            width: 100%;
+            user-select: none;
+        }
+
+        .dropdown-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 16px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Unbounded', sans-serif;
+            font-size: 14px;
+            color: #888;
+        }
+
+        body.light-theme .dropdown-header {
+            background: rgba(0, 0, 0, 0.05);
+            color: #666;
+        }
+
+        .dropdown-header:hover {
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        body.light-theme .dropdown-header:hover {
+            background: rgba(0, 0, 0, 0.08);
+        }
+
+        .dropdown-header.active {
+            border-color: #ffffff;
+            color: #f0f0f0;
+        }
+
+        body.light-theme .dropdown-header.active {
+            border-color: #000000;
+            color: #000000;
+        }
+
+        .dropdown-header .material-symbols-outlined {
+            font-size: 24px;
+            transition: transform 0.3s ease;
+        }
+
+        .dropdown-header.open .material-symbols-outlined {
+            transform: rotate(180deg);
+        }
+
+        .dropdown-list {
+            position: absolute;
+            top: calc(100% + 4px);
+            left: 0;
+            right: 0;
+            background: #1a1a1a;
+            border-radius: 12px;
+            padding: 6px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-8px);
+            transition: all 0.3s ease;
+            z-index: 100;
+            overflow: hidden;
+        }
+
+        body.light-theme .dropdown-list {
+            background: #ffffff;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .dropdown-list.open {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-item {
+            padding: 10px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: 'Unbounded', sans-serif;
+            font-size: 14px;
+            color: #f0f0f0;
+        }
+
+        body.light-theme .dropdown-item {
+            color: #000000;
+        }
+
+        .dropdown-item:hover {
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        body.light-theme .dropdown-item:hover {
+            background: rgba(0, 0, 0, 0.04);
+        }
+
+        .dropdown-item.selected {
+            background: #ffffff;
+            color: #000000;
+        }
+
+        body.light-theme .dropdown-item.selected {
+            background: #000000;
+            color: #ffffff;
+        }
+
+        .dropdown-item .material-symbols-outlined {
+            font-size: 18px;
+            vertical-align: middle;
+            margin-right: 8px;
+        }
+
+        /* ===== ПОЛЕ ВВОДА ===== */
+        .payment-input {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 0 14px;
+            margin-bottom: 12px;
+            transition: background 0.3s, border-color 0.3s;
+            border: 2px solid transparent;
+            position: relative;
+        }
+        .payment-input.error {
+            border-color: #ef4444;
+        }
+        .payment-input.success {
+            border-color: #22c55e;
+        }
+        body.light-theme .payment-input {
+            background: rgba(0, 0, 0, 0.05);
+        }
+        .payment-input input {
+            width: 100%;
+            padding: 12px 0;
+            border: none;
+            outline: none;
+            font-size: 14px;
+            background: transparent;
+            font-family: 'Unbounded', sans-serif;
+            color: #f0f0f0;
+        }
+        body.light-theme .payment-input input {
+            color: #000000;
+        }
+        .payment-input input::placeholder {
+            color: #666;
+        }
+        .payment-input input:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .payment-input .input-label {
+            display: block;
+            font-size: 11px;
+            opacity: 0.4;
+            font-family: 'Unbounded', sans-serif;
+            padding-top: 4px;
+        }
+
+        .payment-input .input-hint {
+            display: block;
+            font-size: 10px;
+            opacity: 0.3;
+            font-family: 'Unbounded', sans-serif;
+            padding-bottom: 4px;
+            min-height: 18px;
+        }
+
+        /* ===== КНОПКА ОПЛАТЫ ===== */
+        .btn-pay {
+            width: 100%;
+            padding: 14px;
+            background: #ffffff;
+            color: #000000;
+            border: none;
+            border-radius: 30px;
+            font-family: 'Syne', sans-serif;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .btn-pay:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+        .btn-pay:hover:not(:disabled) {
+            transform: scale(1.02);
+        }
+        body.light-theme .btn-pay {
+            background: #ffffff;
+            color: #000000;
+        }
+
+        /* ===== МОДАЛКА "ДРУГОЕ" ===== */
+        .other-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(8px);
+            z-index: 2000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+        .other-overlay.open {
+            display: flex;
+        }
+        .other-panel {
+            background: #1a1a1a;
+            border-radius: 28px;
+            padding: 32px;
+            max-width: 380px;
+            width: 90%;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+        }
+        body.light-theme .other-panel {
+            background: #ffffff;
+        }
+        .other-panel h3 {
+            font-family: 'Syne', sans-serif;
+            font-weight: 700;
+            font-size: 24px;
+            margin-bottom: 16px;
+            color: #f0f0f0;
+        }
+        body.light-theme .other-panel h3 {
+            color: #000000;
+        }
+        .other-panel .other-btn {
+            display: block;
+            width: 100%;
+            padding: 14px 18px;
+            border-radius: 16px;
+            font-family: 'Unbounded', sans-serif;
+            font-weight: 600;
+            font-size: 16px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid transparent;
+            color: #f0f0f0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: left;
+            margin-bottom: 8px;
+        }
+        body.light-theme .other-panel .other-btn {
+            background: rgba(0, 0, 0, 0.04);
+            color: #000000;
+        }
+        .other-panel .other-btn:hover {
+            background: rgba(255, 255, 255, 0.08);
+        }
+        body.light-theme .other-panel .other-btn:hover {
+            background: rgba(0, 0, 0, 0.08);
+        }
+        .other-panel .other-btn .material-symbols-outlined {
+            vertical-align: middle;
+            margin-right: 10px;
+        }
+        .other-close {
+            margin-top: 12px;
+            padding: 10px;
+            border: none;
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 12px;
+            color: #888;
+            font-family: 'Unbounded', sans-serif;
+            font-size: 14px;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s;
+        }
+        body.light-theme .other-close {
+            background: rgba(0, 0, 0, 0.04);
+            color: #666;
+        }
+        .other-close:hover {
+            background: rgba(255, 255, 255, 0.08);
+        }
+        body.light-theme .other-close:hover {
+            background: rgba(0, 0, 0, 0.08);
+        }
+
+        /* ===== УСПЕХ ===== */
+        .success-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .success-overlay.open {
+            display: flex;
+        }
+        .success-panel {
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 40px 30px;
+            text-align: center;
+            max-width: 400px;
+            animation: slideUp 0.5s ease;
+        }
+        body.light-theme .success-panel {
+            background: #1a1a1a;
+            color: #eeeeee;
+        }
+        .success-icon {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            width: 80px;
+            height: 80px;
+            background: rgba(0, 200, 100, 0.15);
+            border-radius: 50%;
+            margin-bottom: 16px;
+        }
+        .success-icon .material-symbols-outlined {
+            font-size: 48px;
+            color: #22c55e;
+        }
+        .success-panel h2 {
+            font-size: 28px;
+            font-family: 'Syne', sans-serif;
+            margin-bottom: 12px;
+        }
+        .success-panel p {
+            font-size: 14px;
+            opacity: 0.8;
+            font-family: 'Unbounded', sans-serif;
+            line-height: 1.6;
+            white-space: pre-line;
+            margin-bottom: 24px;
+        }
+        .success-footer {
+            display: inline-block;
+            background: #000000;
+            color: #ffffff;
+            padding: 12px 40px;
+            border-radius: 30px;
+            font-family: 'Syne', sans-serif;
+            font-weight: 700;
+            font-size: 18px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .success-footer:hover {
+            transform: scale(1.05);
+        }
+        body.light-theme .success-footer {
+            background: #ffffff;
+            color: #000000;
+        }
+
+        /* ===== АДАПТИВ ===== */
+        @media (max-width: 600px) {
+            .payment-panel {
+                grid-template-columns: 1fr;
+                border-radius: 16px;
+            }
+            .payment-right {
+                padding: 20px;
+            }
+            .payment-left {
+                padding: 20px;
+            }
+            .payment-methods .pm-btn {
+                font-size: 12px;
+                padding: 6px 12px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -30,7 +655,7 @@
                 </div>
             </div>
             <div class="payment-right">
-                <!-- ===== ВЫБОР ОПЛАТЫ ===== -->
+                <!-- ВЫБОР ОПЛАТЫ -->
                 <div class="payment-methods">
                     <div class="pm-btn active" data-method="sbp">
                         <span class="material-symbols-outlined icon-sm">payments</span> СБП
@@ -43,7 +668,7 @@
                     </div>
                 </div>
 
-                <!-- ===== КАСТОМНЫЙ ДРОПДАУН ===== -->
+                <!-- КАСТОМНЫЙ ДРОПДАУН -->
                 <div class="custom-dropdown" id="contactDropdown">
                     <div class="dropdown-header" id="dropdownHeader">
                         <span id="selectedContactText">Выберите способ контакта</span>
@@ -56,14 +681,14 @@
                     </div>
                 </div>
 
-                <!-- ===== ПОЛЕ ВВОДА ===== -->
+                <!-- ПОЛЕ ВВОДА -->
                 <div class="payment-input" id="contactInputWrapper">
                     <span class="input-label" id="contactLabel">Сначала выберите способ контакта</span>
                     <input type="text" id="contactInput" placeholder="" disabled />
                     <span class="input-hint" id="contactHint"></span>
                 </div>
 
-                <!-- ===== СООБЩЕНИЕ ===== -->
+                <!-- СООБЩЕНИЕ -->
                 <div class="payment-input">
                     <span class="input-label">Сообщение (необязательно)</span>
                     <input type="text" id="messageInput" placeholder="Ваше сообщение..." />
@@ -119,8 +744,8 @@
         // ============================================================
         //   КОНФИГУРАЦИЯ TELEGRAM
         // ============================================================
-        const BOT_TOKEN = '8451595343:AAFmxxaI9ltHhDAf4DJZ9SsU84nLZhpnKFc';
-        const CHAT_ID = '140403762';
+        const BOT_TOKEN = 'YOUR_BOT_TOKEN';
+        const CHAT_ID = 'YOUR_CHAT_ID';
         const URL_API = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
 
         // ============================================================
