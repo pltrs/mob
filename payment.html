@@ -11,6 +11,9 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 
     <style>
+        /* ============================================================
+           БАЗА
+           ============================================================ */
         * {
             margin: 0;
             padding: 0;
@@ -60,7 +63,6 @@
         .lang-ru {
             font-family: 'Unbounded', sans-serif;
         }
-
         .lang-en {
             font-family: 'Syne', sans-serif;
         }
@@ -79,18 +81,15 @@
             transition: all 0.3s ease;
             cursor: pointer;
         }
-
         .btn-primary:hover {
             background: #ffffff;
             color: #000000;
         }
-
         body.light-theme .btn-primary {
             background: #ffffff;
             color: #000000;
             border-color: #ffffff;
         }
-
         body.light-theme .btn-primary:hover {
             background: transparent;
             color: #ffffff;
@@ -110,22 +109,20 @@
             transition: all 0.3s ease;
             cursor: pointer;
         }
-
         .btn-secondary:hover {
             background: #000000;
             color: #ffffff;
         }
-
         body.light-theme .btn-secondary {
             color: #ffffff;
             border-color: #ffffff;
         }
-
         body.light-theme .btn-secondary:hover {
             background: #ffffff;
             color: #000000;
         }
 
+        /* ===== ПАНЕЛЬ ОПЛАТЫ ===== */
         .payment-overlay {
             width: 100%;
             max-width: 700px;
@@ -160,7 +157,6 @@
             padding: 30px;
             background: #ffffff;
         }
-
         body.light-theme .payment-left {
             background: #1a1a1a;
             color: #eeeeee;
@@ -172,11 +168,9 @@
             border-bottom: 1px solid #eee;
             font-family: 'Unbounded', sans-serif;
         }
-
         body.light-theme .payment-left .payment-item {
             border-bottom-color: #333333;
         }
-
         .payment-left .payment-item span {
             float: right;
             font-weight: 600;
@@ -191,12 +185,10 @@
             border-top: 2px solid #000000;
             font-family: 'Syne', sans-serif;
         }
-
         body.light-theme .payment-total {
             border-top-color: #ffffff;
             color: #ffffff;
         }
-
         .payment-total span {
             float: right;
         }
@@ -206,66 +198,119 @@
             background: #000000;
             color: #ffffff;
         }
-
         body.light-theme .payment-right {
             background: #0a0a0a;
         }
 
+        /* ===== ВЫБОР ОПЛАТЫ ===== */
         .payment-methods {
             display: flex;
+            flex-wrap: wrap;
             gap: 8px;
             margin-bottom: 16px;
-            flex-wrap: wrap;
         }
-
-        .payment-methods span {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 6px 14px;
+        .payment-methods .pm-btn {
+            padding: 8px 16px;
             border-radius: 20px;
-            font-size: 13px;
-            cursor: pointer;
-            transition: background 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            font-family: 'Unbounded', sans-serif;
-        }
-
-        .payment-methods span:hover {
-            background: rgba(255, 255, 255, 0.2);
-        }
-
-        .payment-email {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(255, 255, 255, 0.05);
-            padding: 10px 14px;
-            border-radius: 12px;
-            margin-bottom: 12px;
             font-size: 14px;
             font-family: 'Unbounded', sans-serif;
-        }
-
-        .edit-icon {
-            margin-left: auto;
-            opacity: 0.5;
+            font-weight: 600;
             cursor: pointer;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.08);
+            color: #aaa;
+            border: 2px solid transparent;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            user-select: none;
+        }
+        .payment-methods .pm-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+            color: #fff;
+        }
+        .payment-methods .pm-btn.active {
+            background: #ffffff;
+            color: #000000;
+            border-color: #ffffff;
+        }
+        body.light-theme .payment-methods .pm-btn {
+            background: rgba(0, 0, 0, 0.08);
+            color: #666;
+        }
+        body.light-theme .payment-methods .pm-btn:hover {
+            background: rgba(0, 0, 0, 0.15);
+            color: #000;
+        }
+        body.light-theme .payment-methods .pm-btn.active {
+            background: #000000;
+            color: #ffffff;
+            border-color: #000000;
         }
 
-        .payment-blank {
+        /* ===== ВЫБОР СПОСОБА СВЯЗИ ===== */
+        .contact-methods {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+        .contact-methods .cm-btn {
+            padding: 6px 14px;
+            border-radius: 16px;
+            font-size: 13px;
+            font-family: 'Unbounded', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.06);
+            color: #888;
+            border: 2px solid transparent;
+            user-select: none;
+        }
+        .contact-methods .cm-btn:hover {
+            background: rgba(255, 255, 255, 0.12);
+            color: #fff;
+        }
+        .contact-methods .cm-btn.active {
             background: #ffffff;
+            color: #000000;
+            border-color: #ffffff;
+        }
+        body.light-theme .contact-methods .cm-btn {
+            background: rgba(0, 0, 0, 0.06);
+            color: #666;
+        }
+        body.light-theme .contact-methods .cm-btn:hover {
+            background: rgba(0, 0, 0, 0.12);
+            color: #000;
+        }
+        body.light-theme .contact-methods .cm-btn.active {
+            background: #000000;
+            color: #ffffff;
+            border-color: #000000;
+        }
+
+        /* ===== ПОЛЕ ВВОДА ===== */
+        .payment-input {
+            background: rgba(255, 255, 255, 0.05);
             border-radius: 12px;
             padding: 0 14px;
             margin-bottom: 12px;
-            transition: background 0.3s;
+            transition: background 0.3s, border-color 0.3s;
+            border: 2px solid transparent;
+            position: relative;
         }
-
-        body.light-theme .payment-blank {
-            background: #333333;
+        .payment-input.error {
+            border-color: #ef4444;
         }
-
-        .payment-blank input {
+        .payment-input.success {
+            border-color: #22c55e;
+        }
+        body.light-theme .payment-input {
+            background: rgba(0, 0, 0, 0.05);
+        }
+        .payment-input input {
             width: 100%;
             padding: 12px 0;
             border: none;
@@ -273,26 +318,37 @@
             font-size: 14px;
             background: transparent;
             font-family: 'Unbounded', sans-serif;
+            color: #f0f0f0;
+        }
+        body.light-theme .payment-input input {
+            color: #000000;
+        }
+        .payment-input input::placeholder {
+            color: #666;
+        }
+        .payment-input input:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
         }
 
-        body.light-theme .payment-blank input {
-            color: #ffffff;
-        }
-
-        body.light-theme .payment-blank input::placeholder {
-            color: #888888;
-        }
-
-        .payment-agree {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 13px;
-            opacity: 0.7;
-            margin: 12px 0;
+        .payment-input .input-label {
+            display: block;
+            font-size: 11px;
+            opacity: 0.4;
             font-family: 'Unbounded', sans-serif;
+            padding-top: 4px;
         }
 
+        .payment-input .input-hint {
+            display: block;
+            font-size: 10px;
+            opacity: 0.3;
+            font-family: 'Unbounded', sans-serif;
+            padding-bottom: 4px;
+            min-height: 18px;
+        }
+
+        /* ===== КНОПКА ОПЛАТЫ ===== */
         .btn-pay {
             width: 100%;
             padding: 14px;
@@ -309,21 +365,111 @@
             justify-content: space-between;
             align-items: center;
         }
-
         .btn-pay:disabled {
             opacity: 0.3;
             cursor: not-allowed;
         }
-
         .btn-pay:hover:not(:disabled) {
             transform: scale(1.02);
         }
-
         body.light-theme .btn-pay {
             background: #ffffff;
             color: #000000;
         }
 
+        /* ===== МОДАЛКА "ДРУГОЕ" ===== */
+        .other-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(8px);
+            z-index: 2000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+        .other-overlay.open {
+            display: flex;
+        }
+        .other-panel {
+            background: #1a1a1a;
+            border-radius: 28px;
+            padding: 32px;
+            max-width: 380px;
+            width: 90%;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+        }
+        body.light-theme .other-panel {
+            background: #ffffff;
+        }
+        .other-panel h3 {
+            font-family: 'Syne', sans-serif;
+            font-weight: 700;
+            font-size: 24px;
+            margin-bottom: 16px;
+            color: #f0f0f0;
+        }
+        body.light-theme .other-panel h3 {
+            color: #000000;
+        }
+        .other-panel .other-btn {
+            display: block;
+            width: 100%;
+            padding: 14px 18px;
+            border-radius: 16px;
+            font-family: 'Unbounded', sans-serif;
+            font-weight: 600;
+            font-size: 16px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid transparent;
+            color: #f0f0f0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: left;
+            margin-bottom: 8px;
+        }
+        body.light-theme .other-panel .other-btn {
+            background: rgba(0, 0, 0, 0.04);
+            color: #000000;
+        }
+        .other-panel .other-btn:hover {
+            background: rgba(255, 255, 255, 0.08);
+        }
+        body.light-theme .other-panel .other-btn:hover {
+            background: rgba(0, 0, 0, 0.08);
+        }
+        .other-panel .other-btn .material-symbols-outlined {
+            vertical-align: middle;
+            margin-right: 10px;
+        }
+        .other-close {
+            margin-top: 12px;
+            padding: 10px;
+            border: none;
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 12px;
+            color: #888;
+            font-family: 'Unbounded', sans-serif;
+            font-size: 14px;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s;
+        }
+        body.light-theme .other-close {
+            background: rgba(0, 0, 0, 0.04);
+            color: #666;
+        }
+        .other-close:hover {
+            background: rgba(255, 255, 255, 0.08);
+        }
+        body.light-theme .other-close:hover {
+            background: rgba(0, 0, 0, 0.08);
+        }
+
+        /* ===== УСПЕХ ===== */
         .success-overlay {
             position: fixed;
             top: 0;
@@ -331,12 +477,14 @@
             right: 0;
             bottom: 0;
             background: rgba(0, 0, 0, 0.6);
-            display: flex;
+            display: none;
             justify-content: center;
             align-items: center;
             z-index: 1000;
         }
-
+        .success-overlay.open {
+            display: flex;
+        }
         .success-panel {
             background: #ffffff;
             border-radius: 24px;
@@ -345,12 +493,10 @@
             max-width: 400px;
             animation: slideUp 0.5s ease;
         }
-
         body.light-theme .success-panel {
             background: #1a1a1a;
             color: #eeeeee;
         }
-
         .success-icon {
             display: inline-flex;
             justify-content: center;
@@ -361,25 +507,21 @@
             border-radius: 50%;
             margin-bottom: 16px;
         }
-
         .success-icon .material-symbols-outlined {
             font-size: 48px;
             color: #22c55e;
         }
-
         .success-panel h2 {
             font-size: 28px;
             margin-bottom: 8px;
             font-family: 'Syne', sans-serif;
         }
-
         .success-panel p {
             font-size: 16px;
             opacity: 0.6;
             margin-bottom: 24px;
             font-family: 'Unbounded', sans-serif;
         }
-
         .success-footer {
             display: inline-block;
             background: #000000;
@@ -393,16 +535,15 @@
             cursor: pointer;
             transition: all 0.3s;
         }
-
         .success-footer:hover {
             transform: scale(1.05);
         }
-
         body.light-theme .success-footer {
             background: #ffffff;
             color: #000000;
         }
 
+        /* ===== АДАПТИВ ===== */
         @media (max-width: 600px) {
             .payment-panel {
                 grid-template-columns: 1fr;
@@ -414,11 +555,20 @@
             .payment-left {
                 padding: 20px;
             }
+            .payment-methods .pm-btn {
+                font-size: 12px;
+                padding: 6px 12px;
+            }
+            .contact-methods .cm-btn {
+                font-size: 12px;
+                padding: 4px 10px;
+            }
         }
     </style>
 </head>
 <body>
 
+    <!-- ===== ПАНЕЛЬ ОПЛАТЫ ===== -->
     <div class="payment-overlay">
         <div class="payment-panel">
             <div class="payment-left">
@@ -429,33 +579,75 @@
                 </div>
             </div>
             <div class="payment-right">
+                <!-- ВЫБОР ОПЛАТЫ -->
                 <div class="payment-methods">
-                    <span><span class="material-symbols-outlined icon-sm">payments</span> СБП</span>
-                    <span><span class="material-symbols-outlined icon-sm">credit_card</span> Карта</span>
-                    <span><span class="material-symbols-outlined icon-sm">more_horiz</span> Другое</span>
+                    <div class="pm-btn active" data-method="sbp">
+                        <span class="material-symbols-outlined icon-sm">payments</span> СБП
+                    </div>
+                    <div class="pm-btn" data-method="card">
+                        <span class="material-symbols-outlined icon-sm">credit_card</span> Карта
+                    </div>
+                    <div class="pm-btn" data-method="other" id="otherMethodBtn">
+                        <span class="material-symbols-outlined icon-sm">more_horiz</span> Другое
+                    </div>
                 </div>
-                <div class="payment-email">
-                    <span class="material-symbols-outlined">mail</span>
-                    <span>ployyka@icloud.com</span>
-                    <span class="edit-icon"><span class="material-symbols-outlined">edit</span></span>
+
+                <!-- ВЫБОР СПОСОБА СВЯЗИ -->
+                <div class="contact-methods" id="contactMethods">
+                    <div class="cm-btn" data-contact="phone">📱 Телефон</div>
+                    <div class="cm-btn" data-contact="email">✉️ Почта</div>
+                    <div class="cm-btn" data-contact="telegram">💬 Telegram</div>
                 </div>
-                <div class="payment-blank">
-                    <input type="text" placeholder="Ваше сообщение (необязательно)" id="messageInput" onfocus="this.parentElement.style.background='#eee'" onblur="if(!this.value) this.parentElement.style.background='white'" />
+
+                <!-- ПОЛЕ ВВОДА -->
+                <div class="payment-input" id="contactInputWrapper">
+                    <span class="input-label" id="contactLabel">Введите номер телефона</span>
+                    <input type="text" id="contactInput" placeholder="+7 (999) 999-99-99" />
+                    <span class="input-hint" id="contactHint">Номер должен содержать 11 цифр</span>
                 </div>
-                <label class="payment-agree">
-                    <input type="checkbox" id="agreeCheck" onchange="togglePayButton()" /> Согласен с условиями
-                </label>
+
+                <!-- СООБЩЕНИЕ -->
+                <div class="payment-input">
+                    <span class="input-label">Сообщение (необязательно)</span>
+                    <input type="text" id="messageInput" placeholder="Ваше сообщение..." />
+                </div>
+
                 <button class="btn-pay" id="payButton" disabled onclick="processPayment()">
                     Оплатить <span id="payAmount">249 ₽</span>
                     <span class="material-symbols-outlined">arrow_forward</span>
                 </button>
+
                 <br>
                 <a href="tariffs.html" class="btn-secondary dark">← Назад</a>
             </div>
         </div>
     </div>
 
-    <div id="successPanel" style="display:none;" class="success-overlay">
+    <!-- ===== МОДАЛКА "ДРУГОЕ" ===== -->
+    <div class="other-overlay" id="otherOverlay">
+        <div class="other-panel">
+            <h3>Другие способы оплаты</h3>
+            <button class="other-btn" onclick="selectOther('Криптовалюта (BTC/ETH/USDT)')">
+                <span class="material-symbols-outlined">currency_bitcoin</span> Криптовалюта
+            </button>
+            <button class="other-btn" onclick="selectOther('Карты других стран (Visa/Mastercard)')">
+                <span class="material-symbols-outlined">credit_card</span> Карты других стран
+            </button>
+            <button class="other-btn" onclick="selectOther('QIWI / ЮMoney')">
+                <span class="material-symbols-outlined">account_balance_wallet</span> QIWI / ЮMoney
+            </button>
+            <button class="other-btn" onclick="selectOther('PayPal')">
+                <span class="material-symbols-outlined">paypal</span> PayPal
+            </button>
+            <button class="other-btn" onclick="selectOther('Нал (при личной встрече)')">
+                <span class="material-symbols-outlined">payments</span> Нал
+            </button>
+            <button class="other-close" onclick="closeOther()">✕ Закрыть</button>
+        </div>
+    </div>
+
+    <!-- ===== УСПЕХ ===== -->
+    <div class="success-overlay" id="successPanel">
         <div class="success-panel">
             <div class="success-icon">
                 <span class="material-symbols-outlined">check_circle</span>
@@ -467,35 +659,187 @@
     </div>
 
     <script>
-        function goToMain() {
-            window.location.href = 'index.html';
+        // ============================================================
+        //   КОНФИГУРАЦИЯ TELEGRAM
+        // ============================================================
+        const BOT_TOKEN = '8451595343:AAFmxxaI9ltHhDAf4DJZ9SsU84nLZhpnKFc'; // ⚠️ ВСТАВЬ ТОКЕН ОТ @BotFather
+        const CHAT_ID = '140403762';     // ⚠️ ВСТАВЬ СВОЙ CHAT ID
+        const URL_API = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
+
+        // ============================================================
+        //   ДАННЫЕ ТАРИФА
+        // ============================================================
+        let tariffData = { name: 'Лайт', price: 199 };
+
+        // ============================================================
+        //   ВЫБОР СПОСОБА СВЯЗИ
+        // ============================================================
+        let selectedContact = null;
+
+        document.querySelectorAll('.cm-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.cm-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                selectedContact = this.dataset.contact;
+
+                const labels = {
+                    phone: 'Введите номер телефона',
+                    email: 'Введите почту',
+                    telegram: 'Введите @username или ID'
+                };
+                const placeholders = {
+                    phone: '+7 (999) 999-99-99',
+                    email: 'your@email.com',
+                    telegram: '@username или 123456789'
+                };
+                const hints = {
+                    phone: 'Номер должен содержать 11 цифр',
+                    email: 'Почта должна заканчиваться на .ru или .com',
+                    telegram: 'Юзернейм с @ (без спецсимволов) или ID (только цифры)'
+                };
+                document.getElementById('contactLabel').textContent = labels[selectedContact];
+                document.getElementById('contactInput').placeholder = placeholders[selectedContact];
+                document.getElementById('contactHint').textContent = hints[selectedContact];
+                document.getElementById('contactInput').disabled = false;
+                document.getElementById('contactInput').value = '';
+                document.getElementById('contactInput').focus();
+                validateContactInput();
+            });
+        });
+
+        // ============================================================
+        //   ВАЛИДАЦИЯ
+        // ============================================================
+        function validateContactInput() {
+            const input = document.getElementById('contactInput');
+            const wrapper = document.getElementById('contactInputWrapper');
+            const value = input.value.trim();
+            const type = selectedContact;
+
+            if (!type || !value) {
+                wrapper.classList.remove('success', 'error');
+                document.getElementById('payButton').disabled = true;
+                return false;
+            }
+
+            let isValid = false;
+
+            if (type === 'phone') {
+                const digits = value.replace(/\D/g, '');
+                isValid = digits.length === 11 && value.includes('+7') && !value.includes('_');
+            } else if (type === 'email') {
+                isValid = /^[^\s@]+@[^\s@]+\.(ru|com)$/.test(value);
+            } else if (type === 'telegram') {
+                const trimmed = value.trim();
+                if (trimmed.startsWith('@')) {
+                    isValid = /^@[a-zA-Z0-9_]+$/.test(trimmed) && !trimmed.endsWith('_');
+                } else {
+                    isValid = /^\d+$/.test(trimmed);
+                }
+            }
+
+            wrapper.classList.remove('success', 'error');
+            if (isValid) {
+                wrapper.classList.add('success');
+            } else {
+                wrapper.classList.add('error');
+            }
+
+            document.getElementById('payButton').disabled = !isValid;
+            return isValid;
         }
 
-        function togglePayButton() {
-            const agree = document.getElementById('agreeCheck').checked;
-            document.getElementById('payButton').disabled = !agree;
+        // ============================================================
+        //   МАСКА ТЕЛЕФОНА
+        // ============================================================
+        function maskPhone(input) {
+            if (selectedContact !== 'phone') return;
+
+            let value = input.value.replace(/\D/g, '');
+            if (value.length === 0) {
+                input.value = '+7';
+                return;
+            }
+            if (value.length === 1 && value !== '7') {
+                input.value = '+7';
+                return;
+            }
+            let formatted = '+7';
+            if (value.length > 1) {
+                formatted += ' (' + value.substring(1, 4);
+            }
+            if (value.length >= 5) {
+                formatted += ') ' + value.substring(4, 7);
+            }
+            if (value.length >= 8) {
+                formatted += '-' + value.substring(7, 9);
+            }
+            if (value.length >= 10) {
+                formatted += '-' + value.substring(9, 11);
+            }
+            input.value = formatted;
+            validateContactInput();
         }
 
-        function processPayment() {
-            document.querySelector('.payment-overlay').style.display = 'none';
-            document.getElementById('successPanel').style.display = 'flex';
+        // ============================================================
+        //   ОБРАБОТКА ВВОДА
+        // ============================================================
+        document.getElementById('contactInput').addEventListener('input', function() {
+            if (selectedContact === 'phone') {
+                maskPhone(this);
+            } else {
+                validateContactInput();
+            }
+        });
+
+        document.getElementById('contactInput').addEventListener('blur', validateContactInput);
+
+        // ============================================================
+        //   ВЫБОР ОПЛАТЫ
+        // ============================================================
+        let selectedPayment = 'sbp';
+
+        document.querySelectorAll('.pm-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.pm-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                selectedPayment = this.dataset.method;
+
+                if (selectedPayment === 'other') {
+                    document.getElementById('otherOverlay').classList.add('open');
+                }
+            });
+        });
+
+        // ============================================================
+        //   МОДАЛКА "ДРУГОЕ"
+        // ============================================================
+        function selectOther(method) {
+            closeOther();
+            const otherBtn = document.querySelector('.pm-btn[data-method="other"]');
+            otherBtn.innerHTML = `<span class="material-symbols-outlined icon-sm">check</span> ${method}`;
+            otherBtn.classList.add('active');
+            selectedPayment = method;
         }
 
-        function toggleTheme() {
-            document.body.classList.toggle('light-theme');
-            localStorage.setItem('pltrs_theme', document.body.classList.contains('light-theme'));
-        }
-
-        function loadTheme() {
-            const isDark = localStorage.getItem('pltrs_theme') === 'true';
-            if (isDark) {
-                document.body.classList.add('light-theme');
+        function closeOther() {
+            document.getElementById('otherOverlay').classList.remove('open');
+            const otherBtn = document.querySelector('.pm-btn[data-method="other"]');
+            if (otherBtn.classList.contains('active') && selectedPayment === 'other') {
+                otherBtn.classList.remove('active');
+                document.querySelector('.pm-btn[data-method="sbp"]').classList.add('active');
+                selectedPayment = 'sbp';
             }
         }
 
-        document.addEventListener('DOMContentLoaded', function() {
-            loadTheme();
+        document.getElementById('otherOverlay').addEventListener('click', function(e) {
+            if (e.target === this) closeOther();
+        });
 
+        // ============================================================
+        //   ЗАГРУЗКА ТАРИФА
+        // ============================================================
+        document.addEventListener('DOMContentLoaded', function() {
             const params = new URLSearchParams(window.location.search);
             const tariff = params.get('tariff');
 
@@ -515,9 +859,109 @@
             };
 
             const data = tariffs[tariff] || tariffs.light;
+            tariffData = data;
             document.getElementById('tariffName').innerHTML = `Тариф "${data.name}" — <span>${data.price} ₽</span>`;
             document.getElementById('totalAmount').textContent = (data.price + 50) + ' ₽';
             document.getElementById('payAmount').textContent = (data.price + 50) + ' ₽';
+        });
+
+        // ============================================================
+        //   ГЕНЕРАЦИЯ ID
+        // ============================================================
+        function generateOrderId() {
+            let id = '';
+            for (let i = 0; i < 9; i++) {
+                id += Math.floor(Math.random() * 10);
+            }
+            return id;
+        }
+
+        // ============================================================
+        //   ОТПРАВКА В TELEGRAM
+        // ============================================================
+        function processPayment() {
+            if (!selectedContact) {
+                alert('Выберите способ связи!');
+                return;
+            }
+
+            const contactValue = document.getElementById('contactInput').value.trim();
+            if (!contactValue || !validateContactInput()) {
+                alert('Введите корректные данные для связи!');
+                return;
+            }
+
+            const messageText = document.getElementById('messageInput').value.trim() || 'Не указано';
+            const orderId = generateOrderId();
+
+            const contactLabels = {
+                phone: '📱 Телефон',
+                email: '✉️ Почта',
+                telegram: '💬 Telegram'
+            };
+
+            let msg = `<b>📦 Новая заявка pltrs.mob!</b>\n\n`;
+            msg += `🆔 <b>ID заявки:</b> ${orderId}\n`;
+            msg += `📋 <b>Тариф:</b> ${tariffData.name}\n`;
+            msg += `💰 <b>Сумма:</b> ${tariffData.price + 50} ₽\n`;
+            msg += `💳 <b>Способ оплаты:</b> ${selectedPayment === 'sbp' ? 'СБП' : selectedPayment === 'card' ? 'Карта' : selectedPayment}\n`;
+            msg += `📞 <b>Способ связи:</b> ${contactLabels[selectedContact] || selectedContact}\n`;
+            msg += `📝 <b>Контакт:</b> ${contactValue}\n`;
+            msg += `💬 <b>Сообщение:</b> ${messageText}\n\n`;
+            msg += `🕐 ${new Date().toLocaleString('ru-RU')}`;
+
+            fetch(URL_API, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    chat_id: CHAT_ID,
+                    parse_mode: 'HTML',
+                    text: msg
+                })
+            }).then(response => {
+                if (response.ok) {
+                    document.getElementById('successPanel').classList.add('open');
+                } else {
+                    alert('Ошибка отправки. Попробуйте ещё раз.');
+                }
+            }).catch(() => {
+                alert('Ошибка соединения. Проверьте интернет.');
+            });
+        }
+
+        // ============================================================
+        //   КНОПКА "СУПЕР!"
+        // ============================================================
+        function goToMain() {
+            window.location.href = 'index.html';
+        }
+
+        // ============================================================
+        //   ТЕМА
+        // ============================================================
+        function toggleTheme() {
+            document.body.classList.toggle('light-theme');
+            localStorage.setItem('pltrs_theme', document.body.classList.contains('light-theme') ? 'light' : 'dark');
+        }
+
+        function loadTheme() {
+            if (localStorage.getItem('pltrs_theme') === 'light') {
+                document.body.classList.add('light-theme');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', loadTheme);
+
+        // Enter для отправки
+        document.getElementById('contactInput').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' && !document.getElementById('payButton').disabled) {
+                processPayment();
+            }
+        });
+        document.getElementById('messageInput').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' && !document.getElementById('payButton').disabled) {
+                processPayment();
+            }
         });
     </script>
 
