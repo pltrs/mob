@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>pltrs.mob — Тарифы</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📶</text></svg>" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -12,6 +13,72 @@
 
     <style>
         /* ===== БАЗА ===== */
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 100px;
+            overflow-y: scroll;
+            scrollbar-gutter: stable;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(255, 255, 255, 0.18) transparent;
+        }
+
+        html:has(body.light-theme),
+        body.light-theme {
+            scrollbar-color: rgba(0, 0, 0, 0.18) transparent;
+        }
+
+        /* ===== КАСТОМНЫЙ СКРОЛЛБАР (СЛИВАЮЩИЙСЯ С ФОНОМ) ===== */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 10px;
+            border: 2px solid transparent;
+            background-clip: padding-box;
+            transition: background 0.2s ease;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.32);
+            border: 2px solid transparent;
+            background-clip: padding-box;
+        }
+
+        ::-webkit-scrollbar-thumb:active {
+            background: rgba(255, 255, 255, 0.48);
+            border: 2px solid transparent;
+            background-clip: padding-box;
+        }
+
+        /* Скроллбар для светлой темы */
+        body.light-theme::-webkit-scrollbar-thumb,
+        html:has(body.light-theme)::-webkit-scrollbar-thumb {
+            background: rgba(0, 0, 0, 0.15);
+            border: 2px solid transparent;
+            background-clip: padding-box;
+        }
+
+        body.light-theme::-webkit-scrollbar-thumb:hover,
+        html:has(body.light-theme)::-webkit-scrollbar-thumb:hover {
+            background: rgba(0, 0, 0, 0.32);
+            border: 2px solid transparent;
+            background-clip: padding-box;
+        }
+
+        body.light-theme::-webkit-scrollbar-thumb:active,
+        html:has(body.light-theme)::-webkit-scrollbar-thumb:active {
+            background: rgba(0, 0, 0, 0.48);
+            border: 2px solid transparent;
+            background-clip: padding-box;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -25,7 +92,7 @@
             line-height: 1.5;
             background: #0a0a0a;
             color: #f0f0f0;
-            transition: background 0.6s ease, color 0.6s ease;
+            transition: background 0.25s ease, color 0.25s ease;
             min-height: 100vh;
             padding: 80px 24px 40px;
         }
@@ -75,7 +142,7 @@
             pointer-events: none;
             z-index: 9999;
             transform: translateY(-100%);
-            transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
             background: #0a0a0a;
         }
         .theme-transition-overlay.active {
@@ -190,11 +257,11 @@
         }
         .theme-btn .material-symbols-outlined {
             font-size: 28px;
-            transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), color 0.4s ease;
+            transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), color 0.25s ease;
             color: #ffffff;
         }
         body.light-theme .theme-btn .material-symbols-outlined {
-            color: #000000;
+            color: #ffffff;
         }
         .theme-btn .material-symbols-outlined.rotated {
             transform: rotate(180deg);
@@ -294,61 +361,200 @@
         }
 
         .constructor-row {
-            margin-bottom: 20px;
+            margin-bottom: 24px;
         }
         .constructor-row label {
-            display: block;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             font-family: 'Unbounded', sans-serif;
             font-weight: 600;
-            font-size: 18px;
-            margin-bottom: 6px;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+        .constructor-row label .val-badge {
+            font-size: 14px;
+            font-weight: 700;
+            padding: 4px 12px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.08);
+            color: #ffffff;
+            font-variant-numeric: tabular-nums;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        body.light-theme .constructor-row label .val-badge {
+            background: rgba(0, 0, 0, 0.05);
+            color: #000000;
+            border-color: rgba(0, 0, 0, 0.08);
         }
 
-        /* ===== СЛАЙДЕР ===== */
-        .constructor-row input[type="range"] {
+        /* ===== КАСТОМНЫЙ ПЛАВНЫЙ СЛАЙДЕР ===== */
+        .custom-slider {
+            position: relative;
             width: 100%;
-            height: 4px;
-            -webkit-appearance: none;
-            appearance: none;
-            background: #333;
-            border-radius: 2px;
+            height: 38px;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            user-select: none;
+            touch-action: none;
+            margin: 4px 0 10px;
+        }
+
+        .custom-slider .slider-track-bg {
+            position: relative;
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.12);
+            border-radius: 6px;
+            pointer-events: none;
+        }
+
+        body.light-theme .custom-slider .slider-track-bg {
+            background: rgba(0, 0, 0, 0.08);
+        }
+
+        .custom-slider .slider-fill {
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            background: #ffffff;
+            border-radius: 6px;
+            width: 0%;
+            pointer-events: none;
+            will-change: width;
+        }
+
+        body.light-theme .custom-slider .slider-fill {
+            background: #000000;
+        }
+
+        .custom-slider .slider-thumb {
+            position: absolute;
+            top: 50%;
+            left: 0%;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #ffffff;
+            border: 3px solid #141414;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+            transform: translate(-50%, -50%);
+            cursor: grab;
             outline: none;
-            margin: 8px 0;
-            transition: background 0.3s ease;
+            will-change: left, transform;
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
         }
-        body.light-theme .constructor-row input[type="range"] {
-            background: #ddd;
-        }
-        .constructor-row input[type="range"]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background: #ffffff;
-            cursor: pointer;
-            border: 2px solid #ffffff;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-            transition: all 0.2s ease;
-        }
-        body.light-theme .constructor-row input[type="range"]::-webkit-slider-thumb {
+
+        body.light-theme .custom-slider .slider-thumb {
             background: #000000;
-            border-color: #000000;
+            border-color: #ffffff;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
         }
-        .constructor-row input[type="range"]::-webkit-slider-thumb:hover {
-            transform: scale(1.1);
+
+        .custom-slider:hover .slider-thumb {
+            transform: translate(-50%, -50%) scale(1.12);
+            box-shadow: 0 4px 16px rgba(255, 255, 255, 0.25), 0 0 0 6px rgba(255, 255, 255, 0.1);
         }
-        .constructor-row input[type="range"]::-moz-range-thumb {
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background: #ffffff;
-            cursor: pointer;
-            border: 2px solid #ffffff;
+
+        body.light-theme .custom-slider:hover .slider-thumb {
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2), 0 0 0 6px rgba(0, 0, 0, 0.08);
         }
-        body.light-theme .constructor-row input[type="range"]::-moz-range-thumb {
-            background: #000000;
-            border-color: #000000;
+
+        .custom-slider.dragging .slider-thumb,
+        .custom-slider .slider-thumb:active {
+            cursor: grabbing;
+            transform: translate(-50%, -50%) scale(1.18);
+            box-shadow: 0 4px 20px rgba(255, 255, 255, 0.4), 0 0 0 8px rgba(255, 255, 255, 0.15);
+        }
+
+        body.light-theme .custom-slider.dragging .slider-thumb,
+        body.light-theme .custom-slider .slider-thumb:active {
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3), 0 0 0 8px rgba(0, 0, 0, 0.12);
+        }
+
+        .slider-hidden-input {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            margin: -1px;
+            padding: 0;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            border: 0;
+        }
+
+        /* ===== СЛОТ-МАШИНА / IOS WHEEL TICKER ДЛЯ ЧИСЕЛ ===== */
+        .ticker-num {
+            display: inline-flex;
+            align-items: center;
+            height: 1.15em;
+            line-height: 1.15em;
+            overflow: hidden;
+            vertical-align: baseline;
+            font-variant-numeric: tabular-nums;
+            position: relative;
+            mask-image: linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%);
+            -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%);
+        }
+
+        .ticker-col {
+            display: inline-block;
+            height: 1.15em;
+            line-height: 1.15em;
+            overflow: hidden;
+            position: relative;
+            transition: width 0.2s ease, opacity 0.2s ease;
+        }
+
+        .ticker-strip {
+            display: flex;
+            flex-direction: column;
+            will-change: transform;
+        }
+
+        .ticker-digit {
+            height: 1.15em;
+            line-height: 1.15em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            user-select: none;
+        }
+
+        /* ===== АНИМАЦИИ ЧИСЕЛ ===== */
+        @keyframes badgePop {
+            0% { transform: scale(1); }
+            45% { transform: scale(1.16); }
+            100% { transform: scale(1); }
+        }
+
+        .val-badge {
+            transition: transform 0.15s ease;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .val-badge.val-pop {
+            animation: badgePop 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        @keyframes pricePulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.04); }
+            100% { transform: scale(1); }
+        }
+
+        .constructor-price {
+            display: inline-block;
+            transform-origin: left center;
+            transition: transform 0.15s ease;
+        }
+
+        .constructor-price.price-pulse {
+            animation: pricePulse 0.22s ease-out;
         }
 
         /* ===== КАСТОМНЫЕ ЧЕКБОКСЫ (ТЕКСТ-КНОПКИ) ===== */
@@ -394,28 +600,32 @@
         }
 
         .constructor-price {
-            font-family: 'Syne', sans-serif;
+            font-family: 'Unbounded', sans-serif;
             font-weight: 800;
-            font-size: 48px;
-            margin: 16px 0;
+            font-size: 44px;
+            margin: 18px 0;
             line-height: 1.2;
+            letter-spacing: -0.02em;
         }
 
         .constructor-price span {
-            font-family: 'Syne', sans-serif;
+            font-family: 'Unbounded', sans-serif;
         }
 
         .constructor-price .currency {
             font-size: 24px;
             opacity: 0.7;
+            font-weight: 600;
         }
 
         .constructor-price .per-month {
             display: block;
             font-size: 14px;
-            opacity: 0.4;
+            opacity: 0.5;
             font-family: 'Unbounded', sans-serif;
-            font-weight: 400;
+            font-weight: 500;
+            letter-spacing: 0;
+            margin-top: 4px;
         }
 
         .btn-primary {
@@ -482,15 +692,17 @@
             margin-bottom: 8px;
         }
         .tariff-card .price {
-            font-family: 'Syne', sans-serif;
+            font-family: 'Unbounded', sans-serif;
             font-weight: 800;
-            font-size: 36px;
-            margin: 12px 0;
+            font-size: 32px;
+            margin: 14px 0;
+            letter-spacing: -0.02em;
         }
         .tariff-card .price span {
-            font-size: 18px;
-            font-weight: 400;
-            opacity: 0.5;
+            font-size: 16px;
+            font-weight: 500;
+            opacity: 0.6;
+            letter-spacing: 0;
         }
         .tariff-card .text-body {
             font-family: 'Unbounded', sans-serif;
@@ -625,6 +837,24 @@
                 font-size: 18px;
             }
         }
+
+        /* ===== ФУТЕР ===== */
+        footer {
+            margin-top: 80px;
+            padding: 32px 0 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+            font-size: 14px;
+            opacity: 0.6;
+            font-family: 'Unbounded', sans-serif;
+        }
+        body.light-theme footer {
+            border-top-color: rgba(0, 0, 0, 0.08);
+        }
     </style>
 </head>
 <body>
@@ -683,18 +913,36 @@
             <p class="text-body" style="opacity:0.6; margin-bottom:16px;">Собери свой тариф</p>
 
             <div class="constructor-row">
-                <label>ГБ интернета: <span id="gbVal">15</span> ГБ</label>
-                <input type="range" id="gbSlider" min="0" max="100" value="15" />
+                <label>ГБ интернета <span class="val-badge"><span id="gbVal" class="ticker-num">15</span> ГБ</span></label>
+                <div class="custom-slider" data-input="gbSlider" data-min="0" data-max="100" data-step="5" data-value="15">
+                    <div class="slider-track-bg">
+                        <div class="slider-fill"></div>
+                        <div class="slider-thumb" tabindex="0" role="slider" aria-label="ГБ интернета" aria-valuemin="0" aria-valuemax="100" aria-valuenow="15"></div>
+                    </div>
+                    <input type="range" id="gbSlider" min="0" max="100" step="5" value="15" class="slider-hidden-input" />
+                </div>
             </div>
 
             <div class="constructor-row">
-                <label>Минуты: <span id="minVal">200</span> мин</label>
-                <input type="range" id="minSlider" min="0" max="1000" value="200" step="50" />
+                <label>Минуты звонков <span class="val-badge"><span id="minVal" class="ticker-num">200</span> мин</span></label>
+                <div class="custom-slider" data-input="minSlider" data-min="0" data-max="1000" data-step="50" data-value="200">
+                    <div class="slider-track-bg">
+                        <div class="slider-fill"></div>
+                        <div class="slider-thumb" tabindex="0" role="slider" aria-label="Минуты звонков" aria-valuemin="0" aria-valuemax="1000" aria-valuenow="200"></div>
+                    </div>
+                    <input type="range" id="minSlider" min="0" max="1000" step="50" value="200" class="slider-hidden-input" />
+                </div>
             </div>
 
             <div class="constructor-row">
-                <label>СМС: <span id="smsVal">20</span> шт</label>
-                <input type="range" id="smsSlider" min="0" max="100" value="20" step="10" />
+                <label>Пакет СМС <span class="val-badge"><span id="smsVal" class="ticker-num">20</span> шт</span></label>
+                <div class="custom-slider" data-input="smsSlider" data-min="0" data-max="100" data-step="10" data-value="20">
+                    <div class="slider-track-bg">
+                        <div class="slider-fill"></div>
+                        <div class="slider-thumb" tabindex="0" role="slider" aria-label="Пакет СМС" aria-valuemin="0" aria-valuemax="100" aria-valuenow="20"></div>
+                    </div>
+                    <input type="range" id="smsSlider" min="0" max="100" step="10" value="20" class="slider-hidden-input" />
+                </div>
             </div>
 
             <!-- КАСТОМНЫЕ ЧЕКБОКСЫ (ТЕКСТ-КНОПКИ) -->
@@ -722,10 +970,10 @@
             </div>
 
             <div class="constructor-price">
-    <span id="constructorPrice">0</span> <span style="font-size: 18px; opacity: 0.5;">₽</span>
+    <span id="constructorPrice" class="ticker-num">0</span> <span style="font-size: 18px; opacity: 0.5;">₽</span>
     <span style="display: block; font-size: 14px; opacity: 0.4; font-family: 'Unbounded', sans-serif;">/мес</span>
 </div>
-            <a href="payment.html?tariff=custom" class="btn-primary btn-sm">Оформить</a>
+            <a href="payment.html?tariff=custom" id="customTariffBtn" class="btn-primary btn-sm">Оформить</a>
         </div>
 
         <!-- ===== ВСЕ ТАРИФЫ ===== -->
@@ -896,6 +1144,12 @@
 
         </div>
 
+        <!-- ===== ФУТЕР ===== -->
+        <footer>
+            <div>© <span id="currentYear"></span> pltrs.mob — всегда на связи</div>
+            <div>Связь нового поколения · Учебный проект</div>
+        </footer>
+
     </div>
 
     <script>
@@ -917,57 +1171,379 @@
                 themeIcon.textContent = newIsLight ? 'dark_mode' : 'light_mode';
                 themeIcon.classList.toggle('rotated');
                 localStorage.setItem('pltrs_theme', newIsLight ? 'light' : 'dark');
-            }, 400);
-            setTimeout(() => overlay.classList.remove('active'), 800);
+            }, 140);
+            setTimeout(() => overlay.classList.remove('active'), 280);
         }
 
         function loadTheme() {
             const body = document.body;
-            body.classList.remove('light-theme');
-            themeIcon.textContent = 'light_mode';
-            themeIcon.classList.add('rotated');
+            const savedTheme = localStorage.getItem('pltrs_theme') || 'dark';
+            if (savedTheme === 'light') {
+                body.classList.add('light-theme');
+                themeIcon.textContent = 'dark_mode';
+                themeIcon.classList.remove('rotated');
+            } else {
+                body.classList.remove('light-theme');
+                themeIcon.textContent = 'light_mode';
+                themeIcon.classList.add('rotated');
+            }
             overlay.classList.remove('active');
-            localStorage.setItem('pltrs_theme', 'dark');
         }
 
         // ===== БУРГЕР =====
         const burgerBtn = document.getElementById('burgerBtn');
         const menuOverlay = document.getElementById('menuOverlay');
 
+        function closeMenu() {
+            burgerBtn.classList.remove('active');
+            menuOverlay.classList.remove('open');
+        }
+
         burgerBtn.addEventListener('click', function(e) {
             e.stopPropagation();
             this.classList.toggle('active');
             menuOverlay.classList.toggle('open');
-            document.body.style.overflow = menuOverlay.classList.contains('open') ? 'hidden' : '';
         });
 
         menuOverlay.addEventListener('click', function(e) {
             if (e.target === this) {
-                burgerBtn.classList.remove('active');
-                this.classList.remove('open');
-                document.body.style.overflow = '';
+                closeMenu();
             }
         });
 
         document.querySelectorAll('.menu-panel nav a').forEach(link => {
             link.addEventListener('click', () => {
-                burgerBtn.classList.remove('active');
-                menuOverlay.classList.remove('open');
-                document.body.style.overflow = '';
+                closeMenu();
             });
         });
 
-        // ===== КОНСТРУКТОР (НОВАЯ ЛОГИКА) =====
+        // Блокировка прокрутки фона при открытом меню без скрытия скроллбара
+        function handleOverlayScrollLock(e) {
+            if (menuOverlay && menuOverlay.classList.contains('open')) {
+                if (!e.target.closest('.menu-panel')) {
+                    e.preventDefault();
+                }
+            }
+        }
+        window.addEventListener('wheel', handleOverlayScrollLock, { passive: false });
+        window.addEventListener('touchmove', handleOverlayScrollLock, { passive: false });
+        window.addEventListener('keydown', function(e) {
+            if (menuOverlay && menuOverlay.classList.contains('open') && ['ArrowUp', 'ArrowDown', 'PageUp', 'PageDown', 'Space', 'Home', 'End'].includes(e.code)) {
+                if (!e.target.closest('input, textarea, select')) {
+                    e.preventDefault();
+                }
+            }
+        });
+
+        // ===== СЛОТ-МАШИНА / IOS КОЛЕСО TICKER ДЛЯ ЧИСЕЛ =====
+        function createTickerStrip() {
+            const strip = document.createElement('span');
+            strip.className = 'ticker-strip';
+            // 3 набора 0..9 (30 цифр) для непрерывной прокрутки в любую сторону
+            for (let set = 0; set < 3; set++) {
+                for (let i = 0; i <= 9; i++) {
+                    const d = document.createElement('span');
+                    d.className = 'ticker-digit';
+                    d.textContent = i;
+                    strip.appendChild(d);
+                }
+            }
+            return strip;
+        }
+
+        const tickerStates = new WeakMap();
+
+        function updateTicker(container, value) {
+            if (!container) return;
+            const targetNum = parseInt(value, 10);
+            if (isNaN(targetNum)) return;
+
+            let state = tickerStates.get(container);
+            if (!state) {
+                state = { lastValue: null, lastTime: 0 };
+                tickerStates.set(container, state);
+            }
+
+            const isInitial = state.lastValue === null;
+            if (!isInitial && targetNum === state.lastValue) {
+                return; // Значение не изменилось
+            }
+
+            const now = performance.now();
+            const timeDelta = state.lastTime ? (now - state.lastTime) : 1000;
+            state.lastTime = now;
+            const isRapid = timeDelta < 85; // Быстрое скраббирование
+
+            const isIncrease = isInitial || targetNum >= state.lastValue;
+            state.lastValue = targetNum;
+
+            const str = String(targetNum);
+            const targetLen = str.length;
+
+            if (!container.classList.contains('ticker-num')) {
+                container.classList.add('ticker-num');
+            }
+
+            let cols = Array.from(container.querySelectorAll('.ticker-col'));
+
+            if (cols.length === 0) {
+                container.innerHTML = '';
+                for (let i = 0; i < targetLen; i++) {
+                    const col = document.createElement('span');
+                    col.className = 'ticker-col';
+                    const strip = createTickerStrip();
+                    col.appendChild(strip);
+                    container.appendChild(col);
+                    const d = parseInt(str[i], 10) || 0;
+                    const pos = 10 + d;
+                    col.dataset.pos = pos;
+                    strip.style.transition = 'none';
+                    strip.style.transform = `translateY(-${pos * (100 / 30)}%)`;
+                }
+                return;
+            }
+
+            if (cols.length < targetLen) {
+                const needed = targetLen - cols.length;
+                const refNode = cols[0] || null;
+                for (let i = 0; i < needed; i++) {
+                    const col = document.createElement('span');
+                    col.className = 'ticker-col';
+                    const strip = createTickerStrip();
+                    col.appendChild(strip);
+                    container.insertBefore(col, refNode);
+                    const d = parseInt(str[i], 10) || 0;
+                    const pos = 10 + d;
+                    col.dataset.pos = pos;
+                    strip.style.transition = 'none';
+                    strip.style.transform = `translateY(-${pos * (100 / 30)}%)`;
+                }
+                cols = Array.from(container.querySelectorAll('.ticker-col'));
+            } else if (cols.length > targetLen) {
+                const extra = cols.length - targetLen;
+                for (let i = 0; i < extra; i++) {
+                    cols[i].remove();
+                }
+                cols = Array.from(container.querySelectorAll('.ticker-col'));
+            }
+
+            for (let i = 0; i < targetLen; i++) {
+                const targetDigit = parseInt(str[i], 10) || 0;
+                const col = cols[i];
+                const strip = col.querySelector('.ticker-strip');
+                if (!strip) continue;
+
+                let currentPos = parseInt(col.dataset.pos, 10);
+                if (isNaN(currentPos)) currentPos = 10 + targetDigit;
+
+                // Пре-нормализация к среднему набору [10..19]
+                if (currentPos < 10 || currentPos >= 20) {
+                    const normPos = 10 + (((currentPos % 10) + 10) % 10);
+                    strip.style.transition = 'none';
+                    strip.style.transform = `translateY(-${normPos * (100 / 30)}%)`;
+                    void strip.offsetHeight; // форсируем reflow
+                    currentPos = normPos;
+                    col.dataset.pos = normPos;
+                }
+
+                const currentDigit = currentPos - 10;
+
+                if (targetDigit === currentDigit && !isInitial) {
+                    continue;
+                }
+
+                let nextPos;
+                if (isIncrease) {
+                    if (targetDigit >= currentDigit) {
+                        nextPos = 10 + targetDigit; // [10..19]
+                    } else {
+                        nextPos = 20 + targetDigit; // [20..28] переход через 0 вперед
+                    }
+                } else {
+                    if (targetDigit <= currentDigit) {
+                        nextPos = 10 + targetDigit; // [10..19]
+                    } else {
+                        nextPos = 0 + targetDigit;  // [1..9] переход через 0 назад
+                    }
+                }
+
+                col.dataset.pos = nextPos;
+
+                const duration = isRapid ? 0.12 : 0.38;
+                const stagger = isRapid ? 0 : (targetLen - 1 - i) * 30;
+                const easing = isRapid ? 'cubic-bezier(0.1, 0.9, 0.2, 1)' : 'cubic-bezier(0.16, 1, 0.3, 1)';
+
+                strip.style.transition = isInitial ? 'none' : `transform ${duration}s ${easing} ${stagger}ms`;
+                strip.style.transform = `translateY(-${nextPos * (100 / 30)}%)`;
+
+                // Нормализация по окончанию анимации без утечки обработчиков
+                strip.ontransitionend = function() {
+                    let pos = parseInt(col.dataset.pos, 10);
+                    if (!isNaN(pos) && (pos >= 20 || pos < 10)) {
+                        const norm = 10 + (((pos % 10) + 10) % 10);
+                        col.dataset.pos = norm;
+                        strip.style.transition = 'none';
+                        strip.style.transform = `translateY(-${norm * (100 / 30)}%)`;
+                    }
+                };
+            }
+
+            // Дополнительный микро-пульс
+            const badge = container.closest('.val-badge');
+            if (badge && !isInitial && !isRapid) {
+                badge.classList.remove('val-pop');
+                void badge.offsetWidth;
+                badge.classList.add('val-pop');
+            }
+
+            const priceContainer = container.closest('.constructor-price');
+            if (priceContainer && !isInitial && !isRapid) {
+                priceContainer.classList.remove('price-pulse');
+                void priceContainer.offsetWidth;
+                priceContainer.classList.add('price-pulse');
+            }
+        }
+
+        // ===== КАСТОМНЫЕ ПЛАВНЫЕ СЛАЙДЕРЫ =====
+        function initCustomSliders() {
+            document.querySelectorAll('.custom-slider').forEach(slider => {
+                const inputId = slider.getAttribute('data-input');
+                const input = document.getElementById(inputId);
+                const trackBg = slider.querySelector('.slider-track-bg');
+                const fill = slider.querySelector('.slider-fill');
+                const thumb = slider.querySelector('.slider-thumb');
+
+                const min = parseFloat(slider.getAttribute('data-min')) || 0;
+                const max = parseFloat(slider.getAttribute('data-max')) || 100;
+                const step = parseFloat(slider.getAttribute('data-step')) || 1;
+                let currentVal = parseFloat(slider.getAttribute('data-value')) || min;
+
+                let isDragging = false;
+
+                function updateVisuals(pct, animated = false) {
+                    const clampedPct = Math.max(0, Math.min(100, pct));
+                    if (animated) {
+                        const transitionStyle = '0.28s cubic-bezier(0.25, 1, 0.5, 1)';
+                        fill.style.transition = `width ${transitionStyle}`;
+                        thumb.style.transition = `left ${transitionStyle}`;
+                    } else {
+                        fill.style.transition = 'none';
+                        thumb.style.transition = 'none';
+                    }
+                    fill.style.width = `${clampedPct}%`;
+                    thumb.style.left = `${clampedPct}%`;
+                }
+
+                function setValue(newVal, animated = true, triggerUpdate = true) {
+                    newVal = Math.max(min, Math.min(max, newVal));
+                    currentVal = newVal;
+                    slider.setAttribute('data-value', currentVal);
+                    if (input) input.value = currentVal;
+                    thumb.setAttribute('aria-valuenow', currentVal);
+
+                    const targetPct = ((currentVal - min) / (max - min)) * 100;
+                    updateVisuals(targetPct, animated);
+
+                    if (triggerUpdate) {
+                        updateConstructor();
+                    }
+                }
+
+                // Начальная позиция
+                const initPct = ((currentVal - min) / (max - min)) * 100;
+                updateVisuals(initPct, false);
+
+                function getRatioFromEvent(e) {
+                    const rect = trackBg.getBoundingClientRect();
+                    return Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+                }
+
+                slider.addEventListener('pointerdown', function(e) {
+                    isDragging = true;
+                    slider.classList.add('dragging');
+                    slider.setPointerCapture(e.pointerId);
+
+                    const ratio = getRatioFromEvent(e);
+                    const rawVal = min + ratio * (max - min);
+                    const steppedVal = Math.max(min, Math.min(max, Math.round(rawVal / step) * step));
+
+                    // Плавный переход при клике на отдаленную часть трека
+                    const currentRatio = ((currentVal - min) / (max - min));
+                    if (Math.abs(ratio - currentRatio) > 0.04 && e.target !== thumb) {
+                        setValue(steppedVal, true, true);
+                    } else {
+                        updateVisuals(ratio * 100, false);
+                        if (steppedVal !== currentVal) {
+                            currentVal = steppedVal;
+                            slider.setAttribute('data-value', currentVal);
+                            if (input) input.value = currentVal;
+                            thumb.setAttribute('aria-valuenow', currentVal);
+                            updateConstructor();
+                        }
+                    }
+                });
+
+                slider.addEventListener('pointermove', function(e) {
+                    if (!isDragging) return;
+                    const ratio = getRatioFromEvent(e);
+                    updateVisuals(ratio * 100, false);
+
+                    const rawVal = min + ratio * (max - min);
+                    const steppedVal = Math.max(min, Math.min(max, Math.round(rawVal / step) * step));
+                    if (steppedVal !== currentVal) {
+                        currentVal = steppedVal;
+                        slider.setAttribute('data-value', currentVal);
+                        if (input) input.value = currentVal;
+                        thumb.setAttribute('aria-valuenow', currentVal);
+                        updateConstructor();
+                    }
+                });
+
+                function onPointerEnd(e) {
+                    if (!isDragging) return;
+                    isDragging = false;
+                    slider.classList.remove('dragging');
+                    try {
+                        slider.releasePointerCapture(e.pointerId);
+                    } catch (err) {}
+                    // Магнитное плавное дотягивание до выбранного шага
+                    const snapPct = ((currentVal - min) / (max - min)) * 100;
+                    updateVisuals(snapPct, true);
+                }
+
+                slider.addEventListener('pointerup', onPointerEnd);
+                slider.addEventListener('pointercancel', onPointerEnd);
+
+                // Доступность с клавиатуры
+                thumb.addEventListener('keydown', function(e) {
+                    if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') {
+                        e.preventDefault();
+                        setValue(currentVal - step, true, true);
+                    } else if (e.key === 'ArrowRight' || e.key === 'ArrowUp') {
+                        e.preventDefault();
+                        setValue(currentVal + step, true, true);
+                    } else if (e.key === 'Home') {
+                        e.preventDefault();
+                        setValue(min, true, true);
+                    } else if (e.key === 'End') {
+                        e.preventDefault();
+                        setValue(max, true, true);
+                    }
+                });
+            });
+        }
+
+        // ===== КОНСТРУКТОР =====
         function updateConstructor() {
             const gb = parseInt(document.getElementById('gbSlider').value);
             const min = parseInt(document.getElementById('minSlider').value);
             const sms = parseInt(document.getElementById('smsSlider').value);
 
-            document.getElementById('gbVal').textContent = gb;
-            document.getElementById('minVal').textContent = min;
-            document.getElementById('smsVal').textContent = sms;
+            updateTicker(document.getElementById('gbVal'), gb);
+            updateTicker(document.getElementById('minVal'), min);
+            updateTicker(document.getElementById('smsVal'), sms);
 
-            // Новая логика: всё от 0 до 590
+            // Расчёт стоимости конструктора (без ограничений)
             let price = 0;
             price += gb * 3; // 3 ₽ за ГБ
             price += min * 0.2; // 0.2 ₽ за минуту
@@ -976,19 +1552,36 @@
             const bonuses = document.querySelectorAll('.constructor-bonuses input[type="checkbox"]:checked');
             price += bonuses.length * 25; // 25 ₽ за каждый безлимит
 
-            price = Math.min(price, 590);
-            document.getElementById('constructorPrice').textContent = Math.round(price);
+            const finalPrice = Math.round(price);
+            updateTicker(document.getElementById('constructorPrice'), finalPrice);
+
+            const bonusList = Array.from(bonuses).map(b => {
+                const label = document.querySelector(`label[for="${b.id}"]`);
+                return label ? label.textContent.trim() : b.id;
+            }).join(', ');
+
+            const customBtn = document.getElementById('customTariffBtn');
+            if (customBtn) {
+                let url = `payment.html?tariff=custom&price=${finalPrice}&gb=${gb}&min=${min}&sms=${sms}`;
+                if (bonusList) {
+                    url += `&bonuses=${encodeURIComponent(bonusList)}`;
+                }
+                customBtn.href = url;
+            }
         }
 
-        document.querySelectorAll('.constructor-bonuses input, .constructor-row input').forEach(el => {
-            el.addEventListener('input', updateConstructor);
+        document.querySelectorAll('.constructor-bonuses input').forEach(el => {
+            el.addEventListener('change', updateConstructor);
         });
 
         // ===== ЗАГРУЗКА =====
         document.addEventListener('DOMContentLoaded', function() {
             loadTheme();
             themeBtn.addEventListener('click', toggleTheme);
+            initCustomSliders();
             updateConstructor();
+            const yearEl = document.getElementById('currentYear');
+            if (yearEl) yearEl.textContent = new Date().getFullYear();
         });
     </script>
 
