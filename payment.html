@@ -202,7 +202,7 @@
             background: #0a0a0a;
         }
 
-        /* ===== ВЫБОР ОПЛАТЫ (КЛИКАБЕЛЬНЫЕ КНОПКИ) ===== */
+        /* ===== ВЫБОР ОПЛАТЫ ===== */
         .payment-methods {
             display: flex;
             flex-wrap: wrap;
@@ -742,11 +742,12 @@
 
     <script>
         // ============================================================
-        //   ПРИВЯЗКА БОТА
+        //   КОНФИГУРАЦИЯ — ТВОЙ СЕРВЕР НА RENDER
         // ============================================================
         const URL_API = 'https://bot-contact-s8p4.onrender.com/send';
+
         // ============================================================
-        //   ДАННЫЕ ТАРИФА (ПРИВЯЗКА)
+        //   ДАННЫЕ ТАРИФА
         // ============================================================
         let tariffData = { name: 'Лайт', price: 199 };
 
@@ -941,7 +942,7 @@
         });
 
         // ============================================================
-        //   ЗАГРУЗКА ТАРИФА (ПРИВЯЗКА)
+        //   ЗАГРУЗКА ТАРИФА
         // ============================================================
         document.addEventListener('DOMContentLoaded', function() {
             const params = new URLSearchParams(window.location.search);
@@ -982,7 +983,7 @@
         }
 
         // ============================================================
-        //   ОТПРАВКА
+        //   ОТПРАВКА НА СЕРВЕР
         // ============================================================
         function processPayment() {
             if (!selectedContact) {
@@ -1017,20 +1018,25 @@
 
             fetch(URL_API, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: {
+                    'Content-Type': 'application/json'
+                },
                 body: JSON.stringify({
-                    chat_id: CHAT_ID,
-                    parse_mode: 'HTML',
                     text: msg
                 })
-            }).then(response => {
+            })
+            .then(response => {
                 if (response.ok) {
                     document.getElementById('successPanel').classList.add('open');
                 } else {
-                    alert('Ошибка отправки. Попробуйте ещё раз.');
+                    response.text().then(text => {
+                        alert('❌ Ошибка сервера: ' + text);
+                    });
                 }
-            }).catch(() => {
-                alert('Ошибка соединения. Проверьте интернет.');
+            })
+            .catch(error => {
+                console.error('Ошибка:', error);
+                alert('❌ Ошибка соединения: ' + error.message);
             });
         }
 
