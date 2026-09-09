@@ -80,10 +80,24 @@
             background-clip: padding-box;
         }
 
-        * {
+        *, *::before, *::after {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent !important;
+            -webkit-touch-callout: none;
+        }
+
+        :focus:not(:focus-visible) {
+            outline: none !important;
+        }
+
+        button, a, input, select, textarea, [role="button"],
+        .burger-btn, .theme-btn, .pm-btn, .btn-pay, .dropdown-header, .dropdown-item, .other-modal-btn {
+            -webkit-tap-highlight-color: transparent !important;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            user-select: none;
         }
 
         body {
@@ -988,6 +1002,36 @@
     </div>
 
     <script>
+        // ===== ТАКТИЛЬНЫЙ ОТКЛИК (VIBRATION / HAPTIC FEEDBACK) =====
+        function haptic(type = 'light') {
+            try {
+                if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.HapticFeedback) {
+                    const hf = window.Telegram.WebApp.HapticFeedback;
+                    if (type === 'success' || type === 'error' || type === 'warning') {
+                        hf.notificationOccurred(type);
+                    } else if (type === 'selection') {
+                        hf.selectionChanged();
+                    } else {
+                        hf.impactOccurred(type);
+                    }
+                    return;
+                }
+                if (typeof navigator !== 'undefined' && typeof navigator.vibrate === 'function') {
+                    if (type === 'light' || type === 'selection') {
+                        navigator.vibrate(16);
+                    } else if (type === 'medium') {
+                        navigator.vibrate(26);
+                    } else if (type === 'heavy') {
+                        navigator.vibrate(40);
+                    } else if (type === 'success') {
+                        navigator.vibrate([30, 50, 30]);
+                    } else if (type === 'error') {
+                        navigator.vibrate([50, 60, 50]);
+                    }
+                }
+            } catch (e) {}
+        }
+
         // ============================================================
         //   КОНФИГУРАЦИЯ — ТВОЙ СЕРВЕР НА RENDER
         // ============================================================
@@ -1010,12 +1054,14 @@
 
         dropdownHeader.addEventListener('click', function(e) {
             e.stopPropagation();
+            haptic('light');
             this.classList.toggle('open');
             dropdownList.classList.toggle('open');
         });
 
         dropdownItems.forEach(item => {
             item.addEventListener('click', function() {
+                haptic('selection');
                 const contact = this.dataset.contact;
                 const label = this.textContent.trim();
 
@@ -1173,10 +1219,12 @@
             btn.addEventListener('click', function() {
                 const method = this.dataset.method;
                 if (method === 'other') {
+                    haptic('light');
                     document.getElementById('otherOverlay').classList.add('open');
                     return;
                 }
 
+                haptic('selection');
                 document.querySelectorAll('.pm-btn').forEach(b => b.classList.remove('active'));
                 this.classList.add('active');
                 selectedPayment = method;
@@ -1192,6 +1240,7 @@
         //   МОДАЛКА "ДРУГОЕ"
         // ============================================================
         function selectOther(fullName, shortName, iconName) {
+            haptic('selection');
             document.getElementById('otherOverlay').classList.remove('open');
             document.querySelectorAll('.pm-btn').forEach(b => b.classList.remove('active'));
 
@@ -1204,6 +1253,7 @@
         }
 
         function closeOther() {
+            haptic('light');
             document.getElementById('otherOverlay').classList.remove('open');
         }
 
@@ -1344,14 +1394,17 @@
             })
             .then(response => {
                 if (response.ok) {
+                    haptic('success');
                     document.getElementById('successPanel').classList.add('open');
                 } else {
+                    haptic('error');
                     response.text().then(text => {
                         alert('❌ Ошибка сервера: ' + text);
                     });
                 }
             })
             .catch(error => {
+                haptic('error');
                 console.error('Ошибка:', error);
                 alert('❌ Ошибка соединения: ' + error.message);
             })
@@ -1384,6 +1437,7 @@
         }
 
         function toggleTheme() {
+            haptic('medium');
             const isLight = document.body.classList.toggle('light-theme');
             const theme = isLight ? 'light' : 'dark';
             localStorage.setItem('pltrs_theme', theme);

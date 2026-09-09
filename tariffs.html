@@ -79,10 +79,24 @@
             background-clip: padding-box;
         }
 
-        * {
+        *, *::before, *::after {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent !important;
+            -webkit-touch-callout: none;
+        }
+
+        :focus:not(:focus-visible) {
+            outline: none !important;
+        }
+
+        button, a, input, select, textarea, [role="button"],
+        .burger-btn, .theme-btn, .custom-slider, .slider-thumb, .checkbox-item, .tariff-card, .btn-choose {
+            -webkit-tap-highlight-color: transparent !important;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            user-select: none;
         }
 
         body {
@@ -1249,12 +1263,43 @@
     </div>
 
     <script>
+        // ===== ТАКТИЛЬНЫЙ ОТКЛИК (VIBRATION / HAPTIC FEEDBACK) =====
+        function haptic(type = 'light') {
+            try {
+                if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.HapticFeedback) {
+                    const hf = window.Telegram.WebApp.HapticFeedback;
+                    if (type === 'success' || type === 'error' || type === 'warning') {
+                        hf.notificationOccurred(type);
+                    } else if (type === 'selection') {
+                        hf.selectionChanged();
+                    } else {
+                        hf.impactOccurred(type);
+                    }
+                    return;
+                }
+                if (typeof navigator !== 'undefined' && typeof navigator.vibrate === 'function') {
+                    if (type === 'light' || type === 'selection') {
+                        navigator.vibrate(16);
+                    } else if (type === 'medium') {
+                        navigator.vibrate(26);
+                    } else if (type === 'heavy') {
+                        navigator.vibrate(40);
+                    } else if (type === 'success') {
+                        navigator.vibrate([30, 50, 30]);
+                    } else if (type === 'error') {
+                        navigator.vibrate([50, 60, 50]);
+                    }
+                }
+            } catch (e) {}
+        }
+
         // ===== ТЕМА =====
         const themeBtn = document.getElementById('themeBtn');
         const themeIcon = document.getElementById('themeIcon');
         const overlay = document.getElementById('themeOverlay');
 
         function toggleTheme() {
+            haptic('medium');
             const body = document.body;
             const isLight = body.classList.contains('light-theme');
             overlay.style.background = isLight ? '#0a0a0a' : '#ffffff';
@@ -1297,6 +1342,7 @@
 
         burgerBtn.addEventListener('click', function(e) {
             e.stopPropagation();
+            haptic('light');
             this.classList.toggle('active');
             menuOverlay.classList.toggle('open');
         });
@@ -1532,6 +1578,9 @@
 
                 function setValue(newVal, animated = true, triggerUpdate = true) {
                     newVal = Math.max(min, Math.min(max, newVal));
+                    if (newVal !== currentVal) {
+                        haptic('selection');
+                    }
                     currentVal = newVal;
                     slider.setAttribute('data-value', currentVal);
                     if (input) input.value = currentVal;
@@ -1574,6 +1623,7 @@
                             slider.setAttribute('data-value', currentVal);
                             if (input) input.value = currentVal;
                             thumb.setAttribute('aria-valuenow', currentVal);
+                            haptic('selection');
                             updateConstructor();
                         }
                     }
@@ -1591,6 +1641,7 @@
                         slider.setAttribute('data-value', currentVal);
                         if (input) input.value = currentVal;
                         thumb.setAttribute('aria-valuenow', currentVal);
+                        haptic('selection');
                         updateConstructor();
                     }
                 });
@@ -1605,6 +1656,7 @@
                     // Магнитное плавное дотягивание до выбранного шага
                     const snapPct = ((currentVal - min) / (max - min)) * 100;
                     updateVisuals(snapPct, true);
+                    haptic('light');
                 }
 
                 slider.addEventListener('pointerup', onPointerEnd);
@@ -1667,7 +1719,10 @@
         }
 
         document.querySelectorAll('.constructor-bonuses input').forEach(el => {
-            el.addEventListener('change', updateConstructor);
+            el.addEventListener('change', () => {
+                haptic('light');
+                updateConstructor();
+            });
         });
 
         // ===== ЗАГРУЗКА =====
