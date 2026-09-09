@@ -94,7 +94,7 @@
             color: #f0f0f0;
             transition: background 0.25s ease, color 0.25s ease;
             min-height: 100vh;
-            padding: 80px 24px 40px;
+            padding: 96px 24px 40px;
         }
 
         body.light-theme {
@@ -193,7 +193,7 @@
         }
 
         .burger-btn {
-            background: none;
+            background: rgba(255, 255, 255, 0.1);
             border: 2px solid rgba(255, 255, 255, 0.15);
             border-radius: 50%;
             width: 48px;
@@ -204,12 +204,26 @@
             align-items: center;
             justify-content: center;
             gap: 5px;
-            transition: all 0.3s;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
             position: relative;
             z-index: 1001;
         }
+        .burger-btn:hover {
+            background: rgba(255, 255, 255, 0.18);
+            border-color: rgba(255, 255, 255, 0.3);
+            transform: scale(1.05);
+        }
         body.light-theme .burger-btn {
-            border-color: rgba(0, 0, 0, 0.15);
+            background: rgba(0, 0, 0, 0.06);
+            border-color: rgba(0, 0, 0, 0.12);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+        }
+        body.light-theme .burger-btn:hover {
+            background: rgba(0, 0, 0, 0.12);
+            border-color: rgba(0, 0, 0, 0.2);
         }
         .burger-btn .bar {
             display: block;
@@ -246,14 +260,24 @@
             align-items: center;
             justify-content: center;
             transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-            backdrop-filter: blur(8px);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
             position: relative;
             z-index: 1001;
         }
+        .theme-btn:hover {
+            background: rgba(255, 255, 255, 0.18);
+            border-color: rgba(255, 255, 255, 0.3);
+            transform: scale(1.05);
+        }
         body.light-theme .theme-btn {
             background: rgba(0, 0, 0, 0.85);
             border-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+        }
+        body.light-theme .theme-btn:hover {
+            background: rgba(0, 0, 0, 0.95);
         }
         .theme-btn .material-symbols-outlined {
             font-size: 28px;
@@ -786,16 +810,23 @@
         /* ===== АДАПТИВ ===== */
         @media (max-width: 768px) {
             body {
-                padding: 80px 16px 40px;
+                padding: 96px 16px 40px;
+            }
+            header {
+                padding: 12px 16px;
             }
             .title-main {
-                font-size: 36px;
+                font-size: clamp(26px, 7vw, 36px);
+                line-height: 1.15;
+                word-break: break-word;
             }
             .tariffs-grid {
                 grid-template-columns: 1fr;
+                gap: 18px;
             }
             .constructor-section {
-                padding: 20px;
+                padding: 24px 18px;
+                border-radius: 20px;
             }
             .menu-panel {
                 padding: 28px 20px;
@@ -809,32 +840,97 @@
             }
         }
         @media (max-width: 480px) {
+            body {
+                padding: 90px 14px 40px;
+            }
+            header {
+                padding: 10px 14px;
+            }
             .title-main {
-                font-size: 28px;
+                font-size: clamp(22px, 7.2vw, 28px);
+                margin-bottom: 20px;
+            }
+            .tariff-card {
+                padding: 22px 16px;
+                border-radius: 20px;
+            }
+            .tariff-card .title-card {
+                font-size: 24px;
             }
             .tariff-card .price {
-                font-size: 28px;
+                font-size: 26px;
+                margin: 10px 0;
+            }
+            .tariff-card .btn-primary {
+                width: 100%;
+                text-align: center;
+                display: block;
+                box-sizing: border-box;
+                padding: 12px 20px;
+            }
+            .constructor-section {
+                padding: 18px 14px;
+                border-radius: 18px;
+                margin-bottom: 28px;
+            }
+            .constructor-section .title-card {
+                font-size: 24px;
+            }
+            .constructor-row {
+                margin-bottom: 18px;
+            }
+            .constructor-row label {
+                font-size: 14px;
+            }
+            .constructor-row label .val-badge {
+                font-size: 13px;
+                padding: 3px 10px;
+            }
+            .constructor-bonuses {
+                gap: 8px;
+                margin: 12px 0;
+            }
+            .constructor-bonuses label {
+                font-size: 13px;
+                padding: 6px 12px;
+                border-radius: 16px;
+            }
+            .constructor-price {
+                font-size: 30px;
+                margin: 14px 0;
+            }
+            .constructor-price .currency {
+                font-size: 18px;
+            }
+            .constructor-section .btn-primary {
+                width: 100%;
+                text-align: center;
+                display: block;
+                box-sizing: border-box;
+                padding: 14px 20px;
             }
             .burger-btn {
-                width: 40px;
-                height: 40px;
+                width: 42px;
+                height: 42px;
             }
             .burger-btn .bar {
                 width: 18px;
                 height: 2px;
             }
             .theme-btn {
-                width: 40px;
-                height: 40px;
+                width: 42px;
+                height: 42px;
             }
             .theme-btn .material-symbols-outlined {
                 font-size: 22px;
             }
-            .constructor-price {
-                font-size: 28px;
-            }
-            .constructor-price .currency {
-                font-size: 18px;
+            footer {
+                margin-top: 50px;
+                padding: 24px 0 16px;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+                font-size: 13px;
             }
         }
 
